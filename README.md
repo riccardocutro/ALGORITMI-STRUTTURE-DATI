@@ -169,7 +169,7 @@ void sort_records(FILE *infile, FILE *outfile, size_t field, size_t k);
 - `field` può valere 1, 2 o 3 e indica quale dei tre campi deve essere usato per ordinare i record.
 - `k` indica la cardinalità minima per le sezioni di array da ordinare con il QuickSort, al di sotto della quale deve essere usato il SelectionSort (se k=0, l'intero array sarà ordinato con il QuickSort; se k=INT_MAX, l'intero array sarà ordinato con il SelectionSort)
 
-Si misurino i tempi di risposta per i due algoritmi, per ciascuno dei tre field che si possono usare come chiave di ordinamento, al variare di k e si produca una breve relazione in cui si riportano i risultati ottenuti insieme a un loro commento. Il commento deve essere basato su statistiche numeriche sui tempi di esecuzione misurati. Nel caso l'ordinamento si protragga per più di 10 minuti si  interrompa l'esecuzione e si riporti un fallimento dell'operazione. I risultati sono quelli che vi sareste aspettati? Se sì, perché? Se no, fate delle ipotesi circa il motivo per cui gli algoritmi non funzionano come vi aspettate, verificatele e riportate quanto scoperto nella relazione. 
+Si misurino i tempi di risposta per i due algoritmi, per ciascuno dei tre field che si possono usare come chiave di ordinamento, al variare di k e si produca una breve relazione in cui si riportano i risultati ottenuti insieme a un loro commento. Il commento deve essere basato su statistiche numeriche sui tempi di esecuzione misurati. Nel caso l'ordinamento si protragga per più di 10 minuti si  interrompa l'esecuzione e si riporti un fallimento dell'operazione. I risultati sono quelli che vi sareste aspettati? Se sì, perché? Se no, fate delle ipotesi circa il motivo per cui gli algoritmi non funzionano come vi aspettate, verificatele e riportate quanto scoperto nella relazione.
 
 **Si ricorda che il file `records.csv` (e i file compilati) NON DEVONO ESSERE OGGETTO DI COMMIT SU GIT!**
 
@@ -234,7 +234,7 @@ Si documenti, in una relazione (README.md su git), il suddetto processo di svilu
 - L'eseguibile `main_ex2` deve ricevere come parametri il percorso del file di testo da usare e la lunghezza minima delle parole da considerare. Per esempio:
 
 ```
-$ ./main_ex3 /tmp/data/iliade.txt 6
+$ ./main_ex2 /tmp/data/iliade.txt 6
 ```
 
 ## Esercizio 3 - Heap ternario
@@ -259,7 +259,7 @@ Implementare gli unit-test degli algoritmi secondo le indicazioni suggerite nel 
 - L'eseguibile `main_ex3` deve ricevere come parametri il percorso del dizionario da usare come riferimento e il file da correggere. Per esempio:
 
 ```
-$ ./main_ex2 /tmp/data/dictionary.txt /tmp/data/correctme.txt
+$ ./main_ex3 /tmp/data/dictionary.txt /tmp/data/correctme.txt
 ```
 
 
