@@ -21,7 +21,7 @@
 
 **A**: Si veda quanto riportato nel README.
 
-**Q: Sono uno/a studente/ssa che ha già preparato il laboratorio dell'anno accademico 2023/2024. Posso sostenere la prova di laboratorio discutendo gli esercizi di quell'a.a.?**
+**Q: Sono uno/a studente/ssa che ha già preparato il laboratorio dell'anno accademico 2024/2025. Posso sostenere la prova di laboratorio discutendo gli esercizi di quell'a.a.?**
 
 **A**: Si veda quanto riportato nel README.
 

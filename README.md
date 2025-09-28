@@ -25,7 +25,7 @@ Come specificato nella descrizione ufficiale dell'insegnamento (https://laurea.i
 
 L'esame di Algoritmi e strutture dati consiste in una prova scritta, somministrata mediante la piattaforma Esami, ed in una discussione orale del progetto di laboratorio. Il superamento dello scritto permette di accedere alle prove orali della sessione in cui è stato superato lo scritto. Nel caso in cui questa seconda prova non venga superata entro i termini della sessione, lo scritto dovrà essere ripetuto. Il voto sarà la media pesata dei voti ottenuti nelle due prove scritta ed orale [in base ai crediti associati alle parti di teoria (6 CFU) e di laboratorio (3 CFU), nella media lo scritto peserà 6 e l'orale 3], valutate in 30+1 esimi, essendo comunque necessario il raggiungimento della sufficienza in entrambe le prove.
 
-Il codice consegnato dovrà superare **tutti** i test dei correttori automatici messi a disposizione sulla pagina Moodle del Laboratorio di ASD. Un laboratorio il cui codice non dovesse superare qualche test (anche solo uno per un unico esercizio) sarà considerato complessivamente insufficiente. In sede di discussione d'esame, sarà facoltà del docente chiedere di eseguire gli algoritmi implementati su dati ulteriori, forniti dal docente stesso. Al progetto non sarà comunque assegnato preventivamente un voto, ma esso costituirà la base per una discussione orale. In tale discussione la/il candidata/o dovrà dimostrare di conoscere sia gli aspetti teorici della materia, sia il codice consegnato.
+Il codice consegnato dovrà superare **tutti** i test dei correttori automatici messi a disposizione sulla pagina Moodle del Laboratorio di ASD. Un laboratorio il cui codice non dovesse superare qualche test (anche solo uno per un unico esercizio) sarà considerato complessivamente insufficiente. In sede di discussione d'esame, sarà facoltà del docente chiedere di eseguire gli algoritmi implementati su dati ulteriori, forniti dal docente stesso. Ugualmente, sarà facoltà del docente chiedere cambiamenti nel codice durante l'esame, per esempio per l'inclusione di ulteriori unit test o per la correzione di eventuali piccoli problemi di implementazione individuati durante la correzione. Al progetto non sarà comunque assegnato preventivamente un voto, ma esso costituirà la base per una discussione orale. In tale discussione la/il candidata/o dovrà dimostrare di conoscere sia gli aspetti teorici della materia, sia il codice consegnato.
 
 ## Consegna del progetto e discussione orale
 
@@ -100,9 +100,11 @@ La relazione, per quegli esercizi che la richiedono, deve essere inserita nel fi
 
 ## Unit Testing
 
-Come indicato esplicitamente nei testi degli esercizi, il progetto di laboratorio comprende anche la definizione di opportune suite di unit test.
+Come indicato esplicitamente nei testi degli esercizi, il progetto di laboratorio comprende obbligatoriamente la definizione di opportune suite di unit test.
 
-Si rammenta, però, che il focus del laboratorio è l'implementazione di strutture dati e algoritmi. Relativamente agli unit test sarà quindi sufficiente che gli studenti dimostrino di averne colto il senso e di saper realizzare una suite di test sufficiente a coprire i casi più comuni e i casi limite.
+È obbligatorio implementare unit test completi per tutte le funzioni di libreria sviluppate. Gli unit test rappresentano un'area in cui l'AI generativa può essere particolarmente utile per accelerare lo sviluppo e garantire una copertura esaustiva del codice. 
+
+Tuttavia, si rammenta che il focus del laboratorio rimane l'implementazione di strutture dati e algoritmi. Gli studenti dovranno dimostrare di aver compreso il senso degli unit test e di saper realizzare suite di test che coprano i casi più comuni e i casi limite.
 
 ## Qualità dell'implementazione
 
@@ -125,67 +127,132 @@ Per "buona qualità" intendiamo codice ben organizzato, ben modularizzato, ben c
 
 # Consegne per gli esercizi
 
-Come detto sopra, in sede di discussione d'esame, sarà facoltà del docente chiedere di eseguire gli algoritmi implementati su dati forniti dal docente stesso. Nel caso questi dati siano memorizzati su file, questi saranno dei csv con la medesima struttura dei dataset forniti e descritti nel testo dell'esercizio. I codici sviluppati dovranno consentire un rapido e semplice adattamento agli input forniti: ad esempio, **una buona implementazione consentirà di inserire in input il nome del file su cui eseguire il test**, mentre una peggiore richiederà di modificare il codice sorgente e una successiva compilazione a fronte della sola modifica del nome del file contenente il dataset.
-
-
-
+Come detto sopra, in sede di discussione d'esame, sarà facoltà del docente chiedere di eseguire gli algoritmi implementati su dati forniti dal docente stesso. Nel caso questi dati siano memorizzati su file, questi saranno della medesima struttura dei dataset forniti e descritti nel testo dell'esercizio. I codici sviluppati dovranno consentire un rapido e semplice adattamento agli input forniti: ad esempio, **una buona implementazione consentirà di inserire in input il nome del file su cui eseguire il test**, mentre una peggiore richiederà di modificare il codice sorgente e una successiva compilazione a fronte della sola modifica del nome del file contenente il dataset.
 
 ## Esercizio 1 - Algoritmo di ordinamento ibrido QuickSort-SelectionSort
 
-### Testo
-TBD TBD TBD
+Implementare un algoritmo di ordinamento **ibrido** che combini QuickSort e SelectionSort in base alla dimensione dell'array da ordinare. L'algoritmo deve funzionare nel seguente modo:
+
+- Per array di dimensione maggiore o uguale a una soglia `k`, utilizzare QuickSort
+- Per array di dimensione minore di `k`, utilizzare SelectionSort
+
+L'ipotesi da verificare è se SelectionSort, pur avendo complessità O(n²), possa risultare più efficiente di QuickSort su array molto piccoli a causa del minor overhead nelle operazioni elementari. Sarà compito vostro determinare sperimentalmente se questa ipotesi è corretta e identificare eventuali valori ottimali della soglia.
+
+### Specifiche dell'implementazione:
+
+1. **QuickSort**: implementare una versione robusta che sia efficiente su tutti i casi di test presenti nel dataset (descritto sotto). La scelta della strategia di partizionamento e del pivot è lasciata agli studenti, che dovranno valutare le prestazioni sui dati reali.
+2. **SelectionSort**: implementare la versione classica O(n²)
+3. **Algoritmo ibrido**: deve rispettare la soglia `k` e passare automaticamente da un algoritmo all'altro durante la ricorsione
+
+La libreria deve supportare l'ordinamento di array di diversi tipi di dato tramite funzioni di comparazione, rispettando la seguente definizione:
+
+```c
+void hybridsort(void *base, size_t nitems, size_t size, size_t k, int (*compar)(const void *, const void *));
+```
+
+Interpretare i parametri della funzione `hybridsort` considerando la richiesta per una implementazione generica.
 
 ### Unit Testing
 
-Implementare gli unit-test per la libreria secondo le indicazioni suggerite nel documento [Unit Testing](UnitTesting.md).
+Implementare gli unit test per la libreria secondo le indicazioni suggerite nel documento [Unit Testing](UnitTesting.md).
+
+Gli unit test devono coprire:
+- Correttezza dell'ordinamento per tutti i tipi di dato
+- Comportamento con array vuoti e di dimensione piccola
+- Diversi valori della soglia `k`
+- Casi limite, ad esempio, array già ordinati, ordinati inversamente, con elementi duplicati
 
 ### Uso della libreria di ordinamento implementata
-Il file `records.csv` che potete trovare (compresso) all'indirizzo:
 
-> [https://datacloud.di.unito.it/index.php/s/9sQmzB9TdDHezX7](https://datacloud.di.unito.it/index.php/s/9sQmzB9TdDHezX7)
+#### Dataset
 
-contiene 20 milioni di record da ordinare.
-Ogni record è descritto su una riga e contiene i seguenti campi:
+Il file `records.bin.gz` che potete trovare (compresso) all'indirizzo:
 
-**CAMBIARE FORMATO CAMBIARE FORMATO CAMBIARE FORMATO CAMBIARE FORMATO (basta invertire 2 colonne)**
+> [https://datacloud.di.unito.it/index.php/s/3c9H8ZAFqQWEBcf](https://datacloud.di.unito.it/index.php/s/3c9H8ZAFqQWEBcf)
 
-- `id`: (tipo intero) identificatore univoco del record;
-- `field1`: (tipo stringa) contiene parole estratte dalla divina commedia,
-  potete assumere che i valori non contengano spazi o virgole;
-- `field2`: (tipo intero);
-- `field3`: (tipo floating point).
+contiene 20 milioni di record da ordinare in formato binario compresso.
 
-Il formato è un CSV standard: i campi sono separati da virgole; i record sono
-separati da `\n`.
+**Formato del file binario:**
+Il file compresso deve essere estratto prima dell'uso. Una volta decompresso, `records.bin` è strutturato come una sequenza di record, ognuno dei quali occupa esattamente 36 bytes:
+- **Byte 0-7**: `id` (intero senza segno a 64 bit, little-endian)  
+- **Byte 8-11**: `field1` (float a 32 bit, IEEE 754, little-endian)
+- **Byte 12-19**: `field2` (intero con segno a 64 bit, little-endian)
+- **Byte 20-35**: `field3` (stringa di 16 caratteri, padding con '\0' se necessario)
 
-Usando l'algoritmo implementato precedentemente, si realizzi la seguente funzione per ordinare i *record* contenuti nel file `records.csv` in ordine non decrescente secondo i valori contenuti nei tre campi "field".
+Il campo `field3` contiene parole estratte dalla Divina Commedia (massimo 15 caratteri utili + terminatore). I campi sono generati per testare diversi scenari di ordinamento, inclusi casi che possono portare alcuni algoritmi di ordinamento al caso peggiore.
 
+**Suggerimento:**  Per facilitare la manipolazione del file binario, si consiglia di implementare una libreria di supporto con funzioni come:
+
+```c
+int read_record(FILE *file, Record *record);
+int write_record(FILE *file, const Record *record);
+int load_records_from_file(FILE *file, Record **records, size_t *count);
+int save_records_to_file(FILE *file, const Record *records, size_t count);
+void print_record(const Record *record);
 ```
+
+#### Programma principale
+
+Usando l'algoritmo implementato precedentemente, si realizzi la seguente funzione per ordinare i *record* contenuti nel file `records.bin` in ordine non decrescente secondo i valori contenuti nei campi specificati.
+
+```c
 void sort_records(FILE *infile, FILE *outfile, size_t field, size_t k);
 ```
 
-- `infile` è il file contenente i record da ordinare;
-- `outfile` è il file nel quale salvare i record ordinati (che deve essere diverso da `infile`);
-- `field` può valere 1, 2 o 3 e indica quale dei tre campi deve essere usato per ordinare i record.
-- `k` indica la cardinalità minima per le sezioni di array da ordinare con il QuickSort, al di sotto della quale deve essere usato il SelectionSort (se k=0, l'intero array sarà ordinato con il QuickSort; se k=INT_MAX, l'intero array sarà ordinato con il SelectionSort)
+**Parametri:**
+- `infile`: il file binario contenente i record da ordinare
+- `outfile`: il file binario nel quale salvare i record ordinati (deve essere diverso da `infile`)
+- `field`: può valere 1, 2, 3 o 4 e indica quale campo deve essere usato per ordinare i record:
+  - `1`: ordina per `id` (intero senza segno a 64 bit)
+  - `2`: ordina per `field1` (float)
+  - `3`: ordina per `field2` (intero con segno a 64 bit)
+  - `4`: ordina per `field3` (stringa, ordine lessicografico)
+- `k`: soglia per l'algoritmo ibrido
+  - se `k=0`: l'intero array sarà ordinato solo con QuickSort
+  - se `k > numero_totale_record`: l'intero array sarà ordinato solo con SelectionSort
+  - altrimenti: usa QuickSort per sottoinsiemi ≥ k, SelectionSort per sottoinsiemi < k
 
-Si misurino i tempi di risposta per i due algoritmi, per ciascuno dei tre field che si possono usare come chiave di ordinamento, al variare di k e si produca una breve relazione in cui si riportano i risultati ottenuti insieme a un loro commento. Il commento deve essere basato su statistiche numeriche sui tempi di esecuzione misurati. Nel caso l'ordinamento si protragga per più di 10 minuti si  interrompa l'esecuzione e si riporti un fallimento dell'operazione. I risultati sono quelli che vi sareste aspettati? Se sì, perché? Se no, fate delle ipotesi circa il motivo per cui gli algoritmi non funzionano come vi aspettate, verificatele e riportate quanto scoperto nella relazione.
+### Analisi sperimentale
 
-**Si ricorda che il file `records.csv` (e i file compilati) NON DEVONO ESSERE OGGETTO DI COMMIT SU GIT!**
+Si misurino i tempi di risposta dell'algoritmo ibrido per ciascuno dei quattro campi che si possono usare come chiave di ordinamento, al variare di `k`. 
 
-### Condizioni per la consegna:
+**Valori di k da testare**: 0, 10, 50, 100, 500, 1000, 5000, 10000, 1000000
 
-- Creare una sottocartella chiamata `ex1` all'interno del repository.
-- La consegna deve obbligatoriamente contenere un `Makefile`. Questo file con il comando `make all` deve produrre all'interno di `ex1/bin` due file eseguibili chiamati `main_ex1` e `test_ex1`. Se avete usato librerie esterne (come Unity) includete anche queste per consentire la corretta compilazione.
-- L'eseguibile `test_ex1` non deve richiedere nessun parametro e deve eseguire tutti gli unit test automatizzati prodotti.
-- L'eseguibile `main_ex1` deve ricevere come parametri il percorso del file di input, il percorso del file di output, e i valori degli eventuali altri parametri. Per esempio:
+**Gestione della memoria**: L'implementazione deve gestire correttamente l'allocazione e la deallocazione della memoria, evitando memory leak e sprechi di memoria. Si consiglia di testare l'applicazione con strumenti come Valgrind.
 
+Si produca una breve relazione (in formato Markdown nel file `README.md`) in cui si riportano:
+
+1. **Tabelle dei tempi**: tempi di esecuzione per ogni combinazione di campo e valore di k
+2. **Analisi critica**: 
+   - I risultati corrispondono alle aspettative teoriche?
+   - Esiste un valore ottimale di k? Se sì, quale e perché?
+   - L'approccio ibrido offre vantaggi rispetto agli algoritmi puri?
+   - Ci sono differenze significative tra i diversi tipi di campi?
+
+**Vincoli temporali**: Nel caso l'ordinamento non finisca entro 5 minuti, interrompere l'esecuzione e riportare un fallimento dell'operazione nella relazione. Tempi di esecuzione eccessivi possono indicare che il valore di k è troppo elevato o che ci sono problemi nell'implementazione del QuickSort, ad esempio, degenerazione verso il caso peggiore O(n²). In quest'ultimo caso, riflettere sulla strategia di scelta del pivot per sistemare il problema.
+
+**Si ricorda che i file `records.bin.gz`, `records.bin` (e i file compilati) NON DEVONO ESSERE OGGETTO DI COMMIT SU GIT!**
+
+### Condizioni per la consegna
+
+- Creare una sottocartella chiamata `ex1` all'interno del repository
+- La consegna deve obbligatoriamente contenere un `Makefile` che con il comando `make all` produca all'interno di `ex1/bin` due file eseguibili chiamati `main_ex1` e `test_ex1`
+- Se avete usato librerie esterne (come Unity per i test) includete anche queste per consentire la corretta compilazione
+- L'eseguibile `test_ex1` non deve richiedere parametri e deve eseguire tutti gli unit test automatizzati
+- L'eseguibile `main_ex1` deve ricevere come parametri:
+
+```bash
+$ ./bin/main_ex1 <input_file> <output_file> <field> <k>
 ```
-$ TBD TBD TBD
+
+**Esempio di utilizzo:**
+```bash
+$ ./bin/main_ex1 records.bin sorted_output.bin 1 50
 ```
+
+Questo comando ordinerà i record del file `records.bin` secondo il campo `id` (field=1) usando l'algoritmo ibrido con soglia k=50, salvando il risultato in `sorted_output.bin`.
+
 ## Esercizio 2 - Tavole hash (con concatenamento)
-
-### Testo
 
 Si implementi, avvalendosi del supporto di un sistema basato su un Large Language Model, quale, ad esempio, ChatGPT (si veda sotto), una libreria generica che realizza la struttura dati *tavola hash (con concatenamento)* in grado di ospitare un insieme di coppie {<chiave_1,valore_1>,...,<chiave_n,valore_n>}.
 
@@ -222,9 +289,13 @@ Avvalendosi di un sistema basato su LLM, scrivere un programma che utilizza l'ha
 
 Si richiede che per implementare quanto richiesto dal presente esercizio ci si avvalga del supporto di un sistema basato su un Large Language Model, quale, ad esempio, ChatGPT.
 
-E' possibile che il processo di sviluppo risulti iterativo, comportando varie interazioni con il sistema LLM.
+È possibile che il processo di sviluppo risulti iterativo, comportando varie interazioni con il sistema LLM.
 
-Si documenti, in una relazione (README.md su git), il suddetto processo di sviluppo nei suoi aspetti principali (prompt iniziale, output prodotto dal sistema, analisi critica dell'output, raffinamento del prompt, ecc.) e si riportino alcune considerazioni generali sull'intero processo.
+**ATTENZIONE**: I Large Language Models spesso forniscono implementazioni che non rispettano le specifiche dell'esercizio, in particolare ignorando la complessità computazionale richiesta per le strutture dati. **Le consegne che non rispettano la complessità computazionale specificata saranno considerate completamente invalide**. È responsabilità del gruppo studiare attentamente il codice generato, verificarne la correttezza algoritmica e assicurarsi che rispetti i vincoli richiesti.
+
+Serve quindi assumere un ruolo critico e di supervisione nel processo, non limitandosi ad accettare passivamente l'output del sistema LLM, ma analizzandolo, validandolo e, se necessario, richiedendo modifiche specifiche per garantire la conformità ai requisiti.
+
+Si documenti, in una relazione (README.md su git), il suddetto processo di sviluppo nei suoi aspetti principali (prompt iniziale, output prodotto dal sistema, analisi critica dell'output, identificazione di eventuali problemi di complessità, raffinamento del prompt, iterazioni successive, ecc.) e si riportino alcune considerazioni generali sull'intero processo, con particolare attenzione alle sfide incontrate nel garantire la correttezza algoritmica.
 
 ### Condizioni per la consegna:
 
@@ -238,8 +309,6 @@ $ ./main_ex2 /tmp/data/iliade.txt 6
 ```
 
 ## Esercizio 3 - Heap ternario
-
-### Testo
 
 **TBD TBD TBD**
 
@@ -264,8 +333,6 @@ $ ./main_ex3 /tmp/data/dictionary.txt /tmp/data/correctme.txt
 
 
 ## Esercizio 4 - Grafi sparsi e Visita in Ampiezza
-
-### Testo
 
 Si implementi una libreria che realizza la struttura dati *Grafo* in modo che sia ottimale per dati sparsi
 (**attenzione**: le scelte implementative che farete dovranno essere giustificate in relazione alle nozioni presentate
@@ -354,20 +421,20 @@ Ogni record contiene i seguenti dati:
 
 **Note:**
 
-- Potete interpretare le informazioni presenti nelle righe del file come archi **non diretti** (per cui probabilmente vorrete inserire nel vostro grafo sia l'arco di andata che quello di ritorno a fronte di ogni riga letta).
+- Potete interpretare le informazioni presenti nelle righe del file come archi **non diretti**.
 - Il file è stato creato a partire da un dataset poco accurato. I dati riportati contengono inesattezze e imprecisioni.
 
 **Si ricorda che il file `italian_dist_graph.csv` (e i file compilati) NON DEVONO ESSERE OGGETTO DI COMMIT SU GIT!**
 
 ### Condizioni per la consegna:
 
-- Creare una sottocartella chiamata `ex2-4` all'interno del repository, che conterrà i file relativi a questo esercizio e all'Esercizio 2.
-- Includete nella consegna anche un `Makefile` che con il comando `make all` deve produrre all'interno di `ex2-4/bin` due file eseguibili chiamati `main_ex2-4` e `test_ex2-4`. Se avete usato librerie esterne (come Unity) includete anche queste per consentire la corretta compilazione.
-- L'eseguibile `test_ex2-4` non deve richiedere nessun parametro e deve eseguire tutti gli unit test automatizzati prodotti.
-- L'eseguibile `main_ex2-4` deve ricevere come parametri il percorso del file `italian_dist_graph.csv`, il nome della città di partenza e il nome di un file di output, e salvare in quest'ultimo i nomi delle località visitate durante una visita in ampiezza del grafo, un nome per riga, partendo da un nodo di partenza specificato. I nomi dei file non devono essere hardcoded, ma devono essere passati come argomenti da linea di comando.
+- Creare una sottocartella chiamata `ex4` all'interno del repository, che conterrà i file relativi a questo esercizio.
+- Includete nella consegna anche un `Makefile` che con il comando `make all` deve produrre all'interno di `ex4/bin` due file eseguibili chiamati `main_ex4` e `test_ex4`. Se avete usato librerie esterne (come Unity) includete anche queste per consentire la corretta compilazione.
+- L'eseguibile `test_ex4` non deve richiedere nessun parametro e deve eseguire tutti gli unit test automatizzati prodotti.
+- L'eseguibile `main_ex4` deve ricevere come parametri il percorso del file `italian_dist_graph.csv`, il nome della città di partenza e il nome di un file di output, e salvare in quest'ultimo i nomi delle località visitate durante una visita in ampiezza del grafo, un nome per riga, partendo da un nodo di partenza specificato. I nomi dei file non devono essere hardcoded, ma devono essere passati come argomenti da linea di comando.
 
 ```
-$ ./main_ex2-4 italian_dist_graph.csv torino output.txt
+$ ./main_ex4 italian_dist_graph.csv torino output.txt
 ```
 
 Si documenti brevemente, in una relazione (README.md su git), le scelte implementative effettuate e i risultati e tempi dell'esecuzione dell'algoritmo rispetto a quanto atteso.
