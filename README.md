@@ -360,10 +360,8 @@ typedef struct edge {
     void* label;    // etichetta dell'arco
 } Edge;
 ```
-
-#### Funzioni della Libreria
-
-##### Creazione e Configurazione
+---
+#### Creazione e Configurazione
 
 ```c
 Graph graph_create(int labelled, 
@@ -386,7 +384,8 @@ int graph_is_labelled(const Graph gr);
 Dice se il grafo è etichettato o meno.  
 **Complessità**: O(1)
 
-### Gestione Nodi
+---
+#### Gestione Nodi
 
 ```c
 int graph_add_node(Graph gr, const void* node);
@@ -418,7 +417,8 @@ void** graph_get_nodes(const Graph gr);
 Recupera tutti i nodi del grafo.  
 **Complessità**: O(N)
 
-##### Gestione Archi
+---
+#### Gestione Archi
 
 ```c
 int graph_add_edge(Graph gr, const void* node1, const void* node2, const void* label);
@@ -456,7 +456,8 @@ void* graph_get_label(const Graph gr, const void* node1, const void* node2);
 Recupera l'etichetta di un arco.  
 **Complessità**: O(1) (*)
 
-##### Adiacenza
+---
+#### Adiacenza
 
 ```c
 void** graph_get_neighbours(const Graph gr, const void* node);
@@ -470,7 +471,8 @@ int graph_num_neighbours(const Graph gr, const void* node);
 Recupera il numero di nodi adiacenti a un dato nodo.  
 **Complessità**: O(1)
 
-##### Distruzione
+---
+#### Distruzione
 
 ```c
 void graph_free(Graph gr);
