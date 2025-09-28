@@ -147,7 +147,11 @@ L'ipotesi da verificare è se SelectionSort, pur avendo complessità O(n²), pos
 La libreria deve supportare l'ordinamento di array di diversi tipi di dato tramite funzioni di comparazione, rispettando la seguente definizione:
 
 ```c
-void hybridsort(void *base, size_t nitems, size_t size, size_t k, int (*compar)(const void *, const void *));
+void hybridsort(void *base, 
+                size_t nitems, 
+                size_t size, 
+                size_t k, 
+                int (*compar)(const void *, const void *));
 ```
 
 Interpretare i parametri della funzione `hybridsort` considerando la richiesta per una implementazione generica.
