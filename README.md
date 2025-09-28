@@ -347,47 +347,141 @@ durante le lezioni in aula).
 L'implementazione deve essere generica sia per quanto riguarda il tipo dei nodi, sia per quanto riguarda le etichette
 degli archi, implementando le funzioni riportate nel seguente header file (con requisiti minimi di complessità; dove _N_ può indicare il numero di nodi o il numero di archi, a seconda del contesto):
 
-```
-graph.h
+### graph.h
 
+#### Strutture Dati
+
+```c
 typedef struct graph *Graph;
 
 typedef struct edge {
-   void* source; //nodo d'origine
-   void* dest; //nodo di destinazione
-   void* label; //etichetta dell'arco
-}Edge;
-
-Graph graph_create(int labelled, int directed,
-                     int (*compare)(const void*, const void*),
-                     unsigned long (*hash)(const void*));
-
-//crea un grafo vuoto, etichettato se labelled == 1 e diretto se directed == 1,
-//le funzioni f1 e f2 sono necessarie per la costruzione della tavola hash che deve essere usata dalla libreria -- O(1)
-
-int graph_is_directed(const Graph gr);                                                           // dice se il grafo è diretto o meno -- O(1)
-int graph_is_labelled(const Graph gr);                                                           // dice se il grafo è etichettato o meno -- O(1)
-int graph_add_node(Graph gr, const void* node);                                                  // aggiunge un nodo -- O(1)
-int graph_add_edge(Graph gr, const void* node1, const void* node2, const void* label);           // aggiunge un arco dati estremi ed etichetta -- O(1) (*)
-int graph_contains_node(const Graph gr, const void* node);                                       // controlla se un nodo è nel grafo -- O(1)
-int graph_contains_edge(const Graph gr, const void* node1, const void* node2);                   // controlla se un arco è nel grafo -- O(1) (*)
-int graph_remove_node(Graph gr, const void* node);                                               // rimuove un nodo dal grafo -- O(N)
-int graph_remove_edge(Graph gr, const void* node1, const void* node2);                           // rimuove un arco dal grafo -- O(1) (*)
-int graph_num_nodes(const Graph gr);                                                             // numero di nodi -- O(1)
-int graph_num_edges(const Graph gr);                                                             // numero di archi -- O(N)
-void** graph_get_nodes(const Graph gr);                                                          // recupero dei nodi del grafo -- O(N)
-Edge** graph_get_edges(const Graph gr);                                                          // recupero degli archi del grafo -- O(N)
-void** graph_get_neighbours(const Graph gr, const void* node);                                   // recupero dei nodi adiacenti ad un dato nodo -- O(1) (*)
-int graph_num_neighbours(const Graph gr, const void* node);                                      // recupero del numero di nodi adiacenti ad un dato nodo -- O(1)
-void* graph_get_label(const Graph gr, const void* node1, const void* node2);                     // recupero dell'etichetta di un arco -- O(1) (*)
-void graph_free(Graph gr);
-
+    void* source;   // nodo d'origine
+    void* dest;     // nodo di destinazione
+    void* label;    // etichetta dell'arco
+} Edge;
 ```
 
-_(*)_ quando il grafo è veramente sparso, assumendo che l'operazione venga effettuata su un nodo la cui lista di adiacenza ha una lunghezza in O(1).
+#### Funzioni della Libreria
+
+##### Creazione e Configurazione
+
+```c
+Graph graph_create(int labelled, 
+                  int directed,
+                  int (*compare)(const void*, const void*),
+                  unsigned long (*hash)(const void*));
+```
+Crea un grafo vuoto, etichettato se `labelled == 1` e diretto se `directed == 1`. Le funzioni `compare` e `hash` sono necessarie per la costruzione della tavola hash che deve essere usata dalla libreria.  
+**Complessità**: O(1)
+
+```c
+int graph_is_directed(const Graph gr);
+```
+Dice se il grafo è diretto o meno.  
+**Complessità**: O(1)
+
+```c
+int graph_is_labelled(const Graph gr);
+```
+Dice se il grafo è etichettato o meno.  
+**Complessità**: O(1)
+
+### Gestione Nodi
+
+```c
+int graph_add_node(Graph gr, const void* node);
+```
+Aggiunge un nodo al grafo.  
+**Complessità**: O(1)
+
+```c
+int graph_contains_node(const Graph gr, const void* node);
+```
+Controlla se un nodo è presente nel grafo.  
+**Complessità**: O(1)
+
+```c
+int graph_remove_node(Graph gr, const void* node);
+```
+Rimuove un nodo dal grafo.  
+**Complessità**: O(N)
+
+```c
+int graph_num_nodes(const Graph gr);
+```
+Restituisce il numero di nodi nel grafo.  
+**Complessità**: O(1)
+
+```c
+void** graph_get_nodes(const Graph gr);
+```
+Recupera tutti i nodi del grafo.  
+**Complessità**: O(N)
+
+##### Gestione Archi
+
+```c
+int graph_add_edge(Graph gr, const void* node1, const void* node2, const void* label);
+```
+Aggiunge un arco dati gli estremi e l'etichetta.  
+**Complessità**: O(1) (*)
+
+```c
+int graph_contains_edge(const Graph gr, const void* node1, const void* node2);
+```
+Controlla se un arco è presente nel grafo.  
+**Complessità**: O(1) (*)
+
+```c
+int graph_remove_edge(Graph gr, const void* node1, const void* node2);
+```
+Rimuove un arco dal grafo.  
+**Complessità**: O(1) (*)
+
+```c
+int graph_num_edges(const Graph gr);
+```
+Restituisce il numero di archi nel grafo.  
+**Complessità**: O(N)
+
+```c
+Edge** graph_get_edges(const Graph gr);
+```
+Recupera tutti gli archi del grafo.  
+**Complessità**: O(N)
+
+```c
+void* graph_get_label(const Graph gr, const void* node1, const void* node2);
+```
+Recupera l'etichetta di un arco.  
+**Complessità**: O(1) (*)
+
+##### Adiacenza
+
+```c
+void** graph_get_neighbours(const Graph gr, const void* node);
+```
+Recupera i nodi adiacenti a un dato nodo.  
+**Complessità**: O(1) (*)
+
+```c
+int graph_num_neighbours(const Graph gr, const void* node);
+```
+Recupera il numero di nodi adiacenti a un dato nodo.  
+**Complessità**: O(1)
+
+##### Distruzione
+
+```c
+void graph_free(Graph gr);
+```
+Libera la memoria allocata per il grafo.
+
+---
+
+**Nota**: Le complessità contrassegnate con (*) assumono un'implementazione efficiente della tavola hash sottostante, e quando il grafo è veramente sparso, assumendo che l'operazione venga effettuata su un nodo la cui lista di adiacenza ha una lunghezza in O(1).
 
 La struttura ```struct graph``` deve essere decisa prendendo in considerazione la richiesta di usare la Tabella Hash dell'esercizio precedente.
-
 
 *Suggerimento*:  un grafo non diretto può essere rappresentato usando un'implementazione per grafi diretti modificata
 per garantire che, per ogni arco *(a,b)* etichettato *w*, presente nel grafo, sia presente nel grafo anche l'arco *(b,a)*
@@ -403,14 +497,14 @@ Implementare gli unit-test degli algoritmi secondo le indicazioni suggerite nel 
 
 Si implementi l'algoritmo di visita in ampiezza secondo il seguente prototipo di funzione
 
+```c
+void** breadth_first_visit(Graph gr, 
+                          void* start, 
+                          int (*compare)(const void*, const void*), 
+                          unsigned long (*hash)(const void*));
 ```
-void** breadth_first_visit(Graph gr, void* start, int (*compare)(const void*, const void*), unsigned long (*hash)(const void*));
-//start è il nodo di partenza da cui cominciare la visita, la funzione restituisce l'array dei nodi nell'ordine di visita.
-//eventualmente, la funzione restituisce null se il nodo start non è presente nel grafo gr.
+Start è il nodo di partenza da cui cominciare la visita, la funzione restituisce l'array dei nodi nell'ordine di visita. Eventualmente, la funzione restituisce null se il nodo start non è presente nel grafo. L'implementazione dell'algoritmo di visita in ampiezza dovrà utilizzare la libreria sui grafi appena implementata.
 
-```
-
-L'implementazione dell'algoritmo di visita in ampiezza dovrà utilizzare la libreria sui grafi appena implementata.
 L'algoritmo dovrà poi essere usato con i dati contenuti nel file `italian_dist_graph.csv`, che potete recuperare all'indirizzo:
 
 > [https://datacloud.di.unito.it/index.php/s/FqneW99EGWLSRpY](https://datacloud.di.unito.it/index.php/s/FqneW99EGWLSRpY)
