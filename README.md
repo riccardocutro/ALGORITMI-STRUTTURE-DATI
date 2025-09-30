@@ -25,11 +25,11 @@ Come specificato nella descrizione ufficiale dell'insegnamento (https://laurea.i
 
 L'esame di Algoritmi e strutture dati consiste in una prova scritta, somministrata mediante la piattaforma Esami, ed in una discussione orale del progetto di laboratorio. Il superamento dello scritto permette di accedere alle prove orali della sessione in cui è stato superato lo scritto. Nel caso in cui questa seconda prova non venga superata entro i termini della sessione, lo scritto dovrà essere ripetuto. Il voto sarà la media pesata dei voti ottenuti nelle due prove scritta ed orale [in base ai crediti associati alle parti di teoria (6 CFU) e di laboratorio (3 CFU), nella media lo scritto peserà 6 e l'orale 3], valutate in 30+1 esimi, essendo comunque necessario il raggiungimento della sufficienza in entrambe le prove.
 
-Il codice consegnato dovrà superare **tutti** i test dei correttori automatici messi a disposizione sulla pagina Moodle del Laboratorio di ASD. Un laboratorio il cui codice non dovesse superare qualche test (anche solo uno per un unico esercizio) sarà considerato complessivamente insufficiente. In sede di discussione d'esame, sarà facoltà del docente chiedere di eseguire gli algoritmi implementati su dati ulteriori, forniti dal docente stesso. Ugualmente, sarà facoltà del docente chiedere cambiamenti nel codice durante l'esame, per esempio per l'inclusione di ulteriori unit test o per la correzione di eventuali piccoli problemi di implementazione individuati durante la correzione. Al progetto non sarà comunque assegnato preventivamente un voto, ma esso costituirà la base per una discussione orale. In tale discussione la/il candidata/o dovrà dimostrare di conoscere sia gli aspetti teorici della materia, sia il codice consegnato.
+Per poter sostenere lo scritto, il codice consegnato (si veda sotto) dovrà superare **tutti** i test dei correttori automatici messi a disposizione sulla pagina Moodle del Laboratorio di ASD. Con un laboratorio il cui codice non dovesse superare qualche test (anche solo uno per un unico esercizio), non è possibile sostenere lo scritto. In sede di discussione d'esame, sarà facoltà del docente chiedere di eseguire gli algoritmi implementati su dati ulteriori, forniti dal docente stesso. Ugualmente, sarà facoltà del docente chiedere cambiamenti nel codice durante l'esame, per esempio per l'inclusione di ulteriori unit test o per la correzione di eventuali piccoli problemi di implementazione individuati durante la correzione. Al progetto non sarà comunque assegnato preventivamente un voto, ma esso costituirà la base per una discussione orale. In tale discussione la/il candidata/o dovrà dimostrare di conoscere sia gli aspetti teorici della materia, sia il codice consegnato.
 
 ## Consegna del progetto e discussione orale
 
-Il  progetto di laboratorio va consegnato mediante GitLab (vedi sotto) entro e non oltre la data della prova scritta che si intende sostenere. E' vietato sostenere la prova scritta in caso di mancata consegna del progetto di laboratorio.
+Il  progetto di laboratorio va consegnato mediante GitLab (vedi sotto) entro e non oltre la data della prova scritta che si intende sostenere. E' vietato sostenere la prova scritta in caso di mancata consegna del progetto di laboratorio o di consegna di un laboratorio il cui codice non supera tutti i test dei correttori automatici.
 
 Si intende consegnata l'ultima versione di laboratorio presente su GitLab alla data della prova scritta che si intende sostenere.
 
@@ -102,7 +102,7 @@ La relazione, per quegli esercizi che la richiedono, deve essere inserita nel fi
 
 Come indicato esplicitamente nei testi degli esercizi, il progetto di laboratorio comprende obbligatoriamente la definizione di opportune suite di unit test.
 
-È obbligatorio implementare unit test completi per tutte le funzioni di libreria sviluppate. Gli unit test rappresentano un'area in cui l'AI generativa può essere particolarmente utile per accelerare lo sviluppo e garantire una copertura esaustiva del codice. 
+È obbligatorio implementare unit test completi per tutte le funzioni di libreria sviluppate. Gli unit test rappresentano un'area in cui l'AI generativa può essere particolarmente utile per accelerare lo sviluppo e garantire una copertura esaustiva del codice.
 
 Tuttavia, si rammenta che il focus del laboratorio rimane l'implementazione di strutture dati e algoritmi. Gli studenti dovranno dimostrare di aver compreso il senso degli unit test e di saper realizzare suite di test che coprano i casi più comuni e i casi limite.
 
@@ -147,10 +147,10 @@ L'ipotesi da verificare è se SelectionSort, pur avendo complessità O(n²), pos
 La libreria deve supportare l'ordinamento di array di diversi tipi di dato tramite funzioni di comparazione, rispettando la seguente definizione:
 
 ```c
-void hybridsort(void *base, 
-                size_t nitems, 
-                size_t size, 
-                size_t k, 
+void hybridsort(void *base,
+                size_t nitems,
+                size_t size,
+                size_t k,
                 int (*compar)(const void *, const void *));
 ```
 
@@ -218,7 +218,7 @@ void sort_records(FILE *infile, FILE *outfile, size_t field, size_t k);
 
 ### Analisi sperimentale
 
-Si misurino i tempi di risposta dell'algoritmo ibrido per ciascuno dei quattro campi che si possono usare come chiave di ordinamento, al variare di `k`. 
+Si misurino i tempi di risposta dell'algoritmo ibrido per ciascuno dei quattro campi che si possono usare come chiave di ordinamento, al variare di `k`.
 
 **Valori di k da testare**: 0, 10, 50, 100, 500, 1000, 5000, 10000, 1000000
 
@@ -227,7 +227,7 @@ Si misurino i tempi di risposta dell'algoritmo ibrido per ciascuno dei quattro c
 Si produca una breve relazione (in formato Markdown nel file `README.md`) in cui si riportano:
 
 1. **Tabelle dei tempi**: tempi di esecuzione per ogni combinazione di campo e valore di k
-2. **Analisi critica**: 
+2. **Analisi critica**:
    - I risultati corrispondono alle aspettative teoriche?
    - Esiste un valore ottimale di k? Se sì, quale e perché?
    - L'approccio ibrido offre vantaggi rispetto agli algoritmi puri?
@@ -364,7 +364,7 @@ typedef struct edge {
 #### Creazione e Configurazione
 
 ```c
-Graph graph_create(int labelled, 
+Graph graph_create(int labelled,
                   int directed,
                   int (*compare)(const void*, const void*),
                   unsigned long (*hash)(const void*));
@@ -500,9 +500,9 @@ Implementare gli unit-test degli algoritmi secondo le indicazioni suggerite nel 
 Si implementi l'algoritmo di visita in ampiezza secondo il seguente prototipo di funzione
 
 ```c
-void** breadth_first_visit(Graph gr, 
-                          void* start, 
-                          int (*compare)(const void*, const void*), 
+void** breadth_first_visit(Graph gr,
+                          void* start,
+                          int (*compare)(const void*, const void*),
                           unsigned long (*hash)(const void*));
 ```
 Start è il nodo di partenza da cui cominciare la visita, la funzione restituisce l'array dei nodi nell'ordine di visita. Eventualmente, la funzione restituisce null se il nodo start non è presente nel grafo. L'implementazione dell'algoritmo di visita in ampiezza dovrà utilizzare la libreria sui grafi appena implementata.
