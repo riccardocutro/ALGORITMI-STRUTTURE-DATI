@@ -11,53 +11,48 @@ Gli studenti e le studentesse iscritti/e al secondo anno in un anno accademico p
 
 Gli studenti e le studentesse che hanno nel piano di studi l'insegnamento di Algoritmi con un numero di CFU **differente da 9** sono pregati di contattare il docente al più presto, al fine di concordare un programma d'esame commisurato ai CFU.
 
+## Validità del progetto di laboratorio
+
+Le specifiche per il progetto di laboratorio descritte in questo documento resteranno valide fino all'ultimo appello relativo al corrente anno accademico **(vale a dire, quella di settembre 2026)** e non oltre! Gli appelli delle sessioni successive a quella dovranno essere sostenuti sulla base delle specifiche che verranno descritte nella prossima edizione del laboratorio di algoritmi.
+
 ## Gruppi di laboratorio e turni
 
 Il progetto di laboratorio può essere svolto individualmente o in gruppo (al più 3 persone). **I membri di uno stesso gruppo devono appartenere tutti allo stesso turno di laboratorio**. Un progetto di laboratorio eseguito da un gruppo costituito da membri appartenenti a turni diversi sarà annullato (e ai singoli membri sarà richiesto di rifarlo in gruppi regolarmente costituiti).
 
 Uno studente o una studentessa, assegnato/a al Turno X può spostarsi al Turno Y, **a patto che trovi un/a collega del turno Y che accetta di spostarsi al turno X**. La richiesta di spostamento deve essere inoltrata via email a entrambi i docenti di laboratorio dei turni coinvolti, da parte di una persona che intende effettuare lo scambio, mettendo in copia la persona disposta allo scambio inverso. Lo scambio si intende effettuato solo a seguito di esplicita autorizzazione (via email) da parte dei docenti.
-E' possibile effettuare un solo spostamento di turno durante uno stesso anno accademico.
-I docenti si riservano di respingere le richieste di spostamento che non dovessero pervenire con **congruo anticipo (min. 1 mese prima)** rispetto alla data dello scritto che si intende sostenere.
 
-## Esame complessivo
+E' possibile effettuare un solo spostamento di turno durante uno stesso anno accademico. I docenti si riservano di respingere le richieste di spostamento che non dovessero pervenire con **congruo anticipo (min. 1 mese prima)** rispetto alla data dello scritto che si intende sostenere.
 
-Come specificato nella descrizione ufficiale dell'insegnamento (https://laurea.informatica.unito.it/do/corsi.pl/Show?_id=iw3r):
+## Algoritmo di esame
 
-L'esame di Algoritmi e strutture dati consiste in una prova scritta, somministrata mediante la piattaforma Esami, ed in una discussione orale del progetto di laboratorio. Il superamento dello scritto permette di accedere alle prove orali della sessione in cui è stato superato lo scritto. Nel caso in cui questa seconda prova non venga superata entro i termini della sessione, lo scritto dovrà essere ripetuto. Il voto sarà la media pesata dei voti ottenuti nelle due prove scritta ed orale [in base ai crediti associati alle parti di teoria (6 CFU) e di laboratorio (3 CFU), nella media lo scritto peserà 6 e l'orale 3], valutate in 30+1 esimi, essendo comunque necessario il raggiungimento della sufficienza in entrambe le prove.
+Come specificato nella descrizione ufficiale dell'insegnamento (https://laurea.informatica.unito.it/do/corsi.pl/Show?_id=iw3r), l'esame di _Algoritmi e Strutture Dati_ consiste in una prova scritta, somministrata mediante la piattaforma Esami, ed in una seguente discussione orale del progetto di laboratorio.
 
-Per poter sostenere lo scritto, il codice consegnato (si veda sotto) dovrà superare **tutti** i test dei correttori automatici messi a disposizione sulla pagina Moodle del Laboratorio di ASD. Con un laboratorio il cui codice non dovesse superare qualche test (anche solo uno per un unico esercizio), non è possibile sostenere lo scritto. In sede di discussione d'esame, sarà facoltà del docente chiedere di eseguire gli algoritmi implementati su dati ulteriori, forniti dal docente stesso. Ugualmente, sarà facoltà del docente chiedere cambiamenti nel codice durante l'esame, per esempio per l'inclusione di ulteriori unit test o per la correzione di eventuali piccoli problemi di implementazione individuati durante la correzione. Al progetto non sarà comunque assegnato preventivamente un voto, ma esso costituirà la base per una discussione orale. In tale discussione la/il candidata/o dovrà dimostrare di conoscere sia gli aspetti teorici della materia, sia il codice consegnato.
+**Per poter sostenere lo scritto,** tutti i membri di un gruppo di laboratorio dovranno sottoporre il codice del progetto di laboratorio su tutti i correttori automatici messi a disposizione sulla pagina Moodle del Laboratorio di ASD, superandone **tutti i test.** Con un laboratorio il cui codice non dovesse superare qualche test (anche solo uno per un unico esercizio), non sarà possibile sostenere lo scritto. Stessa cosa in caso in cui mancasse la consegna di anche un solo esercizio, anche se altri membri del gruppo l'avessero consegnato. Inoltre, il progetto di laboratorio dovrà essere stato consegnato mediante GitLab (vedi sotto), cioè il repository del progetto deve essere stato condiviso con il docente di laboratorio interessato, e deve essere completo senza che vengano effettuati ulteriori commit dopo la data della prova scritta.
 
-## Consegna del progetto e discussione orale
+Il superamento dello scritto permette di accedere alle prove orali **nella medesima sessione della prova scritta superata** (si ricorda che le sessioni sono gennaio-febbraio 2026, giugno-luglio 2026, settembre 2026). Si noti che per quelle sessioni per cui sono previsti due appelli esisteranno due possibilità per la sostenere la prova orale (primo o secondo appello della sessione); per le sessioni in cui è previsto un solo appello, la prova orale deve essere effettuata necessariamente in quell'appello. Nel caso in cui l'orale non venga superato entro i termini della sessione, lo scritto dovrà essere ripetuto. **La prova orale non si tiene nella data e ora ufficiale su esse3**, invece lo studente dovrà prenotarsi su moodle in un'attività apposita scegliendo una data e ora tra quelle proposte. L'attività con le date e ore sarà resa visibile solo una volta pubblicati i risultati dello scritto su esse3. 
 
-Il  progetto di laboratorio va consegnato mediante GitLab (vedi sotto) entro e non oltre la data della prova scritta che si intende sostenere. E' vietato sostenere la prova scritta in caso di mancata consegna del progetto di laboratorio o di consegna di un laboratorio il cui codice non supera tutti i test dei correttori automatici.
+Durante la prova orale, sarà facoltà del docente chiedere di eseguire gli algoritmi implementati su dati ulteriori, forniti dal docente stesso. Ugualmente, sarà facoltà del docente chiedere cambiamenti nel codice durante l'esame, per esempio per l'inclusione di ulteriori unit test o per la correzione di eventuali piccoli problemi di implementazione individuati durante la correzione. Al progetto non sarà comunque assegnato preventivamente un voto, ma esso costituirà la base per una discussione orale. In tale discussione la/il candidata/o dovrà dimostrare di conoscere sia gli aspetti teorici della materia, sia il codice consegnato.
 
-Si intende consegnata l'ultima versione di laboratorio presente su GitLab alla data della prova scritta che si intende sostenere.
+Il voto finale sarà la media pesata dei voti ottenuti nelle due prove scritta ed orale [in base ai crediti associati alle parti di teoria (6 CFU) e di laboratorio (3 CFU), nella media lo scritto peserà 6 e l'orale 3], valutate in 30+1 esimi, essendo comunque necessario il raggiungimento della sufficienza in entrambe le prove.
 
-La prova orale può essere sostenuta solo dopo il superamento della prova scritta.
-
-In caso di superamento della prova scritta, la prova orale va sostenuta **nella medesima sessione della prova scritta superata** (si ricorda che le sessioni sono gennaio-febbraio 2026, giugno-luglio 2026, settembre 2026).
-
-Si noti che per quelle sessioni per cui sono previsti due appelli esisteranno due possibilità per la sostenere la prova orale (primo o secondo appello della sessione); per le sessioni in cui è previsto un solo appello, la prova orale deve essere effettuata necessariamente in quell'appello.
-
-Esempio (caso di una sessione con 2 appelli):
+### Esempio (caso di una sessione con 2 appelli):
 
 - la studentessa/lo studente X intende sostenere la prova scritta nel primo appello di una sessione con 2 appelli;
 - la studentessa/lo studente X deve assicurarsi che il progetto su GitLab, alla data della prova scritta che intende sostenere (in questo esempio, quella del primo appello della sessione), sia aggiornato alla versione che vuole presentare al docente di laboratorio;
+- la studentessa/lo studente X deve sottoporre il codice del progetto su tutti e 4 i correttori automatici messi a disposizione nella pagina Moodle del Laboratorio di ASD, assicurandosi che passi tutti i test;
 - se la studentessa/lo studente X supera la prova scritta nel primo appello della sessione, deve (pena la perdita del voto ottenuto nella prova scritta):
--- iscriversi a uno dei due appelli orali della stessa sessione
--- prenotarsi su Moodle in uno degli slot messi a disposizione dal docente del turno di appartenenza
--- sostenere l'orale nello slot temporale prenotato.
+    - iscriversi a uno dei due appelli orali della stessa sessione,
+    - prenotarsi su Moodle in uno degli slot messi a disposizione dal docente del turno di appartenenza,
+    - sostenere l'orale nello slot temporale prenotato.
 
 Studentesse/studenti diversi, appartenenti allo stesso gruppo di laboratorio, possono sostenere la prova **scritta** nello stesso appello o in appelli diversi. Se studentesse/studenti diversi, appartenenti allo stesso gruppo, superano la prova scritta nello stesso appello, **devono** sostenere l' **orale** nello stesso appello orale. Se studentesse/studenti diversi, appartenenti allo stesso gruppo, superano la prova scritta in appelli diversi, **possono** sostenere l'**orale** in appelli diversi.
 
 Ad esempio, si consideri un gruppo di laboratorio costituito dalle studentesse/dagli studenti X, Y e Z, e si supponga che i soli X e Y sostengano la prova scritta nel primo appello di una sessione con due appelli, X con successo, mentre Y con esito insufficiente. Devono essere rispettate le seguenti condizioni:
 
-- alla data della prova scritta del primo appello della sessione, il progetto di laboratorio del gruppo su GitLab deve essere aggiornato alla versione che si intende presentare;
-- il solo studente X deve sostenere la prova orale nella stessa sessione in cui ha superato lo scritto,  procedendo come indicato nell'esempio riportato sopra, mentre Y e Z sosterranno la discussione quando avranno superato la prova scritta.
+- Alla data della prova scritta del primo appello della sessione, il progetto di laboratorio del gruppo su GitLab deve essere aggiornato alla versione che si intende presentare, e deve superare tutti i test automatici su Moodle.
+- Il solo studente X deve sostenere la prova orale nella stessa sessione in cui ha superato lo scritto,  procedendo come indicato nell'esempio riportato sopra, mentre Y e Z sosterranno la discussione quando avranno superato la prova scritta.
 - Supponiamo che Y e Z superino la prova scritta nell'appello di una sessione con un solo appello: essi dovranno sostenere la prova orale in quello stesso appello.
 - Gli studenti Y e Z dovranno, di norma, presentare la stessa versione del progetto di laboratorio che ha presentato lo studente X; eventuali modifiche al laboratorio successive alla discussione di X dovranno cioè essere di modesta entità, debitamente documentate (i.e., il log delle modifiche dovrà comparire su GitLab) e motivate.
-
-**Validità del progetto di laboratorio** : le specifiche per il progetto di laboratorio descritte in questo documento resteranno valide fino all'ultimo appello relativo al corrente anno accademico **(vale a dire, quella di settembre 2026)** e non oltre! Gli appelli delle sessioni successive a quella dovranno essere sostenuti sulla base delle specifiche che verranno descritte nella prossima edizione del laboratorio di algoritmi.
 
 # Indicazioni generali e suggerimenti
 
@@ -65,12 +60,12 @@ Ad esempio, si consideri un gruppo di laboratorio costituito dalle studentesse/d
 
 Durante la scrittura del codice è richiesto di usare in modo appropriato il sistema di versioning GitLab. Questa richiesta implica quanto segue:
 
-- il progetto di laboratorio va inizializzato "clonando" il repository del laboratorio come descritto nel file Git.md;
-- come è prassi nei moderni ambienti di sviluppo, è richiesto di effettuare commit frequenti, con un nome significativo. L'ideale è un commit per ogni blocco di lavoro terminato (es. creazione e test di una nuova funzione, soluzione di un baco, creazione di una nuova interfaccia, ...);
-- ogni membro del gruppo dovrebbe effettuare il commit delle modifiche che lo hanno visto come principale sviluppatore;
-- al termine del lavoro si dovrà consegnare l'intero repository (dandone accesso al docente).
+- Il progetto di laboratorio va inizializzato "clonando" il repository del laboratorio come descritto nel file `Git.md`.
+- Come è prassi nei moderni ambienti di sviluppo, è richiesto di effettuare commit frequenti, con un nome significativo. L'ideale è un commit per ogni blocco di lavoro terminato (es. creazione e test di una nuova funzione, soluzione di un baco, creazione di una nuova interfaccia, ...). Meglio ancora se si usano branch e merge per gestire sessioni di lavoro più ampie.
+- Ogni membro del gruppo dovrebbe effettuare il commit delle modifiche che lo hanno visto come principale sviluppatore, partecipando quindi attivamente ai commit del repository in misura più o meno bilanciata.
+- Al termine del lavoro si dovrà consegnare l'intero repository (dandone accesso al docente di riferimento del turno).
 
-Il file Git.md contiene un esempio di come usare Git per lo sviluppo degli esercizi proposti per questo laboratorio.
+Il file `Git.md` contiene un esempio di come usare Git per lo sviluppo degli esercizi proposti per questo laboratorio.
 
 ---
 
@@ -96,13 +91,13 @@ Come indicato sotto, alcuni esercizi chiedono di implementare **codice generico*
 
 ## Relazione sugli esercizi
 
-La relazione, per quegli esercizi che la richiedono, deve essere inserita nel file README.md del progetto, divenendo così parte integrante della documentazione.
+La relazione, per quegli esercizi che la richiedono, deve essere inserita in formato _MarkDown_ nel file README.md del progetto, divenendo così parte integrante della documentazione.
 
 ## Unit Testing
 
 Come indicato esplicitamente nei testi degli esercizi, il progetto di laboratorio comprende obbligatoriamente la definizione di opportune suite di unit test.
 
-È obbligatorio implementare unit test completi per tutte le funzioni di libreria sviluppate. Gli unit test rappresentano un'area in cui l'AI generativa può essere particolarmente utile per accelerare lo sviluppo e garantire una copertura esaustiva del codice.
+È obbligatorio implementare unit test completi per tutte le funzioni di libreria sviluppate, escluse le funzioni dedicate all'interazione con l'utente e I/O su file, ma incluse le funzioni di utilità che si decidesse di aggiungere a quelle esplicitamente richieste dall'esercizio. Gli unit test rappresentano un'area in cui l'AI generativa può essere particolarmente utile per accelerare lo sviluppo e garantire una copertura esaustiva del codice.
 
 Tuttavia, si rammenta che il focus del laboratorio rimane l'implementazione di strutture dati e algoritmi. Gli studenti dovranno dimostrare di aver compreso il senso degli unit test e di saper realizzare suite di test che coprano i casi più comuni e i casi limite.
 
@@ -115,7 +110,7 @@ Per "buona qualità" intendiamo codice ben organizzato, ben modularizzato, ben c
 **Alcuni suggerimenti:**
 
 - **Importante**: Gli esercizi richiedono (fra le altre cose) di sviluppare codice generico. Nello sviluppare questa parte, si deve assumere di stare sviluppando una libreria generica intesa come fondamento di futuri programmi. Non è pertanto lecito fare assunzioni semplificative; in generale, l'implementazione della libreria generica deve restare separata e non deve essere influenzata in alcun modo dagli usi di essa eventualmente richiesti negli esercizi (ad esempio, se un esercizio dovesse richiedere l'implementazione della struttura dati grafo e quello stesso o un altro esercizio dovesse richiedere l'implementazione, a partire da tale struttura dati, di un algoritmo per il calcolo delle componenti connesse di un grafo, l'implementazione della struttura dati dovrebbe essere separata dall'algoritmo per il calcolo delle componenti connesse e *non* dovrebbe contenere elementi – variabili, procedure, funzioni, definizioni di tipo, ecc. – eventualmente utili a tale algoritmo, ma non essenziali alla struttura dati; analogamente, se un esercizio dovesse richiedere di operare su grafi con nodi di tipo stringa, l'implementazione della struttura dati grafo dovrebbe restare generica e non potrebbe quindi assumere per i nodi il solo tipo stringa).
-- verificare che il codice sia suddiviso correttamente in package o moduli;
+- verificare che il codice sia suddiviso correttamente in moduli distinti;
 - aggiungere un commento, prima di una definizione, che spieghi il funzionamento dell'oggetto definito, meglio se in formato [doxygen](https://www.doxygen.nl). Evitare quando possibile di commentare direttamente il codice interno alle funzioni/procedure implementate (se il codice è ben scritto, tali commenti in genere non servono);
 - la lunghezza di una funzione/procedura è in genere un campanello di allarme: se essa cresce troppo, probabilmente è necessario rifattorizzare il codice spezzando la funzione in più parti. In linea di massima si può consigliare di intervenire quando la funzione cresce sopra le 30 righe (considerando anche commenti e spazi bianchi);
 - sono accettabili commenti in italiano, sebbene siano preferibili in inglese;
@@ -133,16 +128,16 @@ Come detto sopra, in sede di discussione d'esame, sarà facoltà del docente chi
 
 Implementare un algoritmo di ordinamento **ibrido** che combini QuickSort e SelectionSort in base alla dimensione dell'array da ordinare. L'algoritmo deve funzionare nel seguente modo:
 
-- Per array di dimensione maggiore o uguale a una soglia `k`, utilizzare QuickSort
-- Per array di dimensione minore di `k`, utilizzare SelectionSort
+- Per array di dimensione maggiore o uguale a una soglia `k`, utilizzare QuickSort.
+- Per array di dimensione minore di `k`, utilizzare SelectionSort.
 
 L'ipotesi da verificare è se SelectionSort, pur avendo complessità O(n²), possa risultare più efficiente di QuickSort su array molto piccoli a causa del minor overhead nelle operazioni elementari. Sarà compito vostro determinare sperimentalmente se questa ipotesi è corretta e identificare eventuali valori ottimali della soglia.
 
 ### Specifiche dell'implementazione:
 
 1. **QuickSort**: implementare una versione robusta che sia efficiente su tutti i casi di test presenti nel dataset (descritto sotto). La scelta della strategia di partizionamento e del pivot è lasciata agli studenti, che dovranno valutare le prestazioni sui dati reali.
-2. **SelectionSort**: implementare la versione classica O(n²)
-3. **Algoritmo ibrido**: deve rispettare la soglia `k` e passare automaticamente da un algoritmo all'altro durante la ricorsione
+2. **SelectionSort**: implementare la versione classica O(n²).
+3. **Algoritmo ibrido**: deve rispettare la soglia `k` e passare automaticamente da un algoritmo all'altro durante la ricorsione.
 
 La libreria deve supportare l'ordinamento di array di diversi tipi di dato tramite funzioni di comparazione, rispettando la seguente definizione:
 
@@ -161,10 +156,11 @@ Interpretare i parametri della funzione `hybridsort` considerando la richiesta p
 Implementare gli unit test per la libreria secondo le indicazioni suggerite nel documento [Unit Testing](UnitTesting.md).
 
 Gli unit test devono coprire:
-- Correttezza dell'ordinamento per tutti i tipi di dato
-- Comportamento con array vuoti e di dimensione piccola
-- Diversi valori della soglia `k`
-- Casi limite, ad esempio, array già ordinati, ordinati inversamente, con elementi duplicati
+- Correttezza di eventuali funzioni ausiliarie sviluppate;
+- Correttezza dell'ordinamento per tutti i tipi di dato;
+- Comportamento con array vuoti e di dimensione piccola;
+- Diversi valori della soglia `k`;
+- Casi limite, ad esempio, array già ordinati, ordinati inversamente, con elementi duplicati.
 
 ### Uso della libreria di ordinamento implementata
 
@@ -204,17 +200,17 @@ void sort_records(FILE *infile, FILE *outfile, size_t field, size_t k);
 ```
 
 **Parametri:**
-- `infile`: il file binario contenente i record da ordinare
-- `outfile`: il file binario nel quale salvare i record ordinati (deve essere diverso da `infile`)
+- `infile`: il file binario contenente i record da ordinare.
+- `outfile`: il file binario nel quale salvare i record ordinati (deve essere diverso da `infile`).
 - `field`: può valere 1, 2, 3 o 4 e indica quale campo deve essere usato per ordinare i record:
-  - `1`: ordina per `id` (intero senza segno a 64 bit)
-  - `2`: ordina per `field1` (float)
-  - `3`: ordina per `field2` (intero con segno a 64 bit)
-  - `4`: ordina per `field3` (stringa, ordine lessicografico)
-- `k`: soglia per l'algoritmo ibrido
-  - se `k=0`: l'intero array sarà ordinato solo con QuickSort
-  - se `k > numero_totale_record`: l'intero array sarà ordinato solo con SelectionSort
-  - altrimenti: usa QuickSort per sottoinsiemi ≥ k, SelectionSort per sottoinsiemi < k
+  - `1`: ordina per `id` (intero senza segno a 64 bit);
+  - `2`: ordina per `field1` (float);
+  - `3`: ordina per `field2` (intero con segno a 64 bit);
+  - `4`: ordina per `field3` (stringa, ordine lessicografico).
+- `k`: soglia per l'algoritmo ibrido:
+  - se `k=0`: l'intero array sarà ordinato solo con QuickSort;
+  - se `k > numero_totale_record`: l'intero array sarà ordinato solo con SelectionSort;
+  - altrimenti: usa QuickSort per sottoinsiemi ≥ k, SelectionSort per sottoinsiemi < k.
 
 ### Analisi sperimentale
 
@@ -226,7 +222,7 @@ Si misurino i tempi di risposta dell'algoritmo ibrido per ciascuno dei quattro c
 
 Si produca una breve relazione (in formato Markdown nel file `README.md`) in cui si riportano:
 
-1. **Tabelle dei tempi**: tempi di esecuzione per ogni combinazione di campo e valore di k
+1. **Tabelle dei tempi**: tempi di esecuzione per ogni combinazione di campo e valore di k.
 2. **Analisi critica**:
    - I risultati corrispondono alle aspettative teoriche?
    - Esiste un valore ottimale di k? Se sì, quale e perché?
@@ -239,10 +235,10 @@ Si produca una breve relazione (in formato Markdown nel file `README.md`) in cui
 
 ### Condizioni per la consegna
 
-- Creare una sottocartella chiamata `ex1` all'interno del repository
-- La consegna deve obbligatoriamente contenere un `Makefile` che con il comando `make all` produca all'interno di `ex1/bin` due file eseguibili chiamati `main_ex1` e `test_ex1`
-- Se avete usato librerie esterne (come Unity per i test) includete anche queste per consentire la corretta compilazione
-- L'eseguibile `test_ex1` non deve richiedere parametri e deve eseguire tutti gli unit test automatizzati
+- Creare una sottocartella chiamata `ex1` all'interno del repository.
+- La consegna deve obbligatoriamente contenere un `Makefile` che con il comando `make all` produca all'interno di `ex1/bin` due file eseguibili chiamati `main_ex1` e `test_ex1`.
+- Se avete usato librerie esterne (come Unity per i test) includete anche queste per consentire la corretta compilazione.
+- L'eseguibile `test_ex1` non deve richiedere parametri e deve eseguire tutti gli unit test automatizzati.
 - L'eseguibile `main_ex1` deve ricevere come parametri:
 
 ```bash
