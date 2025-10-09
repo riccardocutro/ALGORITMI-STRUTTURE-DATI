@@ -40,3 +40,4 @@
 **Q: E' possibile sostenere la prova di esame di laboratorio da remoto?**
 
 **A**: No.
+
