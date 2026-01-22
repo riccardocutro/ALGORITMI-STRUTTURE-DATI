@@ -1,5 +1,6 @@
 #include "unity.h"
 #include "utils.h"
+#include "sort.h"
 #include <stdlib.h>
 #include <string.h>
 
@@ -8,6 +9,12 @@ void setUp(void) {
 
 void tearDown(void) {
     remove("test_data.bin");
+}
+
+static int compare_ints(const void *a, const void *b) {
+    int ia = *(const int*)a;
+    int ib = *(const int*)b;
+    return ia - ib;
 }
 
 void test_record_struct_size(void) {
@@ -38,9 +45,21 @@ void test_read_write_record(void) {
     TEST_ASSERT_EQUAL_STRING(r_out.field3, r_in.field3);
 }
 
+/* TEST 3: Selection Sort*/
+void test_sorting_integers(void) {
+    int array[] = { 10, 5, 2, 8, 7 };
+    size_t len = 5;
+
+    hybridsort(array, len, sizeof(int), 100, compare_ints);
+
+    int expected[] = { 2, 5, 7, 8, 10 };
+    TEST_ASSERT_EQUAL_INT_ARRAY(expected, array, len);
+}
+
 int main(void) {
     UNITY_BEGIN();
     RUN_TEST(test_record_struct_size);
     RUN_TEST(test_read_write_record);
+    RUN_TEST(test_sorting_integers);
     return UNITY_END();
 }
