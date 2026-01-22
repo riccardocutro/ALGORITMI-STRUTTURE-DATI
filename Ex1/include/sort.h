@@ -4,7 +4,7 @@
 
 /**
  * Comparison function type definition.
- * Should return an integer less than, equal to, or greater than zero if the
+ * Should return an integer less than equal, or greater than zero if the
  * first argument is considered to be respectively less than, equal to, or
  * greater than the second.
  */

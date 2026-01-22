@@ -8,7 +8,7 @@ TESTDIR = test
 BINDIR = bin
 BUILDDIR = build
 
-UNITY_DIR = ../External_Libraries/Unity
+UNITY_DIR = ../Unity
 UNITY_SRC = $(UNITY_DIR)/src/unity.c
 UNITY_INC = -I$(UNITY_DIR)/src
 

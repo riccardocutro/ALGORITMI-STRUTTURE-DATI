@@ -11,7 +11,7 @@ typedef struct {
     float field1;
     int64_t field2;
     char field3[16];
-} Record;
+} __attribute__((packed)) Record;
 
 /**
  * Reads a single record from a binary file.
@@ -30,20 +30,20 @@ int read_record(FILE *file, Record *record);
 int write_record(FILE *file, const Record *record);
 
 /**
- * Loads all records from a file into a dynamic array.
+ * Loads all records from a file into a dynamic array
  * @param file Pointer to the open input file.
- * @param records Pointer to the array pointer (will be allocated).
+ * @param records Pointer to the array pointer.
  * @param count Pointer to a variable to store the number of records.
- * @return 0 on success, -1 on allocation failure.
+ * @return 0 on success, -1 on allocation fail.
  */
 int load_records_from_file(FILE *file, Record **records, size_t *count);
 
 /**
- * Saves an array of records to a file.
- * @param file Pointer to the open output file.
- * @param records Array of records.
- * @param count Number of records to write.
- * @return 0 on success, -1 on failure.
+ * Saves an array of records to a file
+ * @param file Pointer to the open output file
+ * @param records Array of records
+ * @param count Number of records to write
+ * @return 0 on success, -1 on failure
  */
 int save_records_to_file(FILE *file, const Record *records, size_t count);
 
