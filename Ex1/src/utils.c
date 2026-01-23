@@ -21,12 +21,12 @@ int load_records_from_file(FILE *file, Record **records, size_t *count) {
     long filesize = ftell(file);
     rewind(file);
 
-    if (filesize < 0 || (filesize % sizeof(Record)) != 0) return -1; // File corrotto o vuoto
+    if (filesize < 0 || (filesize % sizeof(Record)) != 0) return -1;
 
     size_t num_records = filesize / sizeof(Record);
 
     *records = malloc(num_records * sizeof(Record));
-    if (*records == NULL) return -1; // Out of memory
+    if (*records == NULL) return -1;
 
     size_t read_count = fread(*records, sizeof(Record), num_records, file);
     if (read_count != num_records) {
@@ -83,5 +83,5 @@ int compare_field2(const void *a, const void *b) {
 int compare_field3(const void *a, const void *b) {
     const Record *ra = (const Record *)a;
     const Record *rb = (const Record *)b;
-    return strcmp(ra->field3, rb->field3);
+    return strncmp(ra->field3, rb->field3, sizeof(ra->field3));
 }

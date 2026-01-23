@@ -45,7 +45,7 @@ void test_read_write_record(void) {
     TEST_ASSERT_EQUAL_STRING(r_out.field3, r_in.field3);
 }
 
-/* TEST 3: Selection Sort*/
+/*Selection Sort*/
 void test_sorting_integers(void) {
     int array[] = { 10, 5, 2, 8, 7 };
     size_t len = 5;
