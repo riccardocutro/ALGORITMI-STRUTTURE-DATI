@@ -1,0 +1,164 @@
+#include "hash_table.h"
+#include <stdlib.h>
+#include <string.h>
+
+#define INITIAL_CAPACITY 127
+#define LOAD_FACTOR 0.75
+
+typedef struct Node {
+    void* key;
+    void* value;
+    struct Node* next;
+} Node;
+
+struct HashTable {
+    Node** buckets;
+    size_t capacity;
+    size_t size;
+    CompareHashFn compare;
+    HashFn hash;
+};
+
+HashTable* hash_table_create(CompareHashFn cmp_fn, HashFn hash_fn) {
+    if (!cmp_fn || !hash_fn) return NULL;
+
+    HashTable* table = malloc(sizeof(HashTable));
+    if (!table) return NULL;
+
+    table->capacity = INITIAL_CAPACITY;
+    table->size = 0;
+    table->compare = cmp_fn;
+    table->hash = hash_fn;
+
+    table->buckets = calloc(table->capacity, sizeof(Node*));
+    if (!table->buckets) {
+        free(table);
+        return NULL;
+    }
+
+    return table;
+}
+
+void hash_table_free(HashTable* table) {
+    if (!table) return;
+
+    for (size_t i = 0; i < table->capacity; ++i) {
+        Node* current = table->buckets[i];
+        while (current) {
+            Node* temp = current;
+            current = current->next;
+            free(temp);
+        }
+    }
+    free(table->buckets);
+    free(table);
+}
+
+/* calculate index */
+static size_t get_bucket_index(HashFn hash_fn, const void* key, size_t capacity) {
+    unsigned long hash_val = hash_fn(key);
+    return hash_val % capacity;
+}
+
+//resizing
+static void hash_table_resize(HashTable* table, size_t new_capacity) {
+    Node** new_buckets = calloc(new_capacity, sizeof(Node*));
+    if (!new_buckets) return;
+
+    for (size_t i = 0; i < table->capacity; ++i) {
+        Node* current = table->buckets[i];
+        while (current) {
+            Node* next = current->next;
+            size_t new_index = get_bucket_index(table->hash, current->key, new_capacity);
+            current->next = new_buckets[new_index];
+            new_buckets[new_index] = current;
+            current = next;
+        }
+    }
+    free(table->buckets);
+    table->buckets = new_buckets;
+    table->capacity = new_capacity;
+}
+
+void hash_table_put(HashTable* table, const void* key, const void* value) {
+    if (table->size >= table->capacity * LOAD_FACTOR) {
+        hash_table_resize(table, table->capacity * 2);
+    }
+
+    size_t index = get_bucket_index(table->hash, key, table->capacity);
+    Node* current = table->buckets[index];
+
+    while (current) {
+        if (table->compare(current->key, key) == 0) {
+            current->value = (void*)value;
+            return;
+        }
+        current = current->next;
+    }
+
+    Node* new_node = malloc(sizeof(Node));
+    if (!new_node) return;
+
+    new_node->key = (void*)key;
+    new_node->value = (void*)value;
+    new_node->next = table->buckets[index];
+    table->buckets[index] = new_node;
+
+    table->size++;
+}
+
+void* hash_table_get(const HashTable* table, const void* key) {
+    size_t index = get_bucket_index(table->hash, key, table->capacity);
+    Node* current = table->buckets[index];
+
+    while (current) {
+        if (table->compare(current->key, key) == 0) {
+            return current->value;
+        }
+        current = current->next;
+    }
+    return NULL;
+}
+
+int hash_table_contains_key(const HashTable* table, const void* key) {
+    return (hash_table_get(table, key) != NULL);
+}
+
+void hash_table_remove(HashTable* table, const void* key) {
+    size_t index = get_bucket_index(table->hash, key, table->capacity);
+    Node* current = table->buckets[index];
+    Node* prev = NULL;
+
+    while (current) {
+        if (table->compare(current->key, key) == 0) {
+            if (prev) {
+                prev->next = current->next;
+            } else {
+                table->buckets[index] = current->next;
+            }
+            free(current);
+            table->size--;
+            return;
+        }
+        prev = current;
+        current = current->next;
+    }
+}
+
+int hash_table_size(const HashTable* table) {
+    return (int)table->size;
+}
+void** hash_table_keyset(const HashTable* table) {
+    if (table->size == 0) return NULL;
+    void** keys = malloc(table->size * sizeof(void*));
+    if (!keys) return NULL;
+    size_t count = 0;
+    for (size_t i = 0; i < table->capacity; ++i) {
+        Node* current = table->buckets[i];
+        while (current) {
+            keys[count++] = current->key;
+            current = current->next;
+        }
+    }
+    return keys;
+}
