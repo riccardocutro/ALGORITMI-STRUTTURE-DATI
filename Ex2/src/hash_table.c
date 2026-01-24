@@ -19,6 +19,9 @@ struct HashTable {
     HashFn hash;
 };
 
+/*
+ * Allocates memory for the table and the array of buckets.
+ */
 HashTable* hash_table_create(CompareHashFn cmp_fn, HashFn hash_fn) {
     if (!cmp_fn || !hash_fn) return NULL;
 
@@ -38,7 +41,9 @@ HashTable* hash_table_create(CompareHashFn cmp_fn, HashFn hash_fn) {
 
     return table;
 }
-
+/*
+ * Deletes all nodes and the table to avoid memory leaks.
+ */
 void hash_table_free(HashTable* table) {
     if (!table) return;
 
@@ -79,7 +84,9 @@ static void hash_table_resize(HashTable* table, size_t new_capacity) {
     table->buckets = new_buckets;
     table->capacity = new_capacity;
 }
-
+/*
+ * Adds a new key-value pair or updates an existing one.
+ */
 void hash_table_put(HashTable* table, const void* key, const void* value) {
     if (table->size >= table->capacity * LOAD_FACTOR) {
         hash_table_resize(table, table->capacity * 2);
@@ -103,10 +110,11 @@ void hash_table_put(HashTable* table, const void* key, const void* value) {
     new_node->value = (void*)value;
     new_node->next = table->buckets[index];
     table->buckets[index] = new_node;
-
     table->size++;
 }
-
+/*
+ *Finds and returns the value associated with a key.
+ */
 void* hash_table_get(const HashTable* table, const void* key) {
     size_t index = get_bucket_index(table->hash, key, table->capacity);
     Node* current = table->buckets[index];
@@ -120,10 +128,11 @@ void* hash_table_get(const HashTable* table, const void* key) {
     return NULL;
 }
 
+
 int hash_table_contains_key(const HashTable* table, const void* key) {
     return (hash_table_get(table, key) != NULL);
 }
-
+//Finds a key and removes its node from the list.
 void hash_table_remove(HashTable* table, const void* key) {
     size_t index = get_bucket_index(table->hash, key, table->capacity);
     Node* current = table->buckets[index];
@@ -148,6 +157,8 @@ void hash_table_remove(HashTable* table, const void* key) {
 int hash_table_size(const HashTable* table) {
     return (int)table->size;
 }
+
+//Returns an array containing all the keys in the table.
 void** hash_table_keyset(const HashTable* table) {
     if (table->size == 0) return NULL;
     void** keys = malloc(table->size * sizeof(void*));
