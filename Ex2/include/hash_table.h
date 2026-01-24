@@ -18,8 +18,7 @@ HashTable* hash_table_create(CompareHashFn cmp_fn, HashFn hash_fn);
 
 /**
  * Inserts a key-value pair.
- * If the key already exists, the value is updated (overwritten).
- * Note: The table does not copy the data, it only saves the pointers.
+ * If the key already exists, the value is updated.
  */
 void hash_table_put(HashTable* table, const void* key, const void* value);
 
@@ -31,16 +30,29 @@ void* hash_table_get(const HashTable* table, const void* key);
 
 /**
  * Checks if a key is in the table.
- * @return 1 if found, 0 otherwise.
+ * @return 1 if found.
  */
 int hash_table_contains_key(const HashTable* table, const void* key);
 
 /**
- * Removes the key (and its value) from the table.
+ * Removes the key from the table.
  * If the key is not there, it does nothing.
  */
 void hash_table_remove(HashTable* table, const void* key);
 
+/**
+ * Returns the number of elements in the table.
+ */
+size_t hash_table_size(const HashTable* table);
 
+/**
+ * Returns an array with all the keys present in the table.
+ */
+void** hash_table_keyset(const HashTable* table);
+
+/**
+ * Frees the entire hash table and its internal structures.
+ */
+void hash_table_free(HashTable* table);
 
 #endif
