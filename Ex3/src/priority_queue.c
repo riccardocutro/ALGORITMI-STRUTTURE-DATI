@@ -1,19 +1,15 @@
+#include "../include/hash_table.h"
 #include "priority_queue.h"
-#include "hash_table.h"
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "sort.h"
-
-#define INITIAL_CAPACITY 32
+#define PQ_INITIAL_CAPACITY 32
 
 struct PriorityQueue {
     void** heap;
     size_t capacity;
     size_t size;
-
     HashTable* index_map;
-
     CompareFn compare;
     HashFn hash;
 };
@@ -24,12 +20,14 @@ static size_t child_1(size_t i) { return 3 * i + 1; }
 static size_t child_2(size_t i) { return 3 * i + 2; }
 static size_t child_3(size_t i) { return 3 * i + 3; }
 
+// --- Map Management ---
 
-// Updates the position of an element in the Hash Table
 static void update_map(PriorityQueue* pq, void* data, int new_idx) {
     int* ptr = (int*)hash_table_get(pq->index_map, data);
+
     if (ptr == NULL) {
         ptr = malloc(sizeof(int));
+        if (!ptr) return;
         hash_table_put(pq->index_map, data, ptr);
     }
     *ptr = new_idx;
@@ -43,6 +41,8 @@ static void remove_from_map(PriorityQueue* pq, void* data) {
         hash_table_remove(pq->index_map, data);
     }
 }
+
+// --- Heap Logic ---
 
 static void swap(PriorityQueue* pq, size_t i, size_t j) {
     void* temp = pq->heap[i];
@@ -95,7 +95,7 @@ PriorityQueue* priority_queue_create(CompareFn f1, HashFn f2) {
     PriorityQueue* pq = malloc(sizeof(PriorityQueue));
     if (!pq) return NULL;
 
-    pq->capacity = INITIAL_CAPACITY;
+    pq->capacity = PQ_INITIAL_CAPACITY;
     pq->size = 0;
     pq->compare = f1;
     pq->hash = f2;
@@ -122,6 +122,7 @@ int priority_queue_push(PriorityQueue* pq, void* data) {
         pq->heap = new_heap;
         pq->capacity = new_cap;
     }
+
     size_t idx = pq->size;
     pq->heap[idx] = data;
     update_map(pq, data, (int)idx);
@@ -175,6 +176,7 @@ int priority_queue_remove(PriorityQueue* pq, const void* data) {
     pq->heap[idx] = moved;
     update_map(pq, moved, (int)idx);
     pq->size--;
+
     size_t p = parent_idx(idx);
     if (idx > 0 && pq->compare(pq->heap[idx], pq->heap[p]) > 0) {
         heapify_up(pq, idx);
@@ -190,8 +192,10 @@ int priority_queue_size(const PriorityQueue* pq) {
 
 void priority_queue_free(PriorityQueue* pq) {
     if (!pq) return;
+
     void** keys = hash_table_keyset(pq->index_map);
     int count = hash_table_size(pq->index_map);
+
     if (keys) {
         for(int i=0; i<count; i++) {
             int* val = (int*)hash_table_get(pq->index_map, keys[i]);
@@ -199,6 +203,7 @@ void priority_queue_free(PriorityQueue* pq) {
         }
         free(keys);
     }
+
     hash_table_free(pq->index_map);
     free(pq->heap);
     free(pq);
