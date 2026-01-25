@@ -55,4 +55,9 @@ void** hash_table_keyset(const HashTable* table);
  */
 void hash_table_free(HashTable* table);
 
+/**
+ * Prints technical statistics about the hash table (collisions, load factor, etc.).
+ * @param table Pointer to the table.
+ */
+void hash_table_print_stats(const HashTable* table);
 #endif

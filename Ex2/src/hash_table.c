@@ -1,4 +1,6 @@
 #include "hash_table.h"
+
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -154,8 +156,8 @@ void hash_table_remove(HashTable* table, const void* key) {
     }
 }
 
-int hash_table_size(const HashTable* table) {
-    return (int)table->size;
+size_t hash_table_size(const HashTable* table) {
+    return table->size;
 }
 
 //Returns an array containing all the keys in the table.
@@ -173,3 +175,43 @@ void** hash_table_keyset(const HashTable* table) {
     }
     return keys;
 }
+/**
+ * @brief Traverses the table to calculate occupancy and collision metrics.
+ */
+void hash_table_print_stats(const HashTable* table) {
+    if (table == NULL) return;
+
+    size_t occupied_buckets = 0;
+    size_t total_collisions = 0;
+    size_t max_chain_len = 0;
+
+    for (size_t i = 0; i < table->capacity; i++) {
+        if (table->buckets[i] != NULL) {
+            occupied_buckets++;
+            size_t current_chain_len = 0;
+            Node* current = table->buckets[i];
+
+            while (current) {
+                current_chain_len++;
+                current = current->next;
+            }
+
+            if (current_chain_len > 1) {
+                total_collisions += (current_chain_len - 1);
+            }
+            if (current_chain_len > max_chain_len) {
+                max_chain_len = current_chain_len;
+            }
+        }
+    }
+
+    printf("\n--- HASH TABLE TECHNICAL STATS ---\n");
+    printf("Total capacity:      %zu\n", table->capacity);
+    printf("Unique keys (size):  %zu\n", table->size);
+    printf("Occupied buckets:    %zu\n", occupied_buckets);
+    printf("Total collisions:    %zu\n", total_collisions);
+    printf("Longest chain:       %zu\n", max_chain_len);
+    printf("Load Factor:         %.2f (Target: 0.75)\n", (double)table->size / table->capacity);
+    printf("----------------------------------\n");
+}
+
