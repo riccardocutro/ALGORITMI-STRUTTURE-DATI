@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-#include "../include/hash_table.h"
+#include "hash_table.h"
 
 /**
  * @file main_ex2.c
@@ -56,18 +56,29 @@ char* string_dup(const char* src) {
  * @return 1 on success, 0 on EOF.
  */
 int read_next_word(FILE* f, char* buffer, size_t max_len) {
-    char temp[MAX_WORD_LEN];
-    if (fscanf(f, "%255s", temp) != 1) return 0;
+    int c;
+    size_t len = 0;
 
-    size_t j = 0;
-    for (size_t i = 0; temp[i] != '\0'; i++) {
-        if (isalnum((unsigned char)temp[i])) {
-            if (j < max_len - 1) buffer[j++] = tolower((unsigned char)temp[i]);
+    while ((c = fgetc(f)) != EOF) {
+        if (isalnum(c)) {
+            buffer[len++] = tolower(c);
+            break;
         }
     }
-    buffer[j] = '\0';
+    if (c == EOF) return 0;
+    while ((c = fgetc(f)) != EOF) {
+        if (isalnum(c)) {
+            if (len < max_len - 1) {
+                buffer[len++] = tolower(c);
+            }
+        } else {
+            break;
+        }
+    }
+    buffer[len] = '\0';
     return 1;
 }
+
 
 int main(int argc, char* argv[]) {
     if (argc != 3) {
@@ -130,22 +141,15 @@ int main(int argc, char* argv[]) {
         printf("RESULT: Most frequent word: '%s' (%d times)\n", max_word, max_freq);
     }
 
-    /* Print statistics before cleaning up memory */
     hash_table_print_stats(table);
 
-    /* --- BULLETPROOF CLEANUP --- */
-    /* 1. Destroy the table structure FIRST to avoid using dangling pointers later */
     hash_table_free(table);
 
-    /* 2. Now safely free the actual data using our cached arrays */
     for (size_t i = 0; i < size; i++) {
-        free(keys[i]);   /* Free the duplicated string */
-        free(values[i]); /* Free the allocated integer */
+        free(keys[i]);
+        free(values[i]);
     }
-
-    /* 3. Free the helper arrays */
     free(keys);
     free(values);
-
     return EXIT_SUCCESS;
 }
