@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdint.h>
-#include "include/utils.h"
+#include "../include/utils.h"
 void print_single_record(const Record *r) {
     printf("ID: %-10lu | F1: %-10.2f | F2: %-10ld | F3: %-10.10s\n",
            (unsigned long)r->id, r->field1, (long)r->field2, r->field3);
