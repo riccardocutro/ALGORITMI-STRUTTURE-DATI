@@ -118,22 +118,14 @@ int main(int argc, char* argv[]) {
 
     fclose(fout);
 
-    // Memory Cleanup
-    void** keys = hash_table_keyset(str_memory);
-    size_t n = hash_table_size(str_memory);
-    for(size_t i=0; i<n; i++) free(keys[i]);
-    free(keys);
-    hash_table_free(str_memory);
-
-    Edge** edges = graph_get_edges(g);
-    if (edges) {
-       for(int i=0; i<graph_num_edges(g); i++) {
-           free(edges[i]);
-       }
-       free(edges);
-    }
-
     graph_free(g);
 
+    void** keys = hash_table_keyset(str_memory);
+    size_t n = hash_table_size(str_memory);
+    for(size_t i=0; i<n; i++) {
+        free(keys[i]);
+    }
+    free(keys);
+    hash_table_free(str_memory);
     return 0;
 }
