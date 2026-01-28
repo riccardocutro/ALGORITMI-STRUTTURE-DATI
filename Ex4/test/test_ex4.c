@@ -50,6 +50,9 @@ void test_undirected_graph(void) {
     Graph ug = graph_create(0, 0, compare_str, hash_str);
     char *a = "X", *b = "Y";
 
+    graph_add_node(ug, a);
+    graph_add_node(ug, b);
+
     graph_add_edge(ug, a, b, NULL);
     TEST_ASSERT_TRUE(graph_contains_edge(ug, a, b));
     TEST_ASSERT_TRUE(graph_contains_edge(ug, b, a));
@@ -59,30 +62,47 @@ void test_undirected_graph(void) {
 
 void test_neighbours(void) {
     char *root = "Root", *l = "L", *r = "R";
+    graph_add_node(gr, root);
+    graph_add_node(gr, l);
+    graph_add_node(gr, r);
+
     graph_add_edge(gr, root, l, NULL);
     graph_add_edge(gr, root, r, NULL);
 
     TEST_ASSERT_EQUAL_INT(2, graph_num_neighbours(gr, root));
     void** neighs = graph_get_neighbours(gr, root);
-    int found_l = (strcmp(neighs[0], l)==0 || strcmp(neighs[1], l)==0);
-    int found_r = (strcmp(neighs[0], r)==0 || strcmp(neighs[1], r)==0);
-    TEST_ASSERT_TRUE(found_l && found_r);
-    free(neighs);
+
+    if (neighs != NULL) {
+        int found_l = (strcmp(neighs[0], l)==0 || strcmp(neighs[1], l)==0);
+        int found_r = (strcmp(neighs[0], r)==0 || strcmp(neighs[1], r)==0);
+        TEST_ASSERT_TRUE(found_l && found_r);
+        free(neighs);
+    } else {
+        TEST_FAIL_MESSAGE("graph_get_neighbours returned NULL");
+    }
 }
 
 void test_bfs(void) {
     char *n1="1", *n2="2", *n3="3", *n4="4";
+    graph_add_node(gr, n1);
+    graph_add_node(gr, n2);
+    graph_add_node(gr, n3);
+    graph_add_node(gr, n4);
+
     graph_add_edge(gr, n1, n2, NULL);
     graph_add_edge(gr, n1, n3, NULL);
     graph_add_edge(gr, n2, n4, NULL);
 
     void** bfs = breadth_first_visit(gr, n1, compare_str, hash_str);
 
-    TEST_ASSERT_EQUAL_STRING("1", bfs[0]);
-    int second_is_2_or_3 = (strcmp(bfs[1], "2")==0 || strcmp(bfs[1], "3")==0);
-    TEST_ASSERT_TRUE(second_is_2_or_3);
-
-    free(bfs);
+    if (bfs != NULL) {
+        TEST_ASSERT_EQUAL_STRING("1", bfs[0]);
+        int second_is_2_or_3 = (strcmp(bfs[1], "2")==0 || strcmp(bfs[1], "3")==0);
+        TEST_ASSERT_TRUE(second_is_2_or_3);
+        free(bfs);
+    } else {
+        TEST_FAIL_MESSAGE("BFS returned NULL");
+    }
 }
 
 int main(void) {
