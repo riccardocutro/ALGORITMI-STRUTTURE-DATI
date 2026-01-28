@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+static int EMPTY = 0;
+
 typedef struct {
     void* data;
     HashTable* edges;
@@ -18,8 +20,6 @@ struct GraphType {
 };
 
 // --- Helper ---
-
-/** Creates a new NodeInfo structure with an empty edge table. */
 static NodeInfo* create_node_info(Graph gr, void* data) {
     NodeInfo* info = malloc(sizeof(NodeInfo));
     info->data = data;
@@ -27,7 +27,6 @@ static NodeInfo* create_node_info(Graph gr, void* data) {
     return info;
 }
 
-/** Frees the memory allocated for a NodeInfo structure and its edges. */
 static void free_node_info(NodeInfo* info) {
     if (info) {
         hash_table_free(info->edges);
@@ -35,9 +34,7 @@ static void free_node_info(NodeInfo* info) {
     }
 }
 
-// --- Implementation ---
-
-/** Creates a new graph with specified properties and helper functions. */
+// --- Implementazione ---
 Graph graph_create(int labelled, int directed, int (*compare)(const void*, const void*), unsigned long (*hash)(const void*)) {
     Graph gr = malloc(sizeof(struct GraphType));
     if (!gr) return NULL;
@@ -52,13 +49,9 @@ Graph graph_create(int labelled, int directed, int (*compare)(const void*, const
     return gr;
 }
 
-/** Returns 1 if the graph is directed, 0 otherwise. */
 int graph_is_directed(const Graph gr) { return gr->directed; }
-
-/** Returns 1 if the graph is labelled, 0 otherwise. */
 int graph_is_labelled(const Graph gr) { return gr->labelled; }
 
-/** Adds a node to the graph if it doesn't exist; returns 1 on success. */
 int graph_add_node(Graph gr, const void* node) {
     if (!gr || !node) return 0;
     if (hash_table_contains_key(gr->nodes, node)) return 0;
@@ -68,23 +61,19 @@ int graph_add_node(Graph gr, const void* node) {
     return 1;
 }
 
-/** Checks if a specific node exists in the graph. */
 int graph_contains_node(const Graph gr, const void* node) {
     if (!gr || !node) return 0;
     return hash_table_contains_key(gr->nodes, node);
 }
 
-/** Returns the total number of nodes in the graph. */
 int graph_num_nodes(const Graph gr) {
     return (int)hash_table_size(gr->nodes);
 }
 
-/** Retrieves an array containing pointers to all nodes in the graph. */
 void** graph_get_nodes(const Graph gr) {
     return hash_table_keyset(gr->nodes);
 }
 
-/** Adds an edge between two nodes (adding nodes if missing); returns 1 on success. */
 int graph_add_edge(Graph gr, const void* node1, const void* node2, const void* label) {
     if (!gr || !node1 || !node2) return 0;
     if (gr->labelled && label == NULL) return 0;
@@ -93,15 +82,18 @@ int graph_add_edge(Graph gr, const void* node1, const void* node2, const void* l
     if (!graph_contains_node(gr, node2)) graph_add_node(gr, node2);
 
     NodeInfo* src_info = (NodeInfo*)hash_table_get(gr->nodes, node1);
+    if (!src_info) return 0;
+
+    void* val_to_store = (label == NULL) ? &EMPTY : (void*)label;
 
     if (!hash_table_contains_key(src_info->edges, node2)) {
-        hash_table_put(src_info->edges, (void*)node2, (void*)label);
+        hash_table_put(src_info->edges, (void*)node2, val_to_store);
         gr->num_edges++;
 
         if (!gr->directed) {
             NodeInfo* dest_info = (NodeInfo*)hash_table_get(gr->nodes, node2);
-            if (gr->compare(node1, node2) != 0) {
-                 hash_table_put(dest_info->edges, (void*)node1, (void*)label);
+            if (dest_info && gr->compare(node1, node2) != 0) {
+                 hash_table_put(dest_info->edges, (void*)node1, val_to_store);
             }
         }
         return 1;
@@ -109,7 +101,6 @@ int graph_add_edge(Graph gr, const void* node1, const void* node2, const void* l
     return 0;
 }
 
-/** Checks if an edge exists between the source and destination nodes. */
 int graph_contains_edge(const Graph gr, const void* node1, const void* node2) {
     if (!gr || !node1 || !node2) return 0;
     NodeInfo* info = (NodeInfo*)hash_table_get(gr->nodes, node1);
@@ -117,14 +108,15 @@ int graph_contains_edge(const Graph gr, const void* node1, const void* node2) {
     return hash_table_contains_key(info->edges, node2);
 }
 
-/** Gets the label of an edge, returns NULL if edge doesn't exist. */
 void* graph_get_label(const Graph gr, const void* node1, const void* node2) {
     if (!graph_contains_edge(gr, node1, node2)) return NULL;
     NodeInfo* info = (NodeInfo*)hash_table_get(gr->nodes, node1);
-    return hash_table_get(info->edges, node2);
+
+    void* val = hash_table_get(info->edges, node2);
+    if (val == &EMPTY) return NULL;
+    return val;
 }
 
-/** Removes an edge between two nodes; returns 1 on success. */
 int graph_remove_edge(Graph gr, const void* node1, const void* node2) {
     if (!graph_contains_edge(gr, node1, node2)) return 0;
 
@@ -134,14 +126,13 @@ int graph_remove_edge(Graph gr, const void* node1, const void* node2) {
 
     if (!gr->directed) {
         NodeInfo* info2 = (NodeInfo*)hash_table_get(gr->nodes, node2);
-        if (gr->compare(node1, node2) != 0) {
+        if (info2 && gr->compare(node1, node2) != 0) {
             hash_table_remove(info2->edges, node1);
         }
     }
     return 1;
 }
 
-/** Removes a node and all its incident edges from the graph. */
 int graph_remove_node(Graph gr, const void* node) {
     if (!graph_contains_node(gr, node)) return 0;
 
@@ -159,39 +150,35 @@ int graph_remove_node(Graph gr, const void* node) {
     }
 
     NodeInfo* target_info = (NodeInfo*)hash_table_get(gr->nodes, node);
-
     if (gr->directed) {
-        gr->num_edges -= hash_table_size(target_info->edges);
+        size_t out_degree = hash_table_size(target_info->edges);
+        if (gr->num_edges >= out_degree) gr->num_edges -= out_degree;
+        else gr->num_edges = 0;
     }
 
     free(all_nodes);
     free_node_info(target_info);
     hash_table_remove(gr->nodes, node);
-
     return 1;
 }
 
-/** Returns the total edge count (adjusts count for undirected graphs). */
 int graph_num_edges(const Graph gr) {
     if (!gr->directed) return (int)(gr->num_edges / 2);
     return (int)gr->num_edges;
 }
 
-/** Retrieves an array of neighbor pointers for a given node. */
 void** graph_get_neighbours(const Graph gr, const void* node) {
     if (!graph_contains_node(gr, node)) return NULL;
     NodeInfo* info = (NodeInfo*)hash_table_get(gr->nodes, node);
     return hash_table_keyset(info->edges);
 }
 
-/** Returns the number of neighbors for a given node. */
 int graph_num_neighbours(const Graph gr, const void* node) {
     if (!graph_contains_node(gr, node)) return 0;
     NodeInfo* info = (NodeInfo*)hash_table_get(gr->nodes, node);
     return (int)hash_table_size(info->edges);
 }
 
-/** Retrieves all edges in the graph as an array of Edge structures. */
 Edge** graph_get_edges(const Graph gr) {
     size_t total_edges = gr->num_edges;
     if (total_edges == 0) return NULL;
@@ -210,7 +197,11 @@ Edge** graph_get_edges(const Graph gr) {
             Edge* e = malloc(sizeof(Edge));
             e->source = nodes[i];
             e->dest = neighbors[j];
-            e->label = hash_table_get(info->edges, neighbors[j]);
+
+            // Convertiamo il valore interno
+            void* val = hash_table_get(info->edges, neighbors[j]);
+            e->label = (val == &EMPTY) ? NULL : val;
+
             result[k++] = e;
         }
         free(neighbors);
@@ -219,7 +210,6 @@ Edge** graph_get_edges(const Graph gr) {
     return result;
 }
 
-/** Frees the graph structure and all associated resources. */
 void graph_free(Graph gr) {
     if (!gr) return;
     void** nodes = graph_get_nodes(gr);
@@ -233,7 +223,7 @@ void graph_free(Graph gr) {
     free(gr);
 }
 
-// --- BFS Implementation ---
+// --- BFS ---
 
 typedef struct QueueNode {
     void* data;
@@ -244,7 +234,6 @@ typedef struct {
     QueueNode *head, *tail;
 } Queue;
 
-/** Enqueues an element to the tail of the queue. */
 static void enqueue(Queue* q, void* data) {
     QueueNode* n = malloc(sizeof(QueueNode));
     n->data = data;
@@ -254,7 +243,6 @@ static void enqueue(Queue* q, void* data) {
     q->tail = n;
 }
 
-/** Dequeues an element from the head of the queue. */
 static void* dequeue(Queue* q) {
     if (!q->head) return NULL;
     QueueNode* tmp = q->head;
@@ -265,12 +253,11 @@ static void* dequeue(Queue* q) {
     return data;
 }
 
-/** Checks if the queue is empty; returns 1 if true, 0 otherwise. */
 static int is_empty(Queue* q) { return q->head == NULL; }
 
-/** Performs a Breadth-First Search visit and returns visited nodes. */
-void** breadth_first_visit(Graph gr, void* start,int (*compare)(const void*, const void*),
-    unsigned long (*hash)(const void*)) {
+void** breadth_first_visit(Graph gr, void* start,
+                           int (*compare)(const void*, const void*),
+                           unsigned long (*hash)(const void*)) {
 
     if (!graph_contains_node(gr, start)) return NULL;
 
@@ -278,7 +265,7 @@ void** breadth_first_visit(Graph gr, void* start,int (*compare)(const void*, con
     Queue q = {NULL, NULL};
 
     int capacity = graph_num_nodes(gr);
-    void** result = malloc(capacity * sizeof(void*));
+    void** result = malloc((capacity + 1) * sizeof(void*)); // +1 per NULL finale
     int count = 0;
 
     enqueue(&q, start);
@@ -291,7 +278,6 @@ void** breadth_first_visit(Graph gr, void* start,int (*compare)(const void*, con
         int n_neigh = graph_num_neighbours(gr, curr);
         if (n_neigh > 0) {
             void** neighbors = graph_get_neighbours(gr, curr);
-
             for (int i = 0; i < n_neigh; i++) {
                 if (!hash_table_contains_key(visited, neighbors[i])) {
                     hash_table_put(visited, neighbors[i], (void*)1);
@@ -301,10 +287,8 @@ void** breadth_first_visit(Graph gr, void* start,int (*compare)(const void*, con
             free(neighbors);
         }
     }
-    hash_table_free(visited);
 
-    if (count < capacity) {
-        result[count] = NULL;
-    }
+    result[count] = NULL; // Terminatore
+    hash_table_free(visited);
     return result;
 }
