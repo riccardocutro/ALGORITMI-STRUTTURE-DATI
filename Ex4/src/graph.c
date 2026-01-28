@@ -1,5 +1,6 @@
 #include "graph.h"
 #include "hash_table.h"
+
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -10,7 +11,7 @@ typedef struct {
     HashTable* edges;
 } NodeInfo;
 
-struct GraphType {
+struct graph {
     HashTable* nodes;
     int directed;
     int labelled;
@@ -34,9 +35,9 @@ static void free_node_info(NodeInfo* info) {
     }
 }
 
-// --- Implementazione ---
+// --- Impl---
 Graph graph_create(int labelled, int directed, int (*compare)(const void*, const void*), unsigned long (*hash)(const void*)) {
-    Graph gr = malloc(sizeof(struct GraphType));
+    Graph gr = malloc(sizeof(struct graph));
     if (!gr) return NULL;
 
     gr->nodes = hash_table_create(compare, hash);
@@ -78,27 +79,25 @@ int graph_add_edge(Graph gr, const void* node1, const void* node2, const void* l
     if (!gr || !node1 || !node2) return 0;
     if (gr->labelled && label == NULL) return 0;
 
-    if (!graph_contains_node(gr, node1)) graph_add_node(gr, node1);
-    if (!graph_contains_node(gr, node2)) graph_add_node(gr, node2);
+    if (!graph_contains_node(gr, node1)) return 0;
+    if (!graph_contains_node(gr, node2)) return 0;
 
     NodeInfo* src_info = (NodeInfo*)hash_table_get(gr->nodes, node1);
-    if (!src_info) return 0;
+
+    if (hash_table_contains_key(src_info->edges, node2)) return 0;
 
     void* val_to_store = (label == NULL) ? &EMPTY : (void*)label;
+    hash_table_put(src_info->edges, (void*)node2, val_to_store);
 
-    if (!hash_table_contains_key(src_info->edges, node2)) {
-        hash_table_put(src_info->edges, (void*)node2, val_to_store);
-        gr->num_edges++;
-
-        if (!gr->directed) {
-            NodeInfo* dest_info = (NodeInfo*)hash_table_get(gr->nodes, node2);
-            if (dest_info && gr->compare(node1, node2) != 0) {
-                 hash_table_put(dest_info->edges, (void*)node1, val_to_store);
-            }
+    if (!gr->directed) {
+        NodeInfo* dest_info = (NodeInfo*)hash_table_get(gr->nodes, node2);
+        if (gr->compare(node1, node2) != 0) {
+             hash_table_put(dest_info->edges, (void*)node1, val_to_store);
         }
-        return 1;
     }
-    return 0;
+
+    gr->num_edges++;
+    return 1;
 }
 
 int graph_contains_edge(const Graph gr, const void* node1, const void* node2) {
@@ -122,48 +121,61 @@ int graph_remove_edge(Graph gr, const void* node1, const void* node2) {
 
     NodeInfo* info = (NodeInfo*)hash_table_get(gr->nodes, node1);
     hash_table_remove(info->edges, node2);
-    gr->num_edges--;
 
     if (!gr->directed) {
         NodeInfo* info2 = (NodeInfo*)hash_table_get(gr->nodes, node2);
-        if (info2 && gr->compare(node1, node2) != 0) {
+        if (gr->compare(node1, node2) != 0) {
             hash_table_remove(info2->edges, node1);
         }
     }
+    gr->num_edges--;
     return 1;
 }
 
 int graph_remove_node(Graph gr, const void* node) {
     if (!graph_contains_node(gr, node)) return 0;
 
-    void** all_nodes = graph_get_nodes(gr);
-    size_t count = graph_num_nodes(gr);
+    NodeInfo* target_info = (NodeInfo*)hash_table_get(gr->nodes, node);
 
-    for (size_t i = 0; i < count; i++) {
-        void* curr = all_nodes[i];
-        if (graph_contains_edge(gr, curr, node)) {
-            NodeInfo* info = (NodeInfo*)hash_table_get(gr->nodes, curr);
-            if (hash_table_contains_key(info->edges, node)) {
-                hash_table_remove(info->edges, node);
+    if (!gr->directed) {
+        size_t degree = hash_table_size(target_info->edges);
+        gr->num_edges -= degree;
+
+        void** neighbors = hash_table_keyset(target_info->edges);
+        for (size_t i = 0; i < degree; i++) {
+            void* neigh = neighbors[i];
+            // Se non è self-loop, rimuovi il back-link
+            if (gr->compare(neigh, node) != 0) {
+                NodeInfo* n_info = (NodeInfo*)hash_table_get(gr->nodes, neigh);
+                hash_table_remove(n_info->edges, node);
             }
         }
-    }
-
-    NodeInfo* target_info = (NodeInfo*)hash_table_get(gr->nodes, node);
-    if (gr->directed) {
+        free(neighbors);
+    } else {
         size_t out_degree = hash_table_size(target_info->edges);
-        if (gr->num_edges >= out_degree) gr->num_edges -= out_degree;
-        else gr->num_edges = 0;
+        gr->num_edges -= out_degree;
+        void** all_nodes = graph_get_nodes(gr);
+        size_t count = graph_num_nodes(gr);
+
+        for (size_t i = 0; i < count; i++) {
+            void* curr = all_nodes[i];
+            if (curr == node) continue;
+
+            NodeInfo* curr_info = (NodeInfo*)hash_table_get(gr->nodes, curr);
+            if (hash_table_contains_key(curr_info->edges, node)) {
+                hash_table_remove(curr_info->edges, node);
+                gr->num_edges--;
+            }
+        }
+        free(all_nodes);
     }
 
-    free(all_nodes);
     free_node_info(target_info);
     hash_table_remove(gr->nodes, node);
     return 1;
 }
 
 int graph_num_edges(const Graph gr) {
-    if (!gr->directed) return (int)(gr->num_edges / 2);
     return (int)gr->num_edges;
 }
 
@@ -180,10 +192,11 @@ int graph_num_neighbours(const Graph gr, const void* node) {
 }
 
 Edge** graph_get_edges(const Graph gr) {
-    size_t total_edges = gr->num_edges;
-    if (total_edges == 0) return NULL;
+    if (gr->num_edges == 0) return NULL;
 
-    Edge** result = malloc(total_edges * sizeof(Edge*));
+    Edge** result = malloc(gr->num_edges * sizeof(Edge*));
+    if (!result) return NULL;
+
     void** nodes = graph_get_nodes(gr);
     size_t num_nodes = graph_num_nodes(gr);
     size_t k = 0;
@@ -194,12 +207,23 @@ Edge** graph_get_edges(const Graph gr) {
         size_t num_neigh = hash_table_size(info->edges);
 
         for (size_t j = 0; j < num_neigh; j++) {
-            Edge* e = malloc(sizeof(Edge));
-            e->source = nodes[i];
-            e->dest = neighbors[j];
+            void* src = nodes[i];
+            void* dst = neighbors[j];
 
-            // Convertiamo il valore interno
-            void* val = hash_table_get(info->edges, neighbors[j]);
+            if (!gr->directed) {
+                if (gr->compare(src, dst) > 0) {
+                    continue;
+                }
+            }
+
+            // Safety check
+            if (k >= gr->num_edges) break;
+
+            Edge* e = malloc(sizeof(Edge));
+            e->source = src;
+            e->dest = dst;
+
+            void* val = hash_table_get(info->edges, dst);
             e->label = (val == &EMPTY) ? NULL : val;
 
             result[k++] = e;
@@ -221,74 +245,4 @@ void graph_free(Graph gr) {
     free(nodes);
     hash_table_free(gr->nodes);
     free(gr);
-}
-
-// --- BFS ---
-
-typedef struct QueueNode {
-    void* data;
-    struct QueueNode* next;
-} QueueNode;
-
-typedef struct {
-    QueueNode *head, *tail;
-} Queue;
-
-static void enqueue(Queue* q, void* data) {
-    QueueNode* n = malloc(sizeof(QueueNode));
-    n->data = data;
-    n->next = NULL;
-    if (q->tail) q->tail->next = n;
-    else q->head = n;
-    q->tail = n;
-}
-
-static void* dequeue(Queue* q) {
-    if (!q->head) return NULL;
-    QueueNode* tmp = q->head;
-    void* data = tmp->data;
-    q->head = tmp->next;
-    if (!q->head) q->tail = NULL;
-    free(tmp);
-    return data;
-}
-
-static int is_empty(Queue* q) { return q->head == NULL; }
-
-void** breadth_first_visit(Graph gr, void* start,
-                           int (*compare)(const void*, const void*),
-                           unsigned long (*hash)(const void*)) {
-
-    if (!graph_contains_node(gr, start)) return NULL;
-
-    HashTable* visited = hash_table_create(compare, hash);
-    Queue q = {NULL, NULL};
-
-    int capacity = graph_num_nodes(gr);
-    void** result = malloc((capacity + 1) * sizeof(void*)); // +1 per NULL finale
-    int count = 0;
-
-    enqueue(&q, start);
-    hash_table_put(visited, start, (void*)1);
-
-    while (!is_empty(&q)) {
-        void* curr = dequeue(&q);
-        result[count++] = curr;
-
-        int n_neigh = graph_num_neighbours(gr, curr);
-        if (n_neigh > 0) {
-            void** neighbors = graph_get_neighbours(gr, curr);
-            for (int i = 0; i < n_neigh; i++) {
-                if (!hash_table_contains_key(visited, neighbors[i])) {
-                    hash_table_put(visited, neighbors[i], (void*)1);
-                    enqueue(&q, neighbors[i]);
-                }
-            }
-            free(neighbors);
-        }
-    }
-
-    result[count] = NULL; // Terminatore
-    hash_table_free(visited);
-    return result;
 }

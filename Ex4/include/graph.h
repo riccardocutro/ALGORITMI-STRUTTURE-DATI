@@ -38,9 +38,4 @@ int graph_num_neighbours(const Graph gr, const void* node);
 /* distruction */
 void graph_free(Graph gr);
 
-/* bfv */
-void** breadth_first_visit(Graph gr, void* start,
-                           int (*compare)(const void*, const void*),
-                           unsigned long (*hash)(const void*));
-
 #endif
