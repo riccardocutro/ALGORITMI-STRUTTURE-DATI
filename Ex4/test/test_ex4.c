@@ -1,5 +1,6 @@
 #include "unity.h"
 #include "graph.h"
+#include "bfs.h"
 #include <string.h>
 #include <stdlib.h>
 

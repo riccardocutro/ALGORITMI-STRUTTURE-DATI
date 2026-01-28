@@ -19,21 +19,11 @@ I test sono stati condotti su un dataset di 20.000.000 di record. Il tempo massi
 | **10000**               | 267.422354 s      | 255.250006 s        | 226.661379  s | TIMEOUT |
 | **1000000**             | TIMEOUT (> 5 min) | TIMEOUT (> 5 min) s | TERMINATED  s | TIMEOUT |
 
-## Analisi Critica
-Dall'analisi dei tempi di esecuzione su un dataset di 20 milioni di record, si possono trarre le seguenti conclusioni tecniche:
-L'efficacia dell'ibridazione (Il "Sweet Spot"). 
-I dati confermano che l'algoritmo ibrido è più efficiente del QuickSort puro ($K=0$).
-Per i campi numerici (ID, Float, Int), il tempo di esecuzione cala sensibilmente passando da $K=0$ a $K=10$ o $K=50$.
-Perché accade? Il Selection Sort, pur essendo un algoritmo quadratico $O(n^2)$, su array molto piccoli è più veloce del QuickSort perché non ha l'overhead delle chiamate ricorsive e della gestione dello stack. 
-Il punto di equilibrio ottimale nel mio test si colloca tra $K=10$ e $K=50$.2. 
-Il decadimento prestazionale (Il "Muro Quadratico")Superata la soglia di $K=100$, 
-si nota un drastico peggioramento delle prestazioni:Con $K=5000$, il tempo sale a circa 115-130 secondi.Con $K=10000$, 
-il tempo raddoppia quasi perfettamente (circa 230-260 secondi). 
-Questo andamento quasi lineare del peggioramento (all'aumentare di $K$) riflette il fatto che stiamo costringendo l'algoritmo a usare un metodo $O(n^2)$ su porzioni di dati troppo grandi, vanificando i vantaggi del QuickSort. 
-Il caso critico: Le Stringhe (Campo 4): Il Campo 4 rappresenta lo scenario peggiore. 
-Mentre i numeri vengono confrontati quasi istantaneamente dalla CPU, il confronto tra stringhe (strcmp o strncmp) è estremamente oneroso.
-Il QuickSort puro riesce a completare l'operazione in 1553 secondi (circa 25 minuti), ma l'inserimento di qualsiasi soglia di Selection Sort ($K>0$) porta immediatamente al TIMEOUT.Questo accade perché il Selection Sort effettua un numero di confronti pari a $O(n^2)$ 
-e quando il costo di ogni singolo confronto è alto (come nelle stringhe), l'algoritmo diventa impraticabile.
-Robustezza del Pivot (Mediana di Tre): Il Campo 1 (ID) è pre-ordinato. In un QuickSort ingenuo (che sceglie il primo elemento come pivot), questo causerebbe un tempo di esecuzione pessimo.
-I risultati (circa 1.7s - 1.8s per $K$ bassi) dimostrano che la strategia della Mediana di Tre funziona correttamente, garantendo una partizione bilanciata anche su dati già ordinati.
+## Analisi dei Risultati (Dataset: 20M record)
 
+Dai test effettuati emergono tre comportamenti principali:
+
+1.  **Scelta di K (Insertion Sort):** Per i campi numerici, l'algoritmo ibrido è più veloce del QuickSort puro ($K=0$). I tempi migliori si ottengono con $K$ tra 10 e 50, dove il costo dell'Insertion Sort su piccoli array è inferiore all'overhead delle chiamate ricorsive.
+2.  **Degrado delle prestazioni:** Aumentando $K$ oltre 100, i tempi peggiorano drasticamente (con $K=10000$ i tempi raddoppiano rispetto all'ottimo), perché su porzioni così grandi la complessità quadratica dell'Insertion Sort diventa dominante.
+3.  **Il caso delle Stringhe:** Sul campo stringa, il confronto (`strcmp`) è molto lento. Qui l'ibridazione è controproducente: qualsiasi $K>0$ porta spesso al timeout, mentre il QuickSort puro riesce a terminare (anche se impiega molto tempo), suggerendo che per confronti costosi è meglio minimizzare il numero assoluto di operazioni.
+4.  **Pivot:** L'uso della "mediana di tre" ha evitato il caso pessimo sul campo ID (già ordinato), mantenendo i tempi in linea con gli altri campi numerici ($~1.7s$).

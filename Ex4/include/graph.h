@@ -1,7 +1,7 @@
 #ifndef GRAPH_H
 #define GRAPH_H
 
-typedef struct GraphType* Graph;
+typedef struct graph *Graph;
 
 typedef struct edge {
     void* source;

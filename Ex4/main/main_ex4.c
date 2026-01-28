@@ -3,6 +3,7 @@
 #include <string.h>
 #include "graph.h"
 #include "hash_table.h"
+#include "bfs.h"
 
 /** @brief Max line length for CSV reading. */
 #define MAX_LINE 1024

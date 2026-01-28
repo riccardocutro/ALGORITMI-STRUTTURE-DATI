@@ -15,7 +15,7 @@ dirs:
 
 main: $(BIN_DIR)/main_ex4
 
-$(BIN_DIR)/main_ex4: $(BUILD_DIR)/main_ex4.o $(BUILD_DIR)/graph.o $(BUILD_DIR)/hash_table.o
+$(BIN_DIR)/main_ex4: $(BUILD_DIR)/main_ex4.o $(BUILD_DIR)/graph.o $(BUILD_DIR)/bfs.o $(BUILD_DIR)/hash_table.o
 	$(CC) $(CFLAGS) $^ -o $@
 
 $(BUILD_DIR)/main_ex4.o: $(MAIN_DIR)/main_ex4.c
@@ -23,13 +23,16 @@ $(BUILD_DIR)/main_ex4.o: $(MAIN_DIR)/main_ex4.c
 
 test: $(BIN_DIR)/test_ex4
 
-$(BIN_DIR)/test_ex4: $(BUILD_DIR)/test_ex4.o $(BUILD_DIR)/graph.o $(BUILD_DIR)/hash_table.o $(BUILD_DIR)/unity.o
+$(BIN_DIR)/test_ex4: $(BUILD_DIR)/test_ex4.o $(BUILD_DIR)/graph.o $(BUILD_DIR)/bfs.o $(BUILD_DIR)/hash_table.o $(BUILD_DIR)/unity.o
 	$(CC) $(CFLAGS) $^ -o $@
 
 $(BUILD_DIR)/test_ex4.o: $(TEST_DIR)/test_ex4.c
 	$(CC) $(CFLAGS) -I$(UNITY_DIR) -c $< -o $@
 
 $(BUILD_DIR)/graph.o: $(SRC_DIR)/graph.c include/graph.h
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(BUILD_DIR)/bfs.o: $(SRC_DIR)/bfs.c include/bfs.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(BUILD_DIR)/hash_table.o: $(SRC_DIR)/hash_table.c include/hash_table.h

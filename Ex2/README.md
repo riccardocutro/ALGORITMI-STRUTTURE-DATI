@@ -7,12 +7,12 @@
 - **Parola più frequente:** 'with' (1.694 occorrenze)
 
 ### Statistiche Tecniche della Hash Table
-| Metrica               | Valore | Note                                     |
-|:----------------------| :----- | :--------------------------------------- |
-| **Capacità Totale**   | 16.256 | Risultato di vari raddoppi (resizing)    |
-| **Collisioni Totali** | 1.682  | Estremamente basse rispetto alle chiavi  |
-| **Catena più lunga**  | 5      | Ottimo: garantisce prestazioni $O(1)$    |
-| **Load Factor**       | 0.49   | Sotto la soglia critica di 0.75          |
+| Metrica               | Valore |
+|:----------------------| :----- |
+| **Capacità Totale**   | 16.256 |
+| **Collisioni Totali** | 1.682  |
+| **Catena più lunga**  | 5      |
+| **Load Factor**       | 0.49   |
 
 ## Analisi Critica
 I dati mostrano che la funzione di hash **djb2** distribuisce le stringhe in modo eccellente.
@@ -25,19 +25,18 @@ stabilizzandosi a una capacità di 16.256 bucket per mantenere il Load Factor vi
 Oltre al test standard (4 lettere), è stata effettuata una prova abbassando la soglia a 2 lettere. 
 Questo ha permesso di osservare il comportamento della struttura dati con un volume di input maggiore.
 
-| Metrica                 | Valore    | Note                                     |
-|:------------------------|:----------|:-----------------------------------------|
-| **Parole Processate**   | 150.782   | Include articoli e preposizioni (es. the)|
-| **Capacità Totale**     | 16.256    | Risultato di vari raddoppi (resizing)     |
-| **Chiavi Uniche**       | 7.378     | Vocabolario distinto memorizzato         |
-| **Collisioni Totali**   | 1.460     | Estremamente basse grazie a djb2         |
-| **Catena più lunga**    | 5         | Ottimo: garantisce prestazioni $O(1)$    |
-| **Load Factor**         | 0.45      | Sotto la soglia critica di 0.75          |
+| Metrica                 | Valore    |
+|:------------------------|:----------|
+| **Parole Processate**   | 150.782   |
+| **Capacità Totale**     | 16.256    |
+| **Chiavi Uniche**       | 7.378     |
+| **Collisioni Totali**   | 1.460     |
+| **Catena più lunga**    | 5         |
+| **Load Factor**         | 0.45      |
 
 Considerazioni Tecniche emerse dal Log: 
 Efficienza della Funzione di Hash (djb2): 
-Nonostante l'aggiunta di migliaia di parole brevi (anche molto simili tra loro, come "the", "thy", "this"), 
-la Longest Chain è rimasta ferma a 5. Questo conferma che la funzione di hash distribuisce le chiavi in modo quasi uniforme, 
+Nonostante l'aggiunta di migliaia di parole brevi, la Longest Chain è rimasta ferma a 5. Questo conferma che la funzione di hash distribuisce le chiavi in modo quasi uniforme, 
 evitando degradazioni delle prestazioni verso il caso pessimo $O(n)$.
 Gestione del Carico: Con 150.000 parole processate, la tabella ha mantenuto un Load Factor di 0.45. 
 Questo dimostra che il meccanismo di Dynamic Resizing ha scalato correttamente la capacità fino a 16.256 bucket, garantendo spazio sufficiente per evitare un eccesso di collisioni.
@@ -47,15 +46,15 @@ Il conteggio di "the" (oltre 10.000) conferma che la pulizia della punteggiatura
 
 **Analisi del Test con soglia di Lunghezza = 5.**
 
-| Metrica               | Valore | Note                                     |
-|:----------------------|:-------|:-----------------------------------------|
-| **Parole Processate** | 51.075 | Filtrate con soglia minima di 5 lettere  |
-| **Parola più comune** | 'their'| 872 occorrenze totali                    |
-| **Capacità Totale**   | 16.256 | Risultato di vari raddoppi (resizing)    |
-| **Chiavi Uniche**     | 6.310  | Parole distinte memorizzate nella tabella|
-| **Collisioni Totali** | 1.108  | Molto basse rispetto al numero di chiavi |
-| **Catena più lunga**  | 5      | Ottimo: garantisce prestazioni $O(1)$    |
-| **Load Factor**       | 0.39   | Ben al di sotto della soglia di stress   |
+| Metrica               | Valore |
+|:----------------------|:-------|
+| **Parole Processate** | 51.075 |
+| **Parola più comune** | 'their'|
+| **Capacità Totale**   | 16.256 |
+| **Chiavi Uniche**     | 6.310  |
+| **Collisioni Totali** | 1.108  |
+| **Catena più lunga**  | 5      |
+| **Load Factor**       | 0.39   |
 
 **Analisi dei Risultati**
 L'analisi con soglia fissata a 5 lettere mostra come il "rumore" delle parole comuni (articoli e preposizioni come the, and, with) venga eliminato, facendo emergere termini più significativi come 'their'.
