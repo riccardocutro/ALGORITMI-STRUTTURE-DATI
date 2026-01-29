@@ -1,20 +1,20 @@
+/**
+ * @file main_ex2.c
+ * @brief Word frequency counter using a generic Hash Table.
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
 #include "hash_table.h"
 
-/**
- * @file main_ex2.c
- * @brief Application to count word frequencies using a generic Hash Table.
- */
-
 #define MAX_WORD_LEN 256
 
 /**
- * @brief DJB2 hash algorithm for strings.
- * @param key Pointer to the string to hash.
- * @return Unsigned long hash value.
+ * @brief DJB2 hash implementation for strings.
+ * @param key Pointer to the string.
+ * @return Computed hash value.
  */
 unsigned long hash_string(const void* key) {
     unsigned long hash = 5381;
@@ -26,19 +26,15 @@ unsigned long hash_string(const void* key) {
 }
 
 /**
- * @brief String comparison wrapper for strcmp.
- * @param a First string.
- * @param b Second string.
- * @return 0 if equal.
+ * @brief String comparison wrapper for generic table use.
  */
 int compare_string(const void* a, const void* b) {
     return strcmp((const char*)a, (const char*)b);
 }
 
 /**
- * @brief Duplicates a string in heap memory.
- * @param src Source string.
- * @return Pointer to the new string.
+ * @brief Duplicates a string on the heap.
+ * @return Pointer to new string or NULL.
  */
 char* string_dup(const char* src) {
     if (src == NULL) return NULL;
@@ -49,10 +45,7 @@ char* string_dup(const char* src) {
 }
 
 /**
- * @brief Reads and cleans the next word from a file.
- * @param f File pointer.
- * @param buffer Output buffer.
- * @param max_len Buffer size.
+ * @brief Extracts the next alphanumeric word from a file.
  * @return 1 on success, 0 on EOF.
  */
 int read_next_word(FILE* f, char* buffer, size_t max_len) {
@@ -79,7 +72,9 @@ int read_next_word(FILE* f, char* buffer, size_t max_len) {
     return 1;
 }
 
-
+/**
+ * @brief Main execution: populates table, finds max frequency, and cleans up.
+ */
 int main(int argc, char* argv[]) {
     if (argc != 3) {
         fprintf(stderr, "Usage: %s <file_path> <min_length>\n", argv[0]);
@@ -143,6 +138,7 @@ int main(int argc, char* argv[]) {
 
     hash_table_print_stats(table);
 
+    // Cleanup
     hash_table_free(table);
 
     for (size_t i = 0; i < size; i++) {

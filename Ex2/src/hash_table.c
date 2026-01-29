@@ -1,5 +1,9 @@
-#include "hash_table.h"
+/**
+ * @file hash_table.c
+ * @brief Implementation of a generic Hash Table using separate chaining.
+ */
 
+#include "hash_table.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -7,12 +11,18 @@
 #define INITIAL_CAPACITY 127
 #define LOAD_FACTOR 0.75
 
+/**
+ * @brief Internal node structure for separate chaining.
+ */
 typedef struct Node {
     void* key;
     void* value;
     struct Node* next;
 } Node;
 
+/**
+ * @brief Hash Table structure definition.
+ */
 struct HashTable {
     Node** buckets;
     size_t capacity;
@@ -21,8 +31,11 @@ struct HashTable {
     HashFn hash;
 };
 
-/*
- * Allocates memory for the table and the array of buckets.
+/**
+ * @brief Allocates and initializes a new Hash Table.
+ * @param cmp_fn Function to compare keys.
+ * @param hash_fn Function to compute hash values.
+ * @return Pointer to the new table or NULL on failure.
  */
 HashTable* hash_table_create(CompareHashFn cmp_fn, HashFn hash_fn) {
     if (!cmp_fn || !hash_fn) return NULL;
@@ -43,8 +56,10 @@ HashTable* hash_table_create(CompareHashFn cmp_fn, HashFn hash_fn) {
 
     return table;
 }
-/*
- * Deletes all nodes and the table to avoid memory leaks.
+
+/**
+ * @brief Frees all nodes and the table structure.
+ * Note: Does not free the keys or values themselves.
  */
 void hash_table_free(HashTable* table) {
     if (!table) return;
@@ -61,13 +76,17 @@ void hash_table_free(HashTable* table) {
     free(table);
 }
 
-/* calculate index */
+/**
+ * @brief Helper to compute the bucket index for a key.
+ */
 static size_t get_bucket_index(HashFn hash_fn, const void* key, size_t capacity) {
     unsigned long hash_val = hash_fn(key);
     return hash_val % capacity;
 }
 
-//resizing
+/**
+ * @brief Internal function to resize the table when load factor is exceeded.
+ */
 static void hash_table_resize(HashTable* table, size_t new_capacity) {
     Node** new_buckets = calloc(new_capacity, sizeof(Node*));
     if (!new_buckets) return;
@@ -86,8 +105,10 @@ static void hash_table_resize(HashTable* table, size_t new_capacity) {
     table->buckets = new_buckets;
     table->capacity = new_capacity;
 }
-/*
- * Adds a new key-value pair or updates an existing one.
+
+/**
+ * @brief Inserts or updates a key-value pair.
+ * Triggers a resize if the load factor threshold is reached.
  */
 void hash_table_put(HashTable* table, const void* key, const void* value) {
     if (table->size >= table->capacity * LOAD_FACTOR) {
@@ -114,8 +135,10 @@ void hash_table_put(HashTable* table, const void* key, const void* value) {
     table->buckets[index] = new_node;
     table->size++;
 }
-/*
- *Finds and returns the value associated with a key.
+
+/**
+ * @brief Retrieves the value associated with a key.
+ * @return Pointer to the value or NULL if not found.
  */
 void* hash_table_get(const HashTable* table, const void* key) {
     size_t index = get_bucket_index(table->hash, key, table->capacity);
@@ -130,11 +153,17 @@ void* hash_table_get(const HashTable* table, const void* key) {
     return NULL;
 }
 
-
+/**
+ * @brief Checks if a key exists in the table.
+ * @return 1 if found, 0 otherwise.
+ */
 int hash_table_contains_key(const HashTable* table, const void* key) {
     return (hash_table_get(table, key) != NULL);
 }
-//Finds a key and removes its node from the list.
+
+/**
+ * @brief Removes a key and its associated value from the table.
+ */
 void hash_table_remove(HashTable* table, const void* key) {
     size_t index = get_bucket_index(table->hash, key, table->capacity);
     Node* current = table->buckets[index];
@@ -156,11 +185,17 @@ void hash_table_remove(HashTable* table, const void* key) {
     }
 }
 
+/**
+ * @brief Returns the number of elements in the table.
+ */
 size_t hash_table_size(const HashTable* table) {
     return table->size;
 }
 
-//Returns an array containing all the keys in the table.
+/**
+ * @brief Returns an array of all keys currently in the table.
+ * @return Pointer to an array of keys (caller must free).
+ */
 void** hash_table_keyset(const HashTable* table) {
     if (table->size == 0) return NULL;
     void** keys = malloc(table->size * sizeof(void*));
@@ -175,8 +210,9 @@ void** hash_table_keyset(const HashTable* table) {
     }
     return keys;
 }
+
 /**
- * @brief Traverses the table to calculate occupancy and collision metrics.
+ * @brief Prints technical performance statistics to stdout.
  */
 void hash_table_print_stats(const HashTable* table) {
     if (table == NULL) return;
@@ -214,4 +250,3 @@ void hash_table_print_stats(const HashTable* table) {
     printf("Load Factor:         %.2f (Target: 0.75)\n", (double)table->size / table->capacity);
     printf("----------------------------------\n");
 }
-
