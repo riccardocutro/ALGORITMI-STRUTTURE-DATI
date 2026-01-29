@@ -215,8 +215,6 @@ Edge** graph_get_edges(const Graph gr) {
                     continue;
                 }
             }
-
-            // Safety check
             if (k >= gr->num_edges) break;
 
             Edge* e = malloc(sizeof(Edge));
