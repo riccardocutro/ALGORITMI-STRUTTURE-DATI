@@ -8,11 +8,11 @@
 
 ### Statistiche Tecniche della Hash Table
 | Metrica               | Valore |
-|:----------------------| :----- |
+|:----------------------|:-------|
 | **Capacità Totale**   | 16.256 |
-| **Collisioni Totali** | 1.682  |
+| **Collisioni Totali** | 1.372  |
 | **Catena più lunga**  | 5      |
-| **Load Factor**       | 0.49   |
+| **Load Factor**       | 0.44   |
 
 ## Analisi Critica
 I dati mostrano che la funzione di hash **djb2** distribuisce le stringhe in modo eccellente.

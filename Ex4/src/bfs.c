@@ -4,15 +4,18 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+/** @brief Queue node for BFS traversal. */
 typedef struct QueueNode {
     void* data;
     struct QueueNode* next;
 } QueueNode;
 
+/** @brief Simple FIFO Queue structure. */
 typedef struct {
     QueueNode *head, *tail;
 } Queue;
 
+/** @brief Adds an element to the tail of the queue. */
 static void enqueue(Queue* q, void* data) {
     QueueNode* n = malloc(sizeof(QueueNode));
     n->data = data;
@@ -22,6 +25,7 @@ static void enqueue(Queue* q, void* data) {
     q->tail = n;
 }
 
+/** @brief Removes and returns the element from the head of the queue. */
 static void* dequeue(Queue* q) {
     if (!q->head) return NULL;
     QueueNode* tmp = q->head;
@@ -31,7 +35,7 @@ static void* dequeue(Queue* q) {
     free(tmp);
     return data;
 }
-
+/** @brief Checks if the queue is empty. */
 static int is_empty(Queue* q) { return q->head == NULL; }
 
 // --- Impl BFS ---

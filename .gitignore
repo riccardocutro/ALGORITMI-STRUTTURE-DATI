@@ -1,8 +1,42 @@
-    **/CMakeLists.txt
+**/CMakeLists.txt
 
-    cmake-build-debug/
-    cmake-build-release/
+cmake-build-debug/
+cmake-build-release/
 
-    .idea/
+.idea/
 
-    *.user
+*.user
+/Ex4/italian_dist_graph.csv
+/Ex3/output.csv
+/Ex4/output.txt
+/Ex3/tasks.csv
+/Ex1/bin
+/Ex1/bin/main_ex1
+/Ex1/bin/test_ex1
+/Ex1/build/debug_view.o
+/Ex1/build/main_ex1.o
+/Ex1/build/sort.o
+/Ex1/build/test_ex1.o
+/Ex1/build/utils.o
+/Ex2/bin/main_ex2
+/Ex2/bin/test_ex2
+/Ex2/build/hash_table.o
+/Ex2/build/main_ex2.o
+/Ex2/build/test_ex2.o
+/Ex2/build/unity.o
+/Ex2/iliade.txt
+/Ex3/bin/main_ex3
+/Ex3/bin/test_ex3
+/Ex3/build/hash_table.o
+Ex3/build/main_ex3.o
+Ex3/build/priority_queue.o
+Ex3/build/test_ex3.o
+Ex3/build/unity.o
+Ex4/bin/main_ex4
+Ex4/bin/test_ex4
+Ex4/build/bfs.o
+Ex4/build/graph.o
+Ex4/build/hash_table.o
+Ex4/build/main_ex4.o
+Ex4/build/test_ex4.o
+Ex4/build/unity.o

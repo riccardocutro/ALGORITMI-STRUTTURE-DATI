@@ -6,11 +6,13 @@
 
 static int EMPTY = 0;
 
+/** @brief Internal wrapper for node data and its adjacency list. */
 typedef struct {
     void* data;
     HashTable* edges;
 } NodeInfo;
 
+/** @brief Internal Graph structure implementation. */
 struct graph {
     HashTable* nodes;
     int directed;
@@ -20,7 +22,12 @@ struct graph {
     size_t num_edges;
 };
 
-// --- Helper ---
+/**
+ * @brief Allocates and initializes a NodeInfo structure.
+ * @param gr Graph instance.
+ * @param data Node data.
+ * @return Pointer to new NodeInfo.
+ */
 static NodeInfo* create_node_info(Graph gr, void* data) {
     NodeInfo* info = malloc(sizeof(NodeInfo));
     info->data = data;
@@ -28,6 +35,10 @@ static NodeInfo* create_node_info(Graph gr, void* data) {
     return info;
 }
 
+/**
+ * @brief Frees a NodeInfo structure and its adjacency table.
+ * @param info Pointer to NodeInfo.
+ */
 static void free_node_info(NodeInfo* info) {
     if (info) {
         hash_table_free(info->edges);

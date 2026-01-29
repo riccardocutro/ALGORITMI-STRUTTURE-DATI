@@ -7,12 +7,14 @@
 #define INITIAL_CAPACITY 127
 #define LOAD_FACTOR 0.75
 
+/** @brief Internal node for the collision chain. */
 typedef struct Node {
     void* key;
     void* value;
     struct Node* next;
 } Node;
 
+/** @brief Internal structure of the Hash Table. */
 struct HashTable {
     Node** buckets;
     size_t capacity;
@@ -61,13 +63,23 @@ void hash_table_free(HashTable* table) {
     free(table);
 }
 
-/* calculate index */
+/**
+ * @brief Calculates the index for a given key.
+ * @param hash_fn Hash function.
+ * @param key Key to map.
+ * @param capacity Current table capacity.
+ * @return Index in the bucket array.
+ */
 static size_t get_bucket_index(HashFn hash_fn, const void* key, size_t capacity) {
     unsigned long hash_val = hash_fn(key);
     return hash_val % capacity;
 }
 
-//resizing
+/**
+ * @brief Resizes the hash table when load factor is exceeded.
+ * @param table Pointer to the table.
+ * @param new_capacity New size for the bucket array.
+ */
 static void hash_table_resize(HashTable* table, size_t new_capacity) {
     Node** new_buckets = calloc(new_capacity, sizeof(Node*));
     if (!new_buckets) return;
