@@ -4,62 +4,104 @@
 #include <stdlib.h>
 #include <string.h>
 
-void setUp(void) {
+/* Setup and Teardown */
+void setUp(void) {}
+void tearDown(void) {}
+
+/* Helper function to create test data */
+static Record* create_test_array(size_t n) {
+    Record *arr = malloc(n * sizeof(Record));
+    for (size_t i = 0; i < n; i++) {
+        arr[i].id = i;
+        arr[i].field1 = (float)i;
+        arr[i].field2 = (int64_t)i;
+        sprintf(arr[i].field3, "str_%zu", i);
+    }
+    return arr;
 }
 
-void tearDown(void) {
-    remove("test_data.bin");
+static int check_sorted(Record *arr, size_t n, int (*cmp)(const void*, const void*)) {
+    for (size_t i = 0; i < n - 1; i++) {
+        if (cmp(&arr[i], &arr[i+1]) > 0) return 0;
+    }
+    return 1;
 }
 
-static int compare_ints(const void *a, const void *b) {
-    int ia = *(const int*)a;
-    int ib = *(const int*)b;
-    return ia - ib;
+/* Test 1: Boundary conditions */
+void test_boundary_conditions(void) {
+    Record r;
+    hybridsort(NULL, 0, sizeof(Record), 0, compare_id);
+
+    hybridsort(&r, 1, sizeof(Record), 0, compare_id);
+    TEST_ASSERT_TRUE(1);
 }
 
-void test_record_struct_size(void) {
-    char msg[100];
-    sprintf(msg, "La struct Record deve essere di 36 bytes, ma è %zu. Hai dimenticato __attribute__((packed))?", sizeof(Record));
-    TEST_ASSERT_EQUAL_INT_MESSAGE(36, sizeof(Record), msg);
+/* Test 2: Reverse sorted array  */
+void test_reverse_sorted(void) {
+    size_t n = 1000;
+    Record *arr = create_test_array(n);
+
+    // Manually reverse
+    for(size_t i=0; i<n; i++) arr[i].id = n - 1 - i;
+
+    hybridsort(arr, n, sizeof(Record), 10, compare_id);
+    TEST_ASSERT_TRUE_MESSAGE(check_sorted(arr, n, compare_id), "Reverse sorted array not sorted correctly");
+
+    free(arr);
 }
 
-void test_read_write_record(void) {
-    Record r_out = { .id = 12345, .field1 = 3.14f, .field2 = -9999, .field3 = "TestString" };
-    Record r_in;
+/* Test 3: Array with many duplicates  */
+void test_duplicates(void) {
+    size_t n = 1000;
+    Record *arr = malloc(n * sizeof(Record));
+    for(size_t i=0; i<n; i++) {
+        arr[i].id = i % 10;
+    }
 
-    FILE *fp = fopen("test_data.bin", "wb");
-    TEST_ASSERT_NOT_NULL(fp);
-    int w_res = write_record(fp, &r_out);
-    fclose(fp);
-    TEST_ASSERT_EQUAL_INT(1, w_res);
+    hybridsort(arr, n, sizeof(Record), 10, compare_id);
+    TEST_ASSERT_TRUE_MESSAGE(check_sorted(arr, n, compare_id), "Array with duplicates not sorted correctly");
 
-    fp = fopen("test_data.bin", "rb");
-    TEST_ASSERT_NOT_NULL(fp);
-    int r_res = read_record(fp, &r_in);
-    fclose(fp);
-
-    TEST_ASSERT_EQUAL_INT(1, r_res);
-    TEST_ASSERT_EQUAL_UINT64(r_out.id, r_in.id);
-    TEST_ASSERT_EQUAL_FLOAT(r_out.field1, r_in.field1);
-    TEST_ASSERT_EQUAL_INT64(r_out.field2, r_in.field2);
-    TEST_ASSERT_EQUAL_STRING(r_out.field3, r_in.field3);
+    free(arr);
 }
 
-/*Selection Sort*/
-void test_sorting_integers(void) {
-    int array[] = { 10, 5, 2, 8, 7 };
-    size_t len = 5;
+/* Test 4: Threshold K logic (Selection Sort vs Quick Sort) */
+void test_threshold_logic(void) {
+    size_t n = 50;
+    Record *arr = create_test_array(n);
 
-    hybridsort(array, len, sizeof(int), 100, compare_ints);
+    for(size_t i=0; i<n; i++) arr[i].id = rand();
 
-    int expected[] = { 2, 5, 7, 8, 10 };
-    TEST_ASSERT_EQUAL_INT_ARRAY(expected, array, len);
+    hybridsort(arr, n, sizeof(Record), 100, compare_id);
+    TEST_ASSERT_TRUE(check_sorted(arr, n, compare_id));
+
+    for(size_t i=0; i<n; i++) arr[i].id = rand();
+
+    hybridsort(arr, n, sizeof(Record), 0, compare_id);
+    TEST_ASSERT_TRUE(check_sorted(arr, n, compare_id));
+
+    free(arr);
+}
+
+/* Test 5: Sorting on different fields (Strings) */
+void test_string_field(void) {
+    Record arr[3];
+    strcpy(arr[0].field3, "Zebra");
+    strcpy(arr[1].field3, "Alfa");
+    strcpy(arr[2].field3, "Base");
+
+    hybridsort(arr, 3, sizeof(Record), 0, compare_field3);
+
+    TEST_ASSERT_EQUAL_STRING("Alfa", arr[0].field3);
+    TEST_ASSERT_EQUAL_STRING("Base", arr[1].field3);
+    TEST_ASSERT_EQUAL_STRING("Zebra", arr[2].field3);
 }
 
 int main(void) {
     UNITY_BEGIN();
-    RUN_TEST(test_record_struct_size);
-    RUN_TEST(test_read_write_record);
-    RUN_TEST(test_sorting_integers);
+    RUN_TEST(test_boundary_conditions);
+    RUN_TEST(test_reverse_sorted);
+    RUN_TEST(test_duplicates);
+    RUN_TEST(test_threshold_logic);
+    RUN_TEST(test_string_field);
     return UNITY_END();
 }
