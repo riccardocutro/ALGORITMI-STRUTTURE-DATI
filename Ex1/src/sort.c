@@ -1,11 +1,19 @@
+/**
+ * @file sort.c
+ * @brief Implementation of a hybrid sorting algorithm (QuickSort + Selection Sort).
+ */
+
 #include "sort.h"
 #include <stdlib.h>
 #include <string.h>
 
 
 /**
- * Scambia due elementi di dimensione size.
- * Usa un buffer statico per performance su elementi piccoli.
+ * @brief Swaps two elements of a given size.
+ * Uses a static buffer for small elements to improve performance.
+ * @param a Pointer to the first element.
+ * @param b Pointer to the second element.
+ * @param size Size of each element in bytes.
  */
 static void swap(void *a, void *b, size_t size) {
     if (a == b) return;
@@ -27,7 +35,11 @@ static void swap(void *a, void *b, size_t size) {
 }
 
 /**
- * Selection Sort: O(n^2)
+ * @brief Standard O(n^2) Selection Sort algorithm.
+ * @param base Pointer to the first element.
+ * @param nitems Number of elements.
+ * @param size Size of each element.
+ * @param compar Comparison function.
  */
 static void selection_sort(void *base, size_t nitems, size_t size, CompareFn compar) {
     char *base_ptr = (char *)base;
@@ -49,8 +61,12 @@ static void selection_sort(void *base, size_t nitems, size_t size, CompareFn com
 }
 
 /**
- * Calcola il pivot usando la Median-of-Three.
- * Prende il primo, il centrale e l'ultimo elementoe li ordina e usa il mediano come pivot.
+ * @brief Selects a pivot using the Median-of-Three strategy.
+ * Sorts the first, middle, and last elements and moves the median to the end.
+ * @param base Pointer to the first element.
+ * @param nitems Number of elements.
+ * @param size Size of each element.
+ * @param compar Comparison function.
  */
 static void median_of_three(void *base, size_t nitems, size_t size, CompareFn compar) {
     char *base_ptr = (char *)base;
@@ -68,7 +84,12 @@ static void median_of_three(void *base, size_t nitems, size_t size, CompareFn co
 }
 
 /**
- * Partition Lomuto con pivot scelto via Median-of-Three
+ * @brief Lomuto partition scheme using a Median-of-Three pivot.
+ * @param base Pointer to the first element.
+ * @param nitems Number of elements.
+ * @param size Size of each element.
+ * @param compar Comparison function.
+ * @return Final index of the pivot.
  */
 static size_t partition(void *base, size_t nitems, size_t size, CompareFn compar) {
     median_of_three(base, nitems, size, compar);
@@ -89,7 +110,12 @@ static size_t partition(void *base, size_t nitems, size_t size, CompareFn compar
 }
 
 /**
- * QuickSort Ricorsivo con check Ibrido
+ * @brief Recursive QuickSort with a fallback to Selection Sort.
+ * @param base Pointer to the first element.
+ * @param nitems Number of elements.
+ * @param size Size of each element.
+ * @param k Threshold for switching to Selection Sort.
+ * @param compar Comparison function.
  */
 static void quick_sort(void *base, size_t nitems, size_t size, size_t k, CompareFn compar) {
     if (nitems < 2) return;
@@ -110,6 +136,14 @@ static void quick_sort(void *base, size_t nitems, size_t size, size_t k, Compare
     }
 }
 
+/**
+ * @brief Public interface for the hybrid sorting algorithm.
+ * @param base Pointer to the first element.
+ * @param nitems Number of elements.
+ * @param size Size of each element.
+ * @param k Threshold for switching algorithms.
+ * @param compar Comparison function.
+ */
 void hybridsort(void *base, size_t nitems, size_t size, size_t k, CompareFn compar) {
     if (nitems < 2) return;
     quick_sort(base, nitems, size, k, compar);
