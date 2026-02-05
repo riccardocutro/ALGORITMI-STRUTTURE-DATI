@@ -17,20 +17,12 @@
  */
 static void swap(void *a, void *b, size_t size) {
     if (a == b) return;
-
-    char buffer[256];
-    if (size <= sizeof(buffer)) {
-        memcpy(buffer, a, size);
-        memcpy(a, b, size);
-        memcpy(b, buffer, size);
-    } else {
-        void *temp = malloc(size);
-        if (temp) {
-            memcpy(temp, a, size);
-            memcpy(a, b, size);
-            memcpy(b, temp, size);
-            free(temp);
-        }
+    char *pa = (char *)a;
+    char *pb = (char *)b;
+    for (size_t i = 0; i < size; ++i) {
+        char tmp = pa[i];
+        pa[i] = pb[i];
+        pb[i] = tmp;
     }
 }
 

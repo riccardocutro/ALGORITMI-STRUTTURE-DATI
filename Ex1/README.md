@@ -19,11 +19,26 @@ I test sono stati condotti su un dataset di 20.000.000 di record. Il tempo massi
 | **10000**               | 267.422354 s      | 255.250006 s        | 226.661379  s | TIMEOUT |
 | **1000000**             | TIMEOUT (> 5 min) | TIMEOUT (> 5 min) s | TERMINATED  s | TIMEOUT |
 
-## Analisi dei Risultati (Dataset: 20M record)
+## Analisi dei Risultati
 
-Dai test effettuati emergono tre comportamenti principali:
+Dai test emergono dei punti fondamentali:
 
-1.  **Scelta di K (Insertion Sort):** Per i campi numerici, l'algoritmo ibrido è più veloce del QuickSort puro ($K=0$). I tempi migliori si ottengono con $K$ tra 10 e 50, dove il costo dell'Insertion Sort su piccoli array è inferiore all'overhead delle chiamate ricorsive.
-2.  **Degrado delle prestazioni:** Aumentando $K$ oltre 100, i tempi peggiorano drasticamente (con $K=10000$ i tempi raddoppiano rispetto all'ottimo), perché su porzioni così grandi la complessità quadratica dell'Insertion Sort diventa dominante.
-3.  **Il caso delle Stringhe:** Sul campo stringa, il confronto (`strcmp`) è molto lento. Qui l'ibridazione è controproducente: qualsiasi $K>0$ porta spesso al timeout, mentre il QuickSort puro riesce a terminare (anche se impiega molto tempo), suggerendo che per confronti costosi è meglio minimizzare il numero assoluto di operazioni.
-4.  **Pivot:** L'uso della "mediana di tre" ha evitato il caso pessimo sul campo ID (già ordinato), mantenendo i tempi in linea con gli altri campi numerici ($~1.7s$).
+1.  **Ottimizzazione sui numeri (K piccolo):** Con un valore di $K$ basso (tra 10 e 50), l'algoritmo è più veloce del QuickSort puro. Questo succede perché su pochi elementi il Selection Sort è molto semplice e immediato, mentre il QuickSort perde tempo a gestire le chiamate ricorsive.
+
+2.  **Rallentamento con K grandi:** Se impostiamo $K$ troppo alto (es. 10.000), il programma diventa lentissimo. Il motivo è che il Selection Sort è un algoritmo "quadratico" ($O(N^2)$) e, a differenza di altri algoritmi, esegue **sempre** tutti i confronti possibili, anche se i dati sono quasi ordinati. Su grandi quantità di dati, questo lavoro inutile pesa tantissimo.
+
+3. I risultati sono coerenti con la teoria della complessità:
+* **Degrado su K grandi:** Aumentando $K$, il termine quadratico del Selection Sort inizia a dominare, peggiorando drasticamente le prestazioni rispetto al QuickSort puro ($K=0$). Questo conferma che il Selection Sort non è adatto a ordinare sequenze lunghe.
+
+4. Dai test emerge che il valore ottimale di $K$ si attesta nell'intervallo **tra 20 e 50**.
+* **Perché:** In questo range si trova il punto di equilibrio dove il risparmio sulle operazioni di gestione dello stack e la migliore località della cache del Selection Sort superano il costo dei confronti aggiuntivi dovuti alla sua natura quadratica.
+* Sotto questa soglia ($K < 10$), l'overhead della ricorsione è ancora presente.
+* Sopra questa soglia ($K > 100$), l'algoritmo diventa inefficiente a causa del numero eccessivo di confronti ($K^2/2$) effettuati dal Selection Sort.
+
+5. L'approccio ibrido offre vantaggi rispetto agli algoritmi puri, ma con riserva:
+* **Vantaggi:** Sui campi numerici (Interi, Float), l'approccio ibrido ha mostrato tempi inferiori rispetto al QuickSort puro ($K=0$), riducendo il tempo totale di esecuzione grazie alla gestione iterativa dei sotto-array piccoli.
+* **Limiti:** Il vantaggio è strettamente legato alla scelta di un $K$ corretto. Se $K$ è errato, le prestazioni degradano velocemente al di sotto di quelle dell'algoritmo puro.
+
+6. SI nota una differenza critica tra i campi numerici e il campo stringa:
+* **Numeri (ID, Int, Float):** I confronti sono istruzioni CPU native velocissime. Qui l'ibridazione funziona bene.
+* **Stringhe:** L'algoritmo soffre enormemente. Il confronto con strcmp è costoso. Poiché il **Selection Sort** esegue ciecamante tutti i confronti possibili per trovare il minimo, il numero totale di chiamate a `strcmp` esplode. Questo spiega perché con le stringhe, anche per $K$ bassi, si rischia il timeout o si hanno prestazioni peggiori rispetto al QuickSort puro (che riesce a scartare dati più velocemente).
