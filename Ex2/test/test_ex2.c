@@ -30,6 +30,10 @@ int compare_int(const void* a, const void* b) {
 
 /**
  * @brief DJB2 hash implementation for string keys.
+ * hash<<5 significa shift a sinistra di 5 bit quindi 2^5
+ * moltiplicare l'hash corrente per 33 e aggiungere il nuovo carattere."
+ *"Nel codice uso lo shift bitwise (<< 5) perché x * 33 equivale a (x << 5) + x,
+ *ed è un modo molto efficiente per la CPU di 'spargere' i bit e evitare collisioni tra stringhe simili
  */
 unsigned long hash_string(const void* key) {
     unsigned long hash = 5381;
@@ -49,6 +53,7 @@ int compare_string(const void* a, const void* b) {
 
 /**
  * @brief Force collisions by returning a constant hash value.
+ * Forza tutte le chiavi a finire nello stesso bucket (collisione totale).
  */
 unsigned long hash_dummy_constant(const void* key) {
     (void)key;

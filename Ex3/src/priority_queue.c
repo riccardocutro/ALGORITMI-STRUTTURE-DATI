@@ -4,7 +4,7 @@
  */
 
 #include "../include/hash_table.h"
-#include "/priority_queue.h"
+#include "../include/priority_queue.h"
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -14,10 +14,10 @@
  * @brief Priority Queue structure using a ternary heap.
  */
 struct PriorityQueue {
-    void** heap;            /**< Array-based ternary heap */
+    void** heap;            /**< Array ternary heap */
     size_t capacity;        /**< Maximum number of elements before resizing */
     size_t size;            /**< Current number of elements */
-    HashTable* index_map;   /**< Map to store element indices for O(1) lookups */
+    HashTable* index_map;   /**< Map to store element indices for O(1) */
     CompareFn compare;      /**< Function to compare elements */
     HashFn hash;            /**< Function to hash elements */
 };

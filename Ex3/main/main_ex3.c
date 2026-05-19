@@ -18,7 +18,7 @@ typedef struct {
     int id;       /**< Unique task identifier */
     int start;    /**< Arrival time of the task */
     int length;   /**< Execution duration */
-    int priority; /**< Priority level (higher values scheduled first) */
+    int priority; /**< Priority level */
 } Task;
 
 /**

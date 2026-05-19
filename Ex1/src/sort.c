@@ -53,56 +53,17 @@ static void selection_sort(void *base, size_t nitems, size_t size, CompareFn com
 }
 
 /**
- * @brief Selects a pivot using the Median-of-Three strategy.
- * Sorts the first, middle, and last elements and moves the median to the end.
- * @param base Pointer to the first element.
- * @param nitems Number of elements.
- * @param size Size of each element.
- * @param compar Comparison function.
+ * @brief Choose a random pivot.
  */
-static void median_of_three(void *base, size_t nitems, size_t size, CompareFn compar) {
+static void random_pivot(void *base, size_t nitems, size_t size) {
     char *base_ptr = (char *)base;
-    size_t mid = (nitems / 2);
 
-    char *p_first = base_ptr;
-    char *p_mid   = base_ptr + (mid * size);
-    char *p_last  = base_ptr + ((nitems - 1) * size);
-
-    if (compar(p_mid, p_first) < 0) swap(p_mid, p_first, size);
-    if (compar(p_last, p_first) < 0) swap(p_last, p_first, size);
-    if (compar(p_last, p_mid) < 0)   swap(p_last, p_mid, size);
-
-    swap(p_mid, p_last, size);
+    size_t rand_idx = ((size_t)rand() ^ ((size_t)rand() << 15)) % nitems;
+    swap(base_ptr + (rand_idx * size), base_ptr + ((nitems - 1) * size), size);
 }
 
 /**
- * @brief Lomuto partition scheme using a Median-of-Three pivot.
- * @param base Pointer to the first element.
- * @param nitems Number of elements.
- * @param size Size of each element.
- * @param compar Comparison function.
- * @return Final index of the pivot.
- */
-static size_t partition(void *base, size_t nitems, size_t size, CompareFn compar) {
-    median_of_three(base, nitems, size, compar);
-
-    char *base_ptr = (char *)base;
-    char *pivot = base_ptr + ((nitems - 1) * size);
-    size_t i = 0;
-
-    for (size_t j = 0; j < nitems - 1; ++j) {
-        char *p_j = base_ptr + (j * size);
-        if (compar(p_j, pivot) <= 0) {
-            swap(base_ptr + (i * size), p_j, size);
-            i++;
-        }
-    }
-    swap(base_ptr + (i * size), pivot, size);
-    return i;
-}
-
-/**
- * @brief Recursive QuickSort with a fallback to Selection Sort.
+ * @brief Recursive QuickSort using 3-Way Partitioning and fallback to Selection Sort.
  * @param base Pointer to the first element.
  * @param nitems Number of elements.
  * @param size Size of each element.
@@ -117,14 +78,37 @@ static void quick_sort(void *base, size_t nitems, size_t size, size_t k, Compare
         return;
     }
 
-    size_t pivot_idx = partition(base, nitems, size, compar);
-
-    quick_sort(base, pivot_idx, size, k, compar);
-
+    random_pivot(base, nitems, size);
     char *base_ptr = (char *)base;
-    if (pivot_idx + 1 < nitems) {
-        size_t right_items = nitems - pivot_idx - 1;
-        quick_sort(base_ptr + ((pivot_idx + 1) * size), right_items, size, k, compar);
+    char pivot_val[size];
+    memcpy(pivot_val, base_ptr + ((nitems - 1) * size), size);
+
+    size_t lt = 0;
+    size_t unk = 0;
+    size_t gt = nitems;
+
+    while (unk < gt) {
+        char *curr_elem = base_ptr + (unk * size);
+        int cmp_res = compar(curr_elem, pivot_val);
+
+        if (cmp_res < 0) {
+            swap(base_ptr + (lt * size), curr_elem, size);
+            lt++;
+            unk++;
+        } else if (cmp_res > 0) {
+            gt--;
+            swap(curr_elem, base_ptr + (gt * size), size);
+        } else {
+            unk++;
+        }
+    }
+
+    if (lt > 0) {
+        quick_sort(base, lt, size, k, compar);
+    }
+    if (nitems > gt) {
+        size_t right_items = nitems - gt;
+        quick_sort(base_ptr + (gt * size), right_items, size, k, compar);
     }
 }
 
