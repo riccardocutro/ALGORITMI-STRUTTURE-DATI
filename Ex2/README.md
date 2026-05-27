@@ -4,7 +4,9 @@
 Per il conteggio delle occorrenze delle parole nel testo (*Iliade*), è stata implementata una **Hash Table** con le seguenti caratteristiche:
 * **Gestione delle Collisioni:** Separate Chaining (liste di trabocco). Questa scelta garantisce robustezza anche con load factor elevati, evitando il clustering tipico dell'indirizzamento aperto.
 * **Funzione di Hash:** Algoritmo **djb2** (Bernstein). È stata scelta per la sua semplicità ed efficacia sulle stringhe ASCII, garantendo una buona distribuzione uniforme e riducendo le collisioni grazie all'effetto valanga (moltiplicazione per 33).
-* **Dynamic Resizing:** La tabella raddoppia automaticamente la sua capacità quando il Load Factor supera la soglia critica (es. 0.5/0.75), garantendo che la complessità media di inserimento e ricerca rimanga ammortizzata a $O(1)$.
+* **Dynamic Resizing (Espansione e Contrazione):** La tabella gestisce in modo bidirezionale la propria capacità per ottimizzare l'uso della memoria mantenendo una complessità temporale ammortizzata di $O(1)$:
+    * **Espansione:** La tabella raddoppia la propria capacità quando il *Load Factor* supera la soglia dello `0.75`.
+    * **Contrazione (Shrinking):** Per evitare sprechi di memoria a seguito di molte eliminazioni di elementi, la tabella dimezza la propria capacità quando il *Load Factor* scende al di sotto dello `0.25`. È stato introdotto un limite inferiore (`INITIAL_CAPACITY = 127`) per evitare contrazioni eccessive quando la tabella è quasi vuota.
 
 ## 2. Risultati Sperimentali (Dataset: iliade.txt)
 
@@ -49,12 +51,13 @@ Vorrei sapere:Q uale funzione di hash mi consigli per minimizzare le collisioni 
     * Si è consultato l'LLM per valutare quale funzione di hash fosse più adatta per un dataset testuale generalista. L'IA ha suggerito l'algoritmo djb2, spiegando che offre un ottimo compromesso tra velocità di calcolo e distribuzione uniforme delle chiavi stringa, riducendo le collisioni rispetto a una somma dei caratteri.
     * Abbiamo discusso la strategia di Resizing: l'IA ha suggerito di raddoppiare la dimensione della tabella quando il Load Factor supera una soglia (0.75) per mantenere la complessità ammortizzata a $O(1)$.
 
-2.  **Criticità Riscontrate e Correzioni (Gestione Memoria & Parsing):**
-    * Gestione Memory Leak con Generics:** L'LLM ha inizialmente proposto una gestione della deallocazione standard (`free` interna alla struct). Tuttavia, trattandosi di una Hash Table generica (`void*`), questo approccio avrebbe causato memory leak dei dati puntati. È stato necessario intervenire manualmente implementando una deallocazione esplicita delle chiavi e dei valori nel client (`main`), verificando poi la correttezza con **Valgrind**.
-    * Parsing del Testo:** Le soluzioni di parsing proposte dall'IA (basate su `fscanf` o `strtok`) si sono rivelate inadeguate per una pulizia fine della punteggiatura. Il codice è stato riscritto manualmente carattere per carattere (`fgetc` + `isalnum`) per garantire la corretta normalizzazione dei termini.
+2. **Criticità Riscontrate e Correzioni (Gestione Memoria & Parsing):**
+    * **Gestione Memory Leak con Generics:** L'LLM ha inizialmente proposto una gestione della deallocazione logica (solo nodi e array di bucket). Trattandosi di una struttura generica (`void*`), è stato necessario intervenire manualmente nel `main` per la deallocazione esplicita delle chiavi e dei valori (stringhe allocate con `string_dup` e interi), validando l'assenza di leak con Valgrind.
+    * **Shrinking e Ottimizzazione Spaziale:** Inizialmente la tabella non si ridimensionava in seguito a cancellazioni. Analizzando con l'LLM il rischio di sprechi di memoria, abbiamo integrato una logica di *shrinking*: la capacità viene dimezzata quando il Load Factor scende $\le 0.25$, mantenendo un limite inferiore (`INITIAL_CAPACITY = 127`) per evitare spreco di memoria.
+    * **Risoluzione Bug nei Test (Pointer Trap):** Durante la stesura dei test Unity per lo *shrinking*, l'LLM ha aiutato a diagnosticare un problema critico sui puntatori: usare l'indirizzo dell'indice in un ciclo `for` (`&i`) come chiave causava l'associazione di tutti i nodi alla stessa cella di memoria stack. È stato risolto introducendo un array statico (`static int test_data[1000]`) per garantire indirizzi univoci e permanenti.
+    * **Parsing del Testo:** Le soluzioni iniziali proposte dall'IA per leggere le parole dal file (basate su `fscanf` o `strtok`) si sono rivelate inadeguate per una pulizia fine della punteggiatura. Il codice è stato riscritto manualmente carattere per carattere (`fgetc` + `isalnum`) per garantire la corretta normalizzazione dei termini.
 3.  **Analisi dei Risultati:**
     * Dopo aver eseguito il codice sul testo `iliade.txt`, abbiamo fornito all'LLM i dati grezzi di output (numero di collisioni, lunghezza massima delle catene, load factor).
     * L'IA ha supportato l'interpretazione critica di questi dati, evidenziando come una catena massima di 5 elementi su 80.000 inserimenti fosse un indicatore di ottima salute della funzione di hash, aiutandoci a formalizzare le conclusioni tecniche presenti nella sezione "Analisi Critica".
-
 ### Verifica e Validazione
 Tutto il codice suggerito o corretto dall'IA è stato analizzato, compreso e testato manualmente. Le spiegazioni teoriche fornite dal modello sono state verificate confrontandole con le slides del corso.
