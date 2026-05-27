@@ -10,6 +10,7 @@
 
 #define INITIAL_CAPACITY 127
 #define LOAD_FACTOR 0.75
+#define SHRINK_THRESHOLD 0.25
 
 /**
  * @brief Internal node structure for separate chaining.
@@ -178,13 +179,23 @@ void hash_table_remove(HashTable* table, const void* key) {
             }
             free(current);
             table->size--;
+            if (table->capacity > INITIAL_CAPACITY && (double)table->size / table->capacity
+                <= SHRINK_THRESHOLD) {
+
+                size_t new_capacity = table->capacity / 2;
+
+                if (new_capacity < INITIAL_CAPACITY) {
+                    new_capacity = INITIAL_CAPACITY;
+                }
+
+                hash_table_resize(table, new_capacity);
+                }
             return;
         }
         prev = current;
         current = current->next;
     }
 }
-
 /**
  * @brief Returns the number of elements in the table.
  */
