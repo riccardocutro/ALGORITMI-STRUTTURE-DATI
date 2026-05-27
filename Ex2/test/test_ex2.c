@@ -208,6 +208,27 @@ void test_keyset(void) {
 }
 
 /**
+ * @brief Verifica il corretto ridimensionamento in contrazione.
+ */
+void test_hash_table_shrinking(void) {
+    static int test_data[1000];
+
+    for (int i = 0; i < 1000; i++) {
+        test_data[i] = i;
+        hash_table_put(table, &test_data[i], &test_data[i]);
+    }
+    for (int i = 0; i < 950; i++) {
+        hash_table_remove(table, &test_data[i]);
+    }
+
+    TEST_ASSERT_EQUAL_INT(50, hash_table_size(table));
+
+    TEST_ASSERT_NOT_NULL(hash_table_get(table, &test_data[999]));
+    TEST_ASSERT_EQUAL_INT(999, *(int*)hash_table_get(table, &test_data[999]));
+}
+
+
+/**
  * @brief Test runner entry point.
  */
 int main(void) {
@@ -219,5 +240,6 @@ int main(void) {
     RUN_TEST(test_string_keys);
     RUN_TEST(test_collision_handling);
     RUN_TEST(test_keyset);
+    RUN_TEST(test_hash_table_shrinking);
     return UNITY_END();
 }
