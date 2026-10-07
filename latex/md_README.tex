@@ -1,0 +1,592 @@
+\hypertarget{md_README_autotoc_md12}{}\doxysection{Regole d\textquotesingle{}esame}\label{md_README_autotoc_md12}
+\hypertarget{md_README_autotoc_md13}{}\doxysubsection{Studenti e studentesse di anni precedenti il 2024/2025}\label{md_README_autotoc_md13}
+Gli studenti e le studentesse iscritti/e al secondo anno in un anno accademico precedente il 2024/2025 {\bfseries{possono}} svolgere tutti gli esercizi di laboratorio interamente in C (come indicato nella presente specifica), oppure i primi due esercizi in C e gli ultimi due in Java.\hypertarget{md_README_autotoc_md14}{}\doxysubsection{Studenti e studentesse con Algoritmi non di 9 CFU}\label{md_README_autotoc_md14}
+Gli studenti e le studentesse che hanno nel piano di studi l\textquotesingle{}insegnamento di Algoritmi con un numero di CFU {\bfseries{differente da 9}} sono pregati di contattare il docente al più presto, al fine di concordare un programma d\textquotesingle{}esame commisurato ai CFU.\hypertarget{md_README_autotoc_md15}{}\doxysubsection{Validità del progetto di laboratorio}\label{md_README_autotoc_md15}
+Le specifiche per il progetto di laboratorio descritte in questo documento resteranno valide fino all\textquotesingle{}ultimo appello relativo al corrente anno accademico $\ast$$\ast$(vale a dire, quella di settembre 2026)$\ast$$\ast$ e non oltre! Gli appelli delle sessioni successive a quella dovranno essere sostenuti sulla base delle specifiche che verranno descritte nella prossima edizione del laboratorio di algoritmi.\hypertarget{md_README_autotoc_md16}{}\doxysubsection{Gruppi di laboratorio e turni}\label{md_README_autotoc_md16}
+Il progetto di laboratorio può essere svolto individualmente o in gruppo (al più 3 persone). {\bfseries{I membri di uno stesso gruppo devono appartenere tutti allo stesso turno di laboratorio}}. Un progetto di laboratorio eseguito da un gruppo costituito da membri appartenenti a turni diversi sarà annullato (e ai singoli membri sarà richiesto di rifarlo in gruppi regolarmente costituiti).
+
+Uno studente o una studentessa, assegnato/a al Turno X può spostarsi al Turno Y, {\bfseries{a patto che trovi un/a collega del turno Y che accetta di spostarsi al turno X}}. La richiesta di spostamento deve essere inoltrata via email a entrambi i docenti di laboratorio dei turni coinvolti, da parte di una persona che intende effettuare lo scambio, mettendo in copia la persona disposta allo scambio inverso. Lo scambio si intende effettuato solo a seguito di esplicita autorizzazione (via email) da parte dei docenti.
+
+E\textquotesingle{} possibile effettuare un solo spostamento di turno durante uno stesso anno accademico. I docenti si riservano di respingere le richieste di spostamento che non dovessero pervenire con {\bfseries{congruo anticipo (min. 1 mese prima)}} rispetto alla data dello scritto che si intende sostenere.\hypertarget{md_README_autotoc_md17}{}\doxysubsection{Algoritmo di esame}\label{md_README_autotoc_md17}
+Come specificato nella descrizione ufficiale dell\textquotesingle{}insegnamento (\href{https://laurea.informatica.unito.it/do/corsi.pl/Show?_id=iw3r}{\texttt{ https\+://laurea.\+informatica.\+unito.\+it/do/corsi.\+pl/\+Show?\+\_\+id=iw3r}}), l\textquotesingle{}esame di {\itshape Algoritmi e Strutture Dati} consiste in una prova scritta, somministrata mediante la piattaforma Esami, ed in una seguente discussione orale del progetto di laboratorio.
+
+{\bfseries{Per poter sostenere lo scritto,}} tutti i membri di un gruppo di laboratorio dovranno sottoporre il codice del progetto di laboratorio su tutti i correttori automatici messi a disposizione sulla pagina Moodle del Laboratorio di ASD, superandone {\bfseries{tutti i test.}} Con un laboratorio il cui codice non dovesse superare qualche test (anche solo uno per un unico esercizio), non sarà possibile sostenere lo scritto. Stessa cosa in caso in cui mancasse la consegna di anche un solo esercizio, anche se altri membri del gruppo l\textquotesingle{}avessero consegnato. Inoltre, il progetto di laboratorio dovrà essere stato consegnato mediante Git\+Lab (vedi sotto), cioè il repository del progetto deve essere stato condiviso con il docente di laboratorio interessato, e deve essere completo senza che vengano effettuati ulteriori commit dopo la data della prova scritta.
+
+Il superamento dello scritto permette di accedere alle prove orali {\bfseries{nella medesima sessione della prova scritta superata}} (si ricorda che le sessioni sono gennaio-\/febbraio 2026, giugno-\/luglio 2026, settembre 2026). Si noti che per quelle sessioni per cui sono previsti due appelli esisteranno due possibilità per la sostenere la prova orale (primo o secondo appello della sessione); per le sessioni in cui è previsto un solo appello, la prova orale deve essere effettuata necessariamente in quell\textquotesingle{}appello. Nel caso in cui l\textquotesingle{}orale non venga superato entro i termini della sessione, lo scritto dovrà essere ripetuto. {\bfseries{La prova orale non si tiene nella data e ora ufficiale su esse3}}, invece lo studente dovrà prenotarsi su moodle in un\textquotesingle{}attività apposita scegliendo una data e ora tra quelle proposte. L\textquotesingle{}attività con le date e ore sarà resa visibile solo una volta pubblicati i risultati dello scritto su esse3.
+
+Durante la prova orale, sarà facoltà del docente chiedere di eseguire gli algoritmi implementati su dati ulteriori, forniti dal docente stesso. Ugualmente, sarà facoltà del docente chiedere cambiamenti nel codice durante l\textquotesingle{}esame, per esempio per l\textquotesingle{}inclusione di ulteriori unit test o per la correzione di eventuali piccoli problemi di implementazione individuati durante la correzione. Al progetto non sarà comunque assegnato preventivamente un voto, ma esso costituirà la base per una discussione orale. In tale discussione la/il candidata/o dovrà dimostrare di conoscere sia gli aspetti teorici della materia, sia il codice consegnato.
+
+Il voto finale sarà la media pesata dei voti ottenuti nelle due prove scritta ed orale \mbox{[}in base ai crediti associati alle parti di teoria (6 CFU) e di laboratorio (3 CFU), nella media lo scritto peserà 6 e l\textquotesingle{}orale 3\mbox{]}, valutate in 30+1 esimi, essendo comunque necessario il raggiungimento della sufficienza in entrambe le prove.\hypertarget{md_README_autotoc_md18}{}\doxysubsubsection{Esempio (caso di una sessione con 2 appelli)\+:}\label{md_README_autotoc_md18}
+
+\begin{DoxyItemize}
+\item la studentessa/lo studente X intende sostenere la prova scritta nel primo appello di una sessione con 2 appelli;
+\item la studentessa/lo studente X deve assicurarsi che il progetto su Git\+Lab, alla data della prova scritta che intende sostenere (in questo esempio, quella del primo appello della sessione), sia aggiornato alla versione che vuole presentare al docente di laboratorio;
+\item la studentessa/lo studente X deve sottoporre il codice del progetto su tutti~e 4 i correttori automatici messi a disposizione nella pagina Moodle del Laboratorio di ASD, assicurandosi che passi tutti i test;
+\item se la studentessa/lo studente X supera la prova scritta nel primo appello della sessione, deve (pena la perdita del voto ottenuto nella prova scritta)\+:
+\begin{DoxyItemize}
+\item iscriversi a uno dei due appelli orali della stessa sessione,
+\item prenotarsi su Moodle in uno degli slot messi a disposizione dal docente del turno di appartenenza,
+\item sostenere l\textquotesingle{}orale nello slot temporale prenotato.
+\end{DoxyItemize}
+\end{DoxyItemize}
+
+Studentesse/studenti diversi, appartenenti allo stesso gruppo di laboratorio, possono sostenere la prova {\bfseries{scritta}} nello stesso appello o in appelli diversi. Se studentesse/studenti diversi, appartenenti allo stesso gruppo, superano la prova scritta nello stesso appello, {\bfseries{devono}} sostenere l\textquotesingle{} {\bfseries{orale}} nello stesso appello orale. Se studentesse/studenti diversi, appartenenti allo stesso gruppo, superano la prova scritta in appelli diversi, {\bfseries{possono}} sostenere l\textquotesingle{}{\bfseries{orale}} in appelli diversi.
+
+Ad esempio, si consideri un gruppo di laboratorio costituito dalle studentesse/dagli studenti X, Y e Z, e si supponga che i soli X e Y sostengano la prova scritta nel primo appello di una sessione con due appelli, X con successo, mentre Y con esito insufficiente. Devono essere rispettate le seguenti condizioni\+:
+
+
+\begin{DoxyItemize}
+\item Alla data della prova scritta del primo appello della sessione, il progetto di laboratorio del gruppo su Git\+Lab deve essere aggiornato alla versione che si intende presentare, e deve superare tutti i test automatici su Moodle.
+\item Il solo studente X deve sostenere la prova orale nella stessa sessione in cui ha superato lo scritto, procedendo come indicato nell\textquotesingle{}esempio riportato sopra, mentre Y e Z sosterranno la discussione quando avranno superato la prova scritta.
+\item Supponiamo che Y e Z superino la prova scritta nell\textquotesingle{}appello di una sessione con un solo appello\+: essi dovranno sostenere la prova orale in quello stesso appello.
+\item Gli studenti Y e Z dovranno, di norma, presentare la stessa versione del progetto di laboratorio che ha presentato lo studente X; eventuali modifiche al laboratorio successive alla discussione di X dovranno cioè essere di modesta entità, debitamente documentate (i.\+e., il log delle modifiche dovrà comparire su Git\+Lab) e motivate.
+\end{DoxyItemize}\hypertarget{md_README_autotoc_md19}{}\doxysection{Indicazioni generali e suggerimenti}\label{md_README_autotoc_md19}
+\hypertarget{md_README_autotoc_md20}{}\doxysubsection{Uso di Git\+Lab}\label{md_README_autotoc_md20}
+Durante la scrittura del codice è richiesto di usare in modo appropriato il sistema di versioning Git\+Lab. Questa richiesta implica quanto segue\+:
+
+
+\begin{DoxyItemize}
+\item Il progetto di laboratorio va inizializzato \char`\"{}clonando\char`\"{} il repository del laboratorio come descritto nel file {\ttfamily \mbox{\hyperlink{Git_8md}{Git.\+md}}}.
+\item Come è prassi nei moderni ambienti di sviluppo, è richiesto di effettuare commit frequenti, con un nome significativo. L\textquotesingle{}ideale è un commit per ogni blocco di lavoro terminato (es. creazione e test di una nuova funzione, soluzione di un baco, creazione di una nuova interfaccia, ...). Meglio ancora se si usano branch e merge per gestire sessioni di lavoro più ampie.
+\item Ogni membro del gruppo dovrebbe effettuare il commit delle modifiche che lo hanno visto come principale sviluppatore, partecipando quindi attivamente ai commit del repository in misura più o meno bilanciata.
+\item Al termine del lavoro si dovrà consegnare l\textquotesingle{}intero repository (dandone accesso al docente di riferimento del turno).
+\end{DoxyItemize}
+
+Il file {\ttfamily \mbox{\hyperlink{Git_8md}{Git.\+md}}} contiene un esempio di come usare Git per lo sviluppo degli esercizi proposti per questo laboratorio.
+
+\DoxyHorRuler{0}
+
+
+{\bfseries{Nota importante}}\+: Su Git\+Lab dovrà essere caricato solamente il codice sorgente, in particolare nessun file dati dovrà essere oggetto di commit!
+
+\DoxyHorRuler{0}
+\hypertarget{md_README_autotoc_md23}{}\doxysubsection{Linguaggio in cui sviluppare il laboratorio}\label{md_README_autotoc_md23}
+L\textquotesingle{}intera implementazione del laboratorio deve essere realizzata nel linguaggio C.
+
+Come indicato sotto, alcuni esercizi chiedono di implementare {\bfseries{codice generico}}. Con \char`\"{}codice generico\char`\"{} si intende codice che deve poter essere eseguito con tipi di dato non noti a tempo di compilazione.
+
+{\bfseries{Suggerimento per la realizzazione di codice generico in C}}\+: Nel caso del C, è necessario capire come meglio approssimare l\textquotesingle{}idea di codice generico utilizzando quanto permesso dal linguaggio. Un approccio comune è far sì che le funzioni e le procedure presenti nel codice prendano in input puntatori a {\ttfamily void} e utilizzino qualche funzione fornita dall\textquotesingle{}utente per accedere alle componenti necessarie (uso di puntatori a funzione).\hypertarget{md_README_autotoc_md24}{}\doxysubsection{Uso di librerie esterne e/o native del linguaggio scelto}\label{md_README_autotoc_md24}
+È vietato l\textquotesingle{}uso di strutture dati native del linguaggio scelto o offerte da librerie esterne, quando la loro realizzazione è richiesta da uno degli esercizi proposti.
+
+È, invece, possibile l\textquotesingle{}uso di strutture dati native del linguaggio o offerte da librerie esterne, se la loro realizzazione non è richiesta da uno degli esercizi proposti.
+
+{\bfseries{Esempio\+:}} l\textquotesingle{}uso di una libreria C che implementa array dinamici è consentito, solo se nessun esercizio chiede la realizzazione di un array dinamico.\hypertarget{md_README_autotoc_md25}{}\doxysubsection{Relazione sugli esercizi}\label{md_README_autotoc_md25}
+La relazione, per quegli esercizi che la richiedono, deve essere inserita in formato {\itshape Mark\+Down} nel file \mbox{\hyperlink{README_8md}{README.\+md}} del progetto, divenendo così parte integrante della documentazione.\hypertarget{md_README_autotoc_md26}{}\doxysubsection{Unit Testing}\label{md_README_autotoc_md26}
+Come indicato esplicitamente nei testi degli esercizi, il progetto di laboratorio comprende obbligatoriamente la definizione di opportune suite di unit test.
+
+È obbligatorio implementare unit test completi per tutte le funzioni di libreria sviluppate, escluse le funzioni dedicate all\textquotesingle{}interazione con l\textquotesingle{}utente e I/O su file, ma incluse le funzioni di utilità che si decidesse di aggiungere a quelle esplicitamente richieste dall\textquotesingle{}esercizio. Gli unit test rappresentano un\textquotesingle{}area in cui l\textquotesingle{}AI generativa può essere particolarmente utile per accelerare lo sviluppo e garantire una copertura esaustiva del codice.
+
+Tuttavia, si rammenta che il focus del laboratorio rimane l\textquotesingle{}implementazione di strutture dati e algoritmi. Gli studenti dovranno dimostrare di aver compreso il senso degli unit test e di saper realizzare suite di test che coprano i casi più comuni e i casi limite.\hypertarget{md_README_autotoc_md27}{}\doxysubsection{Qualità dell\textquotesingle{}implementazione}\label{md_README_autotoc_md27}
+È parte del mandato degli esercizi la realizzazione di codice di buona qualità.
+
+Per \char`\"{}buona qualità\char`\"{} intendiamo codice ben organizzato, ben modularizzato, ben commentato e ben testato.
+
+{\bfseries{Alcuni suggerimenti\+:}}
+
+
+\begin{DoxyItemize}
+\item {\bfseries{Importante}}\+: Gli esercizi richiedono (fra le altre cose) di sviluppare codice generico. Nello sviluppare questa parte, si deve assumere di stare sviluppando una libreria generica intesa come fondamento di futuri programmi. Non è pertanto lecito fare assunzioni semplificative; in generale, l\textquotesingle{}implementazione della libreria generica deve restare separata e non deve essere influenzata in alcun modo dagli usi di essa eventualmente richiesti negli esercizi (ad esempio, se un esercizio dovesse richiedere l\textquotesingle{}implementazione della struttura dati grafo e quello stesso o un altro esercizio dovesse richiedere l\textquotesingle{}implementazione, a partire da tale struttura dati, di un algoritmo per il calcolo delle componenti connesse di un grafo, l\textquotesingle{}implementazione della struttura dati dovrebbe essere separata dall\textquotesingle{}algoritmo per il calcolo delle componenti connesse e {\itshape non} dovrebbe contenere elementi – variabili, procedure, funzioni, definizioni di tipo, ecc. – eventualmente utili a tale algoritmo, ma non essenziali alla struttura dati; analogamente, se un esercizio dovesse richiedere di operare su grafi con nodi di tipo stringa, l\textquotesingle{}implementazione della struttura dati grafo dovrebbe restare generica e non potrebbe quindi assumere per i nodi il solo tipo stringa).
+\item verificare che il codice sia suddiviso correttamente in moduli distinti;
+\item aggiungere un commento, prima di una definizione, che spieghi il funzionamento dell\textquotesingle{}oggetto definito, meglio se in formato \href{https://www.doxygen.nl}{\texttt{ doxygen}}. Evitare quando possibile di commentare direttamente il codice interno alle funzioni/procedure implementate (se il codice è ben scritto, tali commenti in genere non servono);
+\item la lunghezza di una funzione/procedura è in genere un campanello di allarme\+: se essa cresce troppo, probabilmente è necessario rifattorizzare il codice spezzando la funzione in più parti. In linea di massima si può consigliare di intervenire quando la funzione cresce sopra le 30 righe (considerando anche commenti e spazi bianchi);
+\item sono accettabili commenti in italiano, sebbene siano preferibili in inglese;
+\item tutti i nomi (es., nomi di variabili, di funzioni, di tipi, ecc.) {\itshape devono} essere significativi e in inglese;
+\item il codice deve essere correttamente indentato; impostare l\textquotesingle{}indentazione a 2 o 4 caratteri e impostare l\textquotesingle{}editor in modo che inserisca \char`\"{}soft tabs\char`\"{} (cioè, deve inserire il numero corretto di spazi invece che un carattere di tabulazione);
+\item per dare i nomi agli identificatori, seguire le convenzioni in uso per il linguaggio C\+:
+\begin{DoxyItemize}
+\item macro e costanti sono tutti in maiuscolo e in formato snake case (es. THE\+\_\+\+MACRO, THE\+\_\+\+CONSTANT); i nomi di tipo (e.\+g. struct, typedefs, enums, ...) iniziano con una lettera maiuscola e proseguono in camel case (e.\+g., The\+Type, The\+Struct); i nomi di funzione iniziano con una lettera minuscola e proseguono in snake case (e.\+g., the\+\_\+function());
+\end{DoxyItemize}
+\item i file vanno salvati in formato UTF-\/8.
+\end{DoxyItemize}\hypertarget{md_README_autotoc_md28}{}\doxysection{Consegne per gli esercizi}\label{md_README_autotoc_md28}
+Come detto sopra, in sede di discussione d\textquotesingle{}esame, sarà facoltà del docente chiedere di eseguire gli algoritmi implementati su dati forniti dal docente stesso. Nel caso questi dati siano memorizzati su file, questi saranno della medesima struttura dei dataset forniti e descritti nel testo dell\textquotesingle{}esercizio. I codici sviluppati dovranno consentire un rapido e semplice adattamento agli input forniti\+: ad esempio, {\bfseries{una buona implementazione consentirà di inserire in input il nome del file su cui eseguire il test}}, mentre una peggiore richiederà di modificare il codice sorgente e una successiva compilazione a fronte della sola modifica del nome del file contenente il dataset.\hypertarget{md_README_autotoc_md29}{}\doxysubsection{Esercizio 1 -\/ Algoritmo di ordinamento ibrido Quick\+Sort-\/\+Selection\+Sort}\label{md_README_autotoc_md29}
+Implementare un algoritmo di ordinamento {\bfseries{ibrido}} che combini Quick\+Sort e Selection\+Sort in base alla dimensione dell\textquotesingle{}array da ordinare. L\textquotesingle{}algoritmo deve funzionare nel seguente modo\+:
+
+
+\begin{DoxyItemize}
+\item Per array di dimensione maggiore o uguale a una soglia {\ttfamily k}, utilizzare Quick\+Sort.
+\item Per array di dimensione minore di {\ttfamily k}, utilizzare Selection\+Sort.
+\end{DoxyItemize}
+
+L\textquotesingle{}ipotesi da verificare è se Selection\+Sort, pur avendo complessità O(n²), possa risultare più efficiente di Quick\+Sort su array molto piccoli a causa del minor overhead nelle operazioni elementari. Sarà compito vostro determinare sperimentalmente se questa ipotesi è corretta e identificare eventuali valori ottimali della soglia.\hypertarget{md_README_autotoc_md30}{}\doxysubsubsection{Specifiche dell\textquotesingle{}implementazione\+:}\label{md_README_autotoc_md30}
+
+\begin{DoxyEnumerate}
+\item {\bfseries{Quick\+Sort}}\+: implementare una versione robusta che sia efficiente su tutti i casi di test presenti nel dataset (descritto sotto). La scelta della strategia di partizionamento e del pivot è lasciata agli studenti, che dovranno valutare le prestazioni sui dati reali.
+\item {\bfseries{Selection\+Sort}}\+: implementare la versione classica O(n²).
+\item {\bfseries{Algoritmo ibrido}}\+: deve rispettare la soglia {\ttfamily k} e passare automaticamente da un algoritmo all\textquotesingle{}altro durante la ricorsione.
+\end{DoxyEnumerate}
+
+La libreria deve supportare l\textquotesingle{}ordinamento di array di diversi tipi di dato tramite funzioni di comparazione, rispettando la seguente definizione\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{void} hybridsort(\textcolor{keywordtype}{void} *base,}
+\DoxyCodeLine{                \textcolor{keywordtype}{size\_t} nitems,}
+\DoxyCodeLine{                \textcolor{keywordtype}{size\_t} size,}
+\DoxyCodeLine{                \textcolor{keywordtype}{size\_t} k,}
+\DoxyCodeLine{                \textcolor{keywordtype}{int} (*compar)(\textcolor{keyword}{const} \textcolor{keywordtype}{void} *, \textcolor{keyword}{const} \textcolor{keywordtype}{void} *));}
+
+\end{DoxyCode}
+
+
+Interpretare i parametri della funzione {\ttfamily hybridsort} considerando la richiesta per una implementazione generica.\hypertarget{md_README_autotoc_md31}{}\doxysubsubsection{Unit Testing}\label{md_README_autotoc_md31}
+Implementare gli unit test per la libreria secondo le indicazioni suggerite nel documento \mbox{\hyperlink{md_UnitTesting}{Unit Testing}}.
+
+Gli unit test devono coprire\+:
+\begin{DoxyItemize}
+\item Correttezza di eventuali funzioni ausiliarie sviluppate;
+\item Correttezza dell\textquotesingle{}ordinamento per tutti i tipi di dato;
+\item Comportamento con array vuoti e di dimensione piccola;
+\item Diversi valori della soglia {\ttfamily k};
+\item Casi limite, ad esempio, array già ordinati, ordinati inversamente, con elementi duplicati.
+\end{DoxyItemize}\hypertarget{md_README_autotoc_md32}{}\doxysubsubsection{Uso della libreria di ordinamento implementata}\label{md_README_autotoc_md32}
+\hypertarget{md_README_autotoc_md33}{}\doxyparagraph{Dataset}\label{md_README_autotoc_md33}
+Il file {\ttfamily records.\+bin.\+gz} che potete trovare (compresso) all\textquotesingle{}indirizzo\+:
+
+\begin{quote}
+\href{https://datacloud.di.unito.it/index.php/s/3c9H8ZAFqQWEBcf}{\texttt{ https\+://datacloud.\+di.\+unito.\+it/index.\+php/s/3c9\+H8\+ZAFq\+QWEBcf}} \end{quote}
+contiene 20 milioni di record da ordinare in formato binario compresso.
+
+{\bfseries{Formato del file binario\+:}} Il file compresso deve essere estratto prima dell\textquotesingle{}uso. Una volta decompresso, {\ttfamily records.\+bin} è strutturato come una sequenza di record, ognuno dei quali occupa esattamente 36 bytes\+:
+\begin{DoxyItemize}
+\item {\bfseries{Byte 0-\/7}}\+: {\ttfamily id} (intero senza segno a 64 bit, little-\/endian) ~\newline
+
+\item {\bfseries{Byte 8-\/11}}\+: {\ttfamily field1} (float a 32 bit, IEEE 754, little-\/endian)
+\item {\bfseries{Byte 12-\/19}}\+: {\ttfamily field2} (intero con segno a 64 bit, little-\/endian)
+\item {\bfseries{Byte 20-\/35}}\+: {\ttfamily field3} (stringa di 16 caratteri, padding con \textquotesingle{}\textbackslash{}0\textquotesingle{} se necessario)
+\end{DoxyItemize}
+
+Il campo {\ttfamily field3} contiene parole estratte dalla Divina Commedia (massimo 15 caratteri utili + terminatore). I campi sono generati per testare diversi scenari di ordinamento, inclusi casi che possono portare alcuni algoritmi di ordinamento al caso peggiore.
+
+{\bfseries{Suggerimento\+:}} Per facilitare la manipolazione del file binario, si consiglia di implementare una libreria di supporto con funzioni come\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{int} read\_record(FILE *file, Record *record);}
+\DoxyCodeLine{\textcolor{keywordtype}{int} write\_record(FILE *file, \textcolor{keyword}{const} Record *record);}
+\DoxyCodeLine{\textcolor{keywordtype}{int} load\_records\_from\_file(FILE *file, Record **records, \textcolor{keywordtype}{size\_t} *count);}
+\DoxyCodeLine{\textcolor{keywordtype}{int} save\_records\_to\_file(FILE *file, \textcolor{keyword}{const} Record *records, \textcolor{keywordtype}{size\_t} count);}
+\DoxyCodeLine{\textcolor{keywordtype}{void} print\_record(\textcolor{keyword}{const} Record *record);}
+
+\end{DoxyCode}
+\hypertarget{md_README_autotoc_md34}{}\doxyparagraph{Programma principale}\label{md_README_autotoc_md34}
+Usando l\textquotesingle{}algoritmo implementato precedentemente, si realizzi la seguente funzione per ordinare i {\itshape record} contenuti nel file {\ttfamily records.\+bin} in ordine non decrescente secondo i valori contenuti nei campi specificati.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{void} sort\_records(FILE *infile, FILE *outfile, \textcolor{keywordtype}{size\_t} field, \textcolor{keywordtype}{size\_t} k);}
+
+\end{DoxyCode}
+
+
+{\bfseries{Parametri\+:}}
+\begin{DoxyItemize}
+\item {\ttfamily infile}\+: il file binario contenente i record da ordinare.
+\item {\ttfamily outfile}\+: il file binario nel quale salvare i record ordinati (deve essere diverso da {\ttfamily infile}).
+\item {\ttfamily field}\+: può valere 1, 2, 3 o 4 e indica quale campo deve essere usato per ordinare i record\+:
+\begin{DoxyItemize}
+\item {\ttfamily 1}\+: ordina per {\ttfamily id} (intero senza segno a 64 bit);
+\item {\ttfamily 2}\+: ordina per {\ttfamily field1} (float);
+\item {\ttfamily 3}\+: ordina per {\ttfamily field2} (intero con segno a 64 bit);
+\item {\ttfamily 4}\+: ordina per {\ttfamily field3} (stringa, ordine lessicografico).
+\end{DoxyItemize}
+\item {\ttfamily k}\+: soglia per l\textquotesingle{}algoritmo ibrido\+:
+\begin{DoxyItemize}
+\item se {\ttfamily k=0}\+: l\textquotesingle{}intero array sarà ordinato solo con Quick\+Sort;
+\item se {\ttfamily k $>$ numero\+\_\+totale\+\_\+record}\+: l\textquotesingle{}intero array sarà ordinato solo con Selection\+Sort;
+\item altrimenti\+: usa Quick\+Sort per sottoinsiemi ≥ k, Selection\+Sort per sottoinsiemi $<$ k.
+\end{DoxyItemize}
+\end{DoxyItemize}\hypertarget{md_README_autotoc_md35}{}\doxysubsubsection{Analisi sperimentale}\label{md_README_autotoc_md35}
+Si misurino i tempi di risposta dell\textquotesingle{}algoritmo ibrido per ciascuno dei quattro campi che si possono usare come chiave di ordinamento, al variare di {\ttfamily k}.
+
+{\bfseries{Valori di k da testare}}\+: 0, 10, 50, 100, 500, 1000, 5000, 10000, 1000000
+
+{\bfseries{Gestione della memoria}}\+: L\textquotesingle{}implementazione deve gestire correttamente l\textquotesingle{}allocazione e la deallocazione della memoria, evitando memory leak e sprechi di memoria. Si consiglia di testare l\textquotesingle{}applicazione con strumenti come Valgrind.
+
+Si produca una breve relazione (in formato Markdown nel file {\ttfamily \mbox{\hyperlink{README_8md}{README.\+md}}}) in cui si riportano\+:
+
+
+\begin{DoxyEnumerate}
+\item {\bfseries{Tabelle dei tempi}}\+: tempi di esecuzione per ogni combinazione di campo e valore di k.
+\item {\bfseries{Analisi critica}}\+:
+\begin{DoxyItemize}
+\item I risultati corrispondono alle aspettative teoriche?
+\item Esiste un valore ottimale di k? Se sì, quale e perché?
+\item L\textquotesingle{}approccio ibrido offre vantaggi rispetto agli algoritmi puri?
+\item Ci sono differenze significative tra i diversi tipi di campi?
+\end{DoxyItemize}
+\end{DoxyEnumerate}
+
+{\bfseries{Vincoli temporali}}\+: Nel caso l\textquotesingle{}ordinamento non finisca entro 5 minuti, interrompere l\textquotesingle{}esecuzione e riportare un fallimento dell\textquotesingle{}operazione nella relazione. Tempi di esecuzione eccessivi possono indicare che il valore di k è troppo elevato o che ci sono problemi nell\textquotesingle{}implementazione del Quick\+Sort, ad esempio, degenerazione verso il caso peggiore O(n²). In quest\textquotesingle{}ultimo caso, riflettere sulla strategia di scelta del pivot per sistemare il problema.
+
+{\bfseries{Si ricorda che i file {\ttfamily records.\+bin.\+gz}, {\ttfamily records.\+bin} (e i file compilati) NON DEVONO ESSERE OGGETTO DI COMMIT SU GIT!}}\hypertarget{md_README_autotoc_md36}{}\doxysubsubsection{Condizioni per la consegna}\label{md_README_autotoc_md36}
+
+\begin{DoxyItemize}
+\item Creare una sottocartella chiamata {\ttfamily ex1} all\textquotesingle{}interno del repository.
+\item La consegna deve obbligatoriamente contenere un {\ttfamily Makefile} che con il comando {\ttfamily make all} produca all\textquotesingle{}interno di {\ttfamily ex1/bin} due file eseguibili chiamati {\ttfamily main\+\_\+ex1} e {\ttfamily test\+\_\+ex1}.
+\item Se avete usato librerie esterne (come Unity per i test) includete anche queste per consentire la corretta compilazione.
+\item L\textquotesingle{}eseguibile {\ttfamily test\+\_\+ex1} non deve richiedere parametri e deve eseguire tutti gli unit test automatizzati.
+\item L\textquotesingle{}eseguibile {\ttfamily main\+\_\+ex1} deve ricevere come parametri\+:
+\end{DoxyItemize}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$ ./bin/main\_ex1 <input\_file> <output\_file> <field> <k>}
+
+\end{DoxyCode}
+
+
+{\bfseries{Esempio di utilizzo\+:}} 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$ ./bin/main\_ex1 records.bin sorted\_output.bin 1 50}
+
+\end{DoxyCode}
+
+
+Questo comando ordinerà i record del file {\ttfamily records.\+bin} secondo il campo {\ttfamily id} (field=1) usando l\textquotesingle{}algoritmo ibrido con soglia k=50, salvando il risultato in {\ttfamily sorted\+\_\+output.\+bin}.\hypertarget{md_README_autotoc_md37}{}\doxysubsection{Esercizio 2 -\/ Tavole hash (con concatenamento)}\label{md_README_autotoc_md37}
+Si implementi, avvalendosi del supporto di un sistema basato su un Large Language Model, quale, ad esempio, Chat\+GPT (si veda sotto), una libreria generica che realizza la struttura dati {\itshape tavola hash (con concatenamento)} in grado di ospitare un insieme di coppie \{$<$chiave\+\_\+1,valore\+\_\+1$>$,...,$<$chiave\+\_\+n,valore\+\_\+n$>$\}.
+
+La tavola hash deve accettare chiavi e valori di tipi generici (tutte le chiavi hanno uno stesso tipo, tutti i valori hanno uno stesso tipo, ma chiavi e valori possono avere tipi fra loro differenti). Per confrontare le chiavi, la tavola deve accettare una funzione di tipo {\itshape compare}, come quelle usate nel precedente esercizio.
+
+La struttura dati deve offrire almeno le seguenti funzionalità (ricavare il significato delle varie funzioni e procedure e dei loro parametri a partire dai loro prototipi e da quanto studiato nella parte di teoria del corso)\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{HashTable* hash\_table\_create(int (*f1)(const void*,const void*), unsigned long (*f2)(const void*));}
+\DoxyCodeLine{void hash\_table\_put(HashTable*, const void*, const void*);}
+\DoxyCodeLine{void* hash\_table\_get(const HashTable*, const void*);}
+\DoxyCodeLine{int hash\_table\_contains\_key(const HashTable*, const void*);}
+\DoxyCodeLine{void hash\_table\_remove(HashTable*, const void*);}
+\DoxyCodeLine{int hash\_table\_size(const HashTable*);}
+\DoxyCodeLine{void** hash\_table\_keyset(const HashTable*);}
+\DoxyCodeLine{void hash\_table\_free(HashTable*);}
+
+\end{DoxyCode}
+\hypertarget{md_README_autotoc_md38}{}\doxysubsubsection{Unit Testing}\label{md_README_autotoc_md38}
+Implementare avvalendosi del supporto di un sistema basato su un Large Language Model (LLM), quale, ad esempio, Chat\+GPT (si veda sotto), gli unit-\/test degli algoritmi secondo le indicazioni suggerite nel documento \mbox{\hyperlink{md_UnitTesting}{Unit Testing}}.\hypertarget{md_README_autotoc_md39}{}\doxysubsubsection{Uso delle funzioni implementate}\label{md_README_autotoc_md39}
+All\textquotesingle{}indirizzo\+:
+
+\begin{quote}
+\href{https://datacloud.di.unito.it/index.php/s/Ti4Mz7j4Xtjn3Db}{\texttt{ https\+://datacloud.\+di.\+unito.\+it/index.\+php/s/\+Ti4\+Mz7j4\+Xtjn3\+Db}} \end{quote}
+potete trovare un file ({\ttfamily iliade.\+txt}) contenente l\textquotesingle{}Iliade di Omero in inglese.
+
+Avvalendosi di un sistema basato su LLM, scrivere un programma che utilizza l\textquotesingle{}hash table implementata per calcolare la parola di lunghezza almeno pari ad un valore minimo dato che sia più frequente nel file di testo dato.\hypertarget{md_README_autotoc_md40}{}\doxysubsubsection{Uso di sistema basato su un Large Language Model}\label{md_README_autotoc_md40}
+Si richiede che per implementare quanto richiesto dal presente esercizio ci si avvalga del supporto di un sistema basato su un Large Language Model, quale, ad esempio, Chat\+GPT.
+
+È possibile che il processo di sviluppo risulti iterativo, comportando varie interazioni con il sistema LLM.
+
+{\bfseries{ATTENZIONE}}\+: I Large Language Models spesso forniscono implementazioni che non rispettano le specifiche dell\textquotesingle{}esercizio, in particolare ignorando la complessità computazionale richiesta per le strutture dati. {\bfseries{Le consegne che non rispettano la complessità computazionale specificata saranno considerate completamente invalide}}. È responsabilità del gruppo studiare attentamente il codice generato, verificarne la correttezza algoritmica e assicurarsi che rispetti i vincoli richiesti.
+
+Serve quindi assumere un ruolo critico e di supervisione nel processo, non limitandosi ad accettare passivamente l\textquotesingle{}output del sistema LLM, ma analizzandolo, validandolo e, se necessario, richiedendo modifiche specifiche per garantire la conformità ai requisiti.
+
+Si documenti, in una relazione (\mbox{\hyperlink{README_8md}{README.\+md}} su git), il suddetto processo di sviluppo nei suoi aspetti principali (prompt iniziale, output prodotto dal sistema, analisi critica dell\textquotesingle{}output, identificazione di eventuali problemi di complessità, raffinamento del prompt, iterazioni successive, ecc.) e si riportino alcune considerazioni generali sull\textquotesingle{}intero processo, con particolare attenzione alle sfide incontrate nel garantire la correttezza algoritmica.\hypertarget{md_README_autotoc_md41}{}\doxysubsubsection{Condizioni per la consegna\+:}\label{md_README_autotoc_md41}
+
+\begin{DoxyItemize}
+\item Creare una sottocartella chiamata {\ttfamily ex2} all\textquotesingle{}interno del repository.
+\item La consegna deve obbligatoriamente contenere un {\ttfamily Makefile}. Questo file con il comando {\ttfamily make all} deve produrre all\textquotesingle{}interno di {\ttfamily ex2/bin} due file eseguibili chiamati {\ttfamily main\+\_\+ex2} e {\ttfamily test\+\_\+ex2}. Se avete usato librerie esterne (come Unity) includete anche queste per consentire la corretta compilazione.
+\item L\textquotesingle{}eseguibile {\ttfamily test\+\_\+ex2} non deve richiedere nessun parametro e deve eseguire tutti gli unit test automatizzati prodotti.
+\item L\textquotesingle{}eseguibile {\ttfamily main\+\_\+ex2} deve ricevere come parametri il percorso del file di testo da usare e la lunghezza minima delle parole da considerare. Per esempio\+:
+\end{DoxyItemize}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$ ./main\_ex2 /tmp/data/iliade.txt 6}
+
+\end{DoxyCode}
+\hypertarget{md_README_autotoc_md42}{}\doxysubsection{Esercizio 3 -\/ Heap ternario}\label{md_README_autotoc_md42}
+Si implementi la struttura dati {\itshape coda con priorità (Priority\+Queue)} tramite {\bfseries{heap ternario}}, che è strutturato come lo heap binario e con la stessa proprietà di heap (il nodo padre deve avere priorità maggiore di tutti i suoi figli) ma in cui ogni nodo ha tre figli invece che due.
+
+La struttura dati deve consentire un numero qualunque e non noto a priori di elementi e accettare valori di tipo generico. Per confrontarli, la coda deve accettare una funzione di tipo {\itshape compare}, come quelle usate nei precedenti esercizi, che confronti la priorità degli elementi.
+
+La struttura dati deve offrire almeno le seguenti funzionalità (ricavare il significato delle varie funzioni e procedure e dei loro parametri a partire dai loro prototipi e da quanto studiato nella parte di teoria del corso)\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{PriorityQueue* priority\_queue\_create(int (*f1)(const void*,const void*), unsigned long (*f2)(const void*));}
+\DoxyCodeLine{int priority\_queue\_push(PriorityQueue*, void*);}
+\DoxyCodeLine{int priority\_queue\_contains(const PriorityQueue*, const void*);}
+\DoxyCodeLine{void* priority\_queue\_top(const PriorityQueue*);}
+\DoxyCodeLine{void priority\_queue\_pop(PriorityQueue*);}
+\DoxyCodeLine{int priority\_queue\_remove(PriorityQueue*, const void*);}
+\DoxyCodeLine{int priority\_queue\_size(const PriorityQueue*);}
+\DoxyCodeLine{void priority\_queue\_free(PriorityQueue*);}
+
+\end{DoxyCode}
+
+
+Le funzionalità devono tutte avere la complessità ottima consentita dall\textquotesingle{}heap ternario (in particolare, nessuna deve avere complessità lineare). Dove opportuno, si consideri di restituire {\ttfamily -\/1} per indicare un valore invalido degli argomenti.
+
+{\itshape Suggerimento}\+: per implementare i metodi {\ttfamily contains} e {\ttfamily remove} è necessario usare una struttura dati di appoggio oltre allo heap (da non implementare da zero).\hypertarget{md_README_autotoc_md43}{}\doxysubsubsection{Unit Testing}\label{md_README_autotoc_md43}
+Implementare gli unit-\/test degli algoritmi secondo le indicazioni suggerite nel documento \mbox{\hyperlink{md_UnitTesting}{Unit Testing}}.\hypertarget{md_README_autotoc_md44}{}\doxysubsubsection{Uso delle funzioni implementate}\label{md_README_autotoc_md44}
+Si implementi un programma che utilizza la {\ttfamily Priority\+Queue} per simulare un {\bfseries{sistema di scheduling}} di processi (o task) secondo un modello {\bfseries{non preemptive con priorità}}.
+
+Il programma principale dovrà leggere un file CSV che descrive l’insieme dei task da pianificare, {\bfseries{già ordinati per tempo di inizio}}. Ogni riga descrive un task con i seguenti campi\+:
+
+
+\begin{DoxyItemize}
+\item {\ttfamily ID}\+: (int) identificatore univoco del task;
+\item {\ttfamily Start}\+: (int) tempo di arrivo del task nel sistema;
+\item {\ttfamily Length}\+: (int) durata di esecuzione del task;
+\item {\ttfamily Priority}\+: (int) priorità del task (più alto = più urgente).
+\end{DoxyItemize}
+
+Il programma dovrà simulare un {\bfseries{esecutore singolo}} che segue questa logica\+:
+
+
+\begin{DoxyEnumerate}
+\item Al tempo iniziale {\ttfamily t = 0}, l’esecutore è libero.
+\item Quando è libero, se non ci sono task da eseguire, attende fino al tempo seguente {\ttfamily t + 1} senza agire.
+\item Altrimenti, sceglie di eseguire il task con {\bfseries{priorità massima}} tra quelli {\bfseries{già arrivati}} (cioè con {\ttfamily Start $<$= t}) e non ancora eseguiti.
+\item Esegue quindi il task fino alla sua conclusione ({\ttfamily t = t + Length}), {\bfseries{senza interruzioni}}.
+\item Quando un task termina, l\textquotesingle{}esecutore torna libero e riprende il procedimento appena descritto.
+\end{DoxyEnumerate}
+\begin{DoxyEnumerate}
+\item La simulazione termina quando tutti i task sono stati eseguiti.
+\end{DoxyEnumerate}
+
+Il risultato della simulazione dovrà essere scritto su un nuovo file CSV, in cui le righe corrispondono ai task eseguiti nell\textquotesingle{}ordine in cui vengono eseguiti, e deve contenere\+:
+
+
+\begin{DoxyItemize}
+\item {\ttfamily ID}\+: (int) l\textquotesingle{}identificatore univoco del task;
+\item {\ttfamily Start\+Time}\+: (int) il tempo in cui l’esecuzione del task è effettivamente iniziata (che può essere maggiore del suo tempo di arrivo);
+\item {\ttfamily End\+Time}\+: (int) il tempo di completamento del task.
+\end{DoxyItemize}
+
+Il programma dovrà anche essere usato con i dati contenuti nel file {\ttfamily tasks.\+csv}, che potete recuperare all\textquotesingle{}indirizzo\+:
+
+\begin{quote}
+\href{https://datacloud.di.unito.it/index.php/s/xFZcRaxodcakSo4}{\texttt{ https\+://datacloud.\+di.\+unito.\+it/index.\+php/s/x\+FZc\+Raxodcak\+So4}} \end{quote}
+\hypertarget{md_README_autotoc_md45}{}\doxysubsubsection{Condizioni per la consegna\+:}\label{md_README_autotoc_md45}
+
+\begin{DoxyItemize}
+\item Creare una sottocartella chiamata {\ttfamily ex3} all\textquotesingle{}interno del repository.
+\item La consegna deve obbligatoriamente contenere un {\ttfamily Makefile}. Questo file con il comando {\ttfamily make all} deve produrre all\textquotesingle{}interno di {\ttfamily ex3/bin} due file eseguibili chiamati {\ttfamily main\+\_\+ex3} e {\ttfamily test\+\_\+ex3}. Se avete usato librerie esterne (come Unity) includete anche queste per consentire la corretta compilazione.
+\item L\textquotesingle{}eseguibile {\ttfamily test\+\_\+ex3} non deve richiedere nessun parametro e deve eseguire tutti gli unit test automatizzati prodotti.
+\item L\textquotesingle{}eseguibile {\ttfamily main\+\_\+ex3} deve ricevere come parametri\+:
+\end{DoxyItemize}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$ ./main\_ex3 <input\_file> <output\_file>}
+
+\end{DoxyCode}
+
+
+Si documenti brevemente, in una relazione (\mbox{\hyperlink{README_8md}{README.\+md}} su git), le scelte implementative effettuate e i risultati e tempi dell\textquotesingle{}esecuzione dell\textquotesingle{}algoritmo rispetto a quanto atteso.\hypertarget{md_README_autotoc_md46}{}\doxysubsection{Esercizio 4 -\/ Grafi sparsi e Visita in Ampiezza}\label{md_README_autotoc_md46}
+Si implementi una libreria che realizza la struttura dati {\itshape Grafo} in modo che sia ottimale per dati sparsi ({\bfseries{attenzione}}\+: le scelte implementative che farete dovranno essere giustificate in relazione alle nozioni presentate durante le lezioni in aula).
+
+È richiesto che l\textquotesingle{}implementazione sfrutti la Tavola Hash implementata nell\textquotesingle{}Esercizio 2.
+
+L\textquotesingle{}implementazione deve essere generica sia per quanto riguarda il tipo dei nodi, sia per quanto riguarda le etichette degli archi, implementando le funzioni riportate nel seguente header file (con requisiti minimi di complessità; dove {\itshape N} può indicare il numero di nodi o il numero di archi, a seconda del contesto)\+:\hypertarget{md_README_autotoc_md47}{}\doxysubsubsection{graph.\+h}\label{md_README_autotoc_md47}
+\hypertarget{md_README_autotoc_md48}{}\doxyparagraph{Strutture Dati}\label{md_README_autotoc_md48}
+\hypertarget{md_README_autotoc_md49}{}\doxysubsection{@code\{c\}}\label{md_README_autotoc_md49}
+typedef struct graph $\ast$\+Graph;
+
+typedef struct edge \{ void$\ast$ source; // nodo d\textquotesingle{}origine void$\ast$ dest; // nodo di destinazione void$\ast$ label; // etichetta dell\textquotesingle{}arco \} Edge; \hypertarget{md_README_autotoc_md50}{}\doxyparagraph{Creazione e Configurazione}\label{md_README_autotoc_md50}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{Graph graph\_create(\textcolor{keywordtype}{int} labelled,}
+\DoxyCodeLine{                  \textcolor{keywordtype}{int} directed,}
+\DoxyCodeLine{                  \textcolor{keywordtype}{int} (*compare)(\textcolor{keyword}{const} \textcolor{keywordtype}{void}*, \textcolor{keyword}{const} \textcolor{keywordtype}{void}*),}
+\DoxyCodeLine{                  \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} (*hash)(\textcolor{keyword}{const} \textcolor{keywordtype}{void}*));}
+
+\end{DoxyCode}
+ Crea un grafo vuoto, etichettato se {\ttfamily labelled == 1} e diretto se {\ttfamily directed == 1}. Le funzioni {\ttfamily compare} e {\ttfamily hash} sono necessarie per la costruzione della tavola hash che deve essere usata dalla libreria. ~\newline
+ {\bfseries{Complessità}}\+: O(1)
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{int} graph\_is\_directed(\textcolor{keyword}{const} Graph gr);}
+
+\end{DoxyCode}
+ Dice se il grafo è diretto o meno. ~\newline
+ {\bfseries{Complessità}}\+: O(1)
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{int} graph\_is\_labelled(\textcolor{keyword}{const} Graph gr);}
+
+\end{DoxyCode}
+ Dice se il grafo è etichettato o meno. ~\newline
+ {\bfseries{Complessità}}\+: O(1)
+
+\DoxyHorRuler{0}
+ \hypertarget{md_README_autotoc_md52}{}\doxyparagraph{Gestione Nodi}\label{md_README_autotoc_md52}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{int} graph\_add\_node(Graph gr, \textcolor{keyword}{const} \textcolor{keywordtype}{void}* node);}
+
+\end{DoxyCode}
+ Aggiunge un nodo al grafo. ~\newline
+ {\bfseries{Complessità}}\+: O(1)
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{int} graph\_contains\_node(\textcolor{keyword}{const} Graph gr, \textcolor{keyword}{const} \textcolor{keywordtype}{void}* node);}
+
+\end{DoxyCode}
+ Controlla se un nodo è presente nel grafo. ~\newline
+ {\bfseries{Complessità}}\+: O(1)
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{int} graph\_remove\_node(Graph gr, \textcolor{keyword}{const} \textcolor{keywordtype}{void}* node);}
+
+\end{DoxyCode}
+ Rimuove un nodo dal grafo. ~\newline
+ {\bfseries{Complessità}}\+: O(\+N)
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{int} graph\_num\_nodes(\textcolor{keyword}{const} Graph gr);}
+
+\end{DoxyCode}
+ Restituisce il numero di nodi nel grafo. ~\newline
+ {\bfseries{Complessità}}\+: O(1)
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{void}** graph\_get\_nodes(\textcolor{keyword}{const} Graph gr);}
+
+\end{DoxyCode}
+ Recupera tutti i nodi del grafo. ~\newline
+ {\bfseries{Complessità}}\+: O(\+N)
+
+\DoxyHorRuler{0}
+ \hypertarget{md_README_autotoc_md54}{}\doxyparagraph{Gestione Archi}\label{md_README_autotoc_md54}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{int} graph\_add\_edge(Graph gr, \textcolor{keyword}{const} \textcolor{keywordtype}{void}* node1, \textcolor{keyword}{const} \textcolor{keywordtype}{void}* node2, \textcolor{keyword}{const} \textcolor{keywordtype}{void}* label);}
+
+\end{DoxyCode}
+ Aggiunge un arco dati gli estremi e l\textquotesingle{}etichetta. ~\newline
+ {\bfseries{Complessità}}\+: O(1) ($\ast$)
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{int} graph\_contains\_edge(\textcolor{keyword}{const} Graph gr, \textcolor{keyword}{const} \textcolor{keywordtype}{void}* node1, \textcolor{keyword}{const} \textcolor{keywordtype}{void}* node2);}
+
+\end{DoxyCode}
+ Controlla se un arco è presente nel grafo. ~\newline
+ {\bfseries{Complessità}}\+: O(1) ($\ast$)
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{int} graph\_remove\_edge(Graph gr, \textcolor{keyword}{const} \textcolor{keywordtype}{void}* node1, \textcolor{keyword}{const} \textcolor{keywordtype}{void}* node2);}
+
+\end{DoxyCode}
+ Rimuove un arco dal grafo. ~\newline
+ {\bfseries{Complessità}}\+: O(1) ($\ast$)
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{int} graph\_num\_edges(\textcolor{keyword}{const} Graph gr);}
+
+\end{DoxyCode}
+ Restituisce il numero di archi nel grafo. ~\newline
+ {\bfseries{Complessità}}\+: O(\+N)
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{Edge** graph\_get\_edges(\textcolor{keyword}{const} Graph gr);}
+
+\end{DoxyCode}
+ Recupera tutti gli archi del grafo. ~\newline
+ {\bfseries{Complessità}}\+: O(\+N)
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{void}* graph\_get\_label(\textcolor{keyword}{const} Graph gr, \textcolor{keyword}{const} \textcolor{keywordtype}{void}* node1, \textcolor{keyword}{const} \textcolor{keywordtype}{void}* node2);}
+
+\end{DoxyCode}
+ Recupera l\textquotesingle{}etichetta di un arco. ~\newline
+ {\bfseries{Complessità}}\+: O(1) ($\ast$)
+
+\DoxyHorRuler{0}
+ \hypertarget{md_README_autotoc_md56}{}\doxyparagraph{Adiacenza}\label{md_README_autotoc_md56}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{void}** graph\_get\_neighbours(\textcolor{keyword}{const} Graph gr, \textcolor{keyword}{const} \textcolor{keywordtype}{void}* node);}
+
+\end{DoxyCode}
+ Recupera i nodi adiacenti a un dato nodo. ~\newline
+ {\bfseries{Complessità}}\+: O(1) ($\ast$)
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{int} graph\_num\_neighbours(\textcolor{keyword}{const} Graph gr, \textcolor{keyword}{const} \textcolor{keywordtype}{void}* node);}
+
+\end{DoxyCode}
+ Recupera il numero di nodi adiacenti a un dato nodo. ~\newline
+ {\bfseries{Complessità}}\+: O(1)
+
+\DoxyHorRuler{0}
+ \hypertarget{md_README_autotoc_md58}{}\doxyparagraph{Distruzione}\label{md_README_autotoc_md58}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{void} graph\_free(Graph gr);}
+
+\end{DoxyCode}
+ Libera la memoria allocata per il grafo.
+
+\DoxyHorRuler{0}
+
+
+{\bfseries{Nota}}\+: Le complessità contrassegnate con ($\ast$) assumono un\textquotesingle{}implementazione efficiente della tavola hash sottostante, e quando il grafo è veramente sparso, assumendo che l\textquotesingle{}operazione venga effettuata su un nodo la cui lista di adiacenza ha una lunghezza in O(1).
+
+La struttura {\ttfamily struct graph} deve essere decisa prendendo in considerazione la richiesta di usare la Tabella Hash dell\textquotesingle{}esercizio precedente.
+
+{\itshape Suggerimento}\+: un grafo non diretto può essere rappresentato usando un\textquotesingle{}implementazione per grafi diretti modificata per garantire che, per ogni arco $\ast$(a,b)$\ast$ etichettato {\itshape w}, presente nel grafo, sia presente nel grafo anche l\textquotesingle{}arco $\ast$(b,a)$\ast$ etichettato {\itshape w}. Ovviamente, il grafo dovrà mantenere l\textquotesingle{}informazione che specifica se esso è un grafo diretto o non diretto. Similmente, un grafo non etichettato può essere rappresentato usando l\textquotesingle{}implementazione per grafi etichettati modificata per garantire che le etichette siano sempre {\ttfamily null} (che invece non devono mai essere {\ttfamily null} per i grafi etichettati).\hypertarget{md_README_autotoc_md60}{}\doxysubsubsection{Unit Testing}\label{md_README_autotoc_md60}
+Implementare gli unit-\/test degli algoritmi secondo le indicazioni suggerite nel documento \mbox{\hyperlink{md_UnitTesting}{Unit Testing}}.\hypertarget{md_README_autotoc_md61}{}\doxysubsubsection{Uso della libreria che implementa la struttura dati Grafo}\label{md_README_autotoc_md61}
+Si implementi l\textquotesingle{}algoritmo di visita in ampiezza secondo il seguente prototipo di funzione
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{void}** breadth\_first\_visit(Graph gr,}
+\DoxyCodeLine{                          \textcolor{keywordtype}{void}* start,}
+\DoxyCodeLine{                          \textcolor{keywordtype}{int} (*compare)(\textcolor{keyword}{const} \textcolor{keywordtype}{void}*, \textcolor{keyword}{const} \textcolor{keywordtype}{void}*),}
+\DoxyCodeLine{                          \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} (*hash)(\textcolor{keyword}{const} \textcolor{keywordtype}{void}*));}
+
+\end{DoxyCode}
+ Start è il nodo di partenza da cui cominciare la visita, la funzione restituisce l\textquotesingle{}array dei nodi nell\textquotesingle{}ordine di visita. Eventualmente, la funzione restituisce null se il nodo start non è presente nel grafo. L\textquotesingle{}implementazione dell\textquotesingle{}algoritmo di visita in ampiezza dovrà utilizzare la libreria sui grafi appena implementata.
+
+L\textquotesingle{}algoritmo dovrà poi essere usato con i dati contenuti nel file {\ttfamily italian\+\_\+dist\+\_\+graph.\+csv}, che potete recuperare all\textquotesingle{}indirizzo\+:
+
+\begin{quote}
+\href{https://datacloud.di.unito.it/index.php/s/FqneW99EGWLSRpY}{\texttt{ https\+://datacloud.\+di.\+unito.\+it/index.\+php/s/\+Fqne\+W99\+EGWLSRpY}} \end{quote}
+Tale file contiene le distanze in metri tra varie località italiane e una frazione delle località a loro più vicine. Il formato è un CSV standard\+: i campi sono separati da virgole; i record sono separati dal carattere di fine riga ({\ttfamily \textbackslash{}n}).
+
+Ogni record contiene i seguenti dati\+:
+
+
+\begin{DoxyItemize}
+\item {\ttfamily place1}\+: (tipo stringa) nome della località \char`\"{}sorgente\char`\"{} (la stringa può contenere spazi ma non può contenere virgole);
+\item {\ttfamily place2}\+: (tipo stringa) nome della località \char`\"{}destinazione\char`\"{} (la stringa può contenere spazi ma non può contenere virgole);
+\item {\ttfamily distance}\+: (tipo float) distanza in metri tra le due località.
+\end{DoxyItemize}
+
+{\bfseries{Note\+:}}
+
+
+\begin{DoxyItemize}
+\item Potete interpretare le informazioni presenti nelle righe del file come archi {\bfseries{non diretti}}.
+\item Il file è stato creato a partire da un dataset poco accurato. I dati riportati contengono inesattezze e imprecisioni.
+\end{DoxyItemize}
+
+{\bfseries{Si ricorda che il file {\ttfamily italian\+\_\+dist\+\_\+graph.\+csv} (e i file compilati) NON DEVONO ESSERE OGGETTO DI COMMIT SU GIT!}}\hypertarget{md_README_autotoc_md62}{}\doxysubsubsection{Condizioni per la consegna\+:}\label{md_README_autotoc_md62}
+
+\begin{DoxyItemize}
+\item Creare una sottocartella chiamata {\ttfamily ex4} all\textquotesingle{}interno del repository, che conterrà i file relativi a questo esercizio.
+\item Includete nella consegna anche un {\ttfamily Makefile} che con il comando {\ttfamily make all} deve produrre all\textquotesingle{}interno di {\ttfamily ex4/bin} due file eseguibili chiamati {\ttfamily main\+\_\+ex4} e {\ttfamily test\+\_\+ex4}. Se avete usato librerie esterne (come Unity) includete anche queste per consentire la corretta compilazione.
+\item L\textquotesingle{}eseguibile {\ttfamily test\+\_\+ex4} non deve richiedere nessun parametro e deve eseguire tutti gli unit test automatizzati prodotti.
+\item L\textquotesingle{}eseguibile {\ttfamily main\+\_\+ex4} deve ricevere come parametri il percorso del file {\ttfamily italian\+\_\+dist\+\_\+graph.\+csv}, il nome della città di partenza e il nome di un file di output, e salvare in quest\textquotesingle{}ultimo i nomi delle località visitate durante una visita in ampiezza del grafo, un nome per riga, partendo da un nodo di partenza specificato. I nomi dei file non devono essere hardcoded, ma devono essere passati come argomenti da linea di comando.
+\end{DoxyItemize}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$ ./main\_ex4 italian\_dist\_graph.csv torino output.txt}
+
+\end{DoxyCode}
+
+
+Si documenti brevemente, in una relazione (\mbox{\hyperlink{README_8md}{README.\+md}} su git), le scelte implementative effettuate e i risultati e tempi dell\textquotesingle{}esecuzione dell\textquotesingle{}algoritmo rispetto a quanto atteso. 

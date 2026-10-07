@@ -1,0 +1,76 @@
+I test automatici sono \char`\"{}oggetti\char`\"{} software che vengono scritti con l\textquotesingle{}obiettivo di verificare che una porzione di una applicazione sia corretta (secondo qualche criterio di corretteza definito nel test stesso). Quando gli oggetti testati sono \char`\"{}piccoli\char`\"{} e autocontenuti, essi vengono chiamati \char`\"{}unit\char`\"{} e il test automatico di essi è detto \char`\"{}unit testing\char`\"{}. Cosa sia una unit non è definito con precisione, in alcuni contesti può un piccolo modulo, ma più spesso sono singole funzioni, procedure, ecc.
+
+I test automatici in genere predispongono un input, invocano la unit e verificano che l\textquotesingle{}output (o l\textquotesingle{}eventuale side-\/effect) sia corretto. La verifica è fatta per mezzo di asserzioni che indicano quale sia il risultato atteso, quando tali asserzioni falliscono viene interrotto il test e restituito un messaggio d\textquotesingle{}errore appropriato.
+
+I vantaggi dello unit testing sono molteplici\+:
+
+
+\begin{DoxyItemize}
+\item {\itshape debugging}\+: il testing indipendente di piccole unità di codice permette di isolare la porzione di codice in cui è presente il bug, semplificando così la soluzione del problema;
+\item {\itshape qualità del codice}\+: l\textquotesingle{}avere una test suite che automaticamente verifica la correttezza delle unit crea la serenità necessaria perché il codice venga mantenuto e ripulito con la dovuta frequenza. Supponiamo ad esempio di avere una funzione mal scritta, ma critica (ad esempio un suo problema potrebbe portare a danni per migliaia di euro). Sappiamo che la funzione è corretta (ha sempre funzionato perfettamente), ma è lunga, scritta male, e contiente tante parti che sarebbe bene astrarre in modo che possano essere riutilizzate dal resto dell\textquotesingle{}applicazione. Senza una suite di test affidabile difficilmente si procederà agli interventi necessari a risolvere la situazione. L\textquotesingle{}avere una suite di test non necessariamente garantisce di non introdurre bug, ne riduce però drasticamente la probabilità.
+
+Inoltre scrivere test è più semplice quando le unit sono piccole e ben focalizzate e questo incoraggia un miglior stile di programmazione;
+\item {\itshape documentazione}\+: i test di unità forniscono anche una (seppur limitata) fonte di documentazione per il codice. Essi mostrano come si intende che le unit vengano utilizzate e quale sia la relazione attesa tra input e output.
+\end{DoxyItemize}
+
+Affinché gli unit test possano essere efficaci è necessario che godano delle seguenti proprietà\+:
+
+
+\begin{DoxyItemize}
+\item i test devono essere focalizzati\+: uno unit-\/test deve testare un singolo caso d\textquotesingle{}uso di una singola unit. Un test che prende in considerazione più unit o più casi d\textquotesingle{}uso è meno utile perché eventuali problemi sono più difficilmente ricollegabili a una porzione ristretta di codice.
+
+Esempi di test correttamente focalizzati\+:
+\begin{DoxyItemize}
+\item test di una procedura di sort su un array vuoto
+\item test di una procedura di sort su un array dato
+\item test di una procedura di sort su un array con tutti elementi uguali
+\end{DoxyItemize}
+
+Esempi di test non correttamente focalizzati\+:
+\begin{DoxyItemize}
+\item test di una procedura di sort
+\item test del funzionamento di più procedure/funzioni contemporaneamente
+\end{DoxyItemize}
+
+In genere un test poco focalizzato si riconosce perché contiene più asserzioni. Prima di scrivere un test di unità che contenente più asserzioni è bene verificare l\textquotesingle{}opportunità di procedere in questa direzione.
+\item i test devono essere indipendenti\+: l\textquotesingle{}ordine di esecuzione dei test non deve influire sul loro risultato.
+
+L\textquotesingle{}indipendenza dei test è importante perché in caso contrario un baco potrebbe essere nascosto dall\textquotesingle{}esecuzione di un test precedente. Inoltre il debugging dei problemi diventa più complicato perché è necessario prendere in considerazione tutto il contesto.
+\item i test non devono richiedere l\textquotesingle{}intervento umano\+: i test devono essere automatici, non devono richiedere che un essere umano ispezioni il valore di una variabile o ispezioni quanto stampato a video. Un test che passa non deve generare nessun output degno di attenzione, un test fallito deve permettere di risalire velocemente alla porzione di codice da esaminare.
+
+Non scrivere pertanto nulla su console durante un test.
+\end{DoxyItemize}
+
+Si noti che scrivere i test di unità è diverso dallo scrivere un programma di prova per il proprio software. Gli unit test sono pensati per essere eseguiti automaticamente e non richiedere attenzione da parte dell\textquotesingle{}utente.\hypertarget{md_UnitTesting_autotoc_md64}{}\doxysection{Unit testing in C}\label{md_UnitTesting_autotoc_md64}
+Purtroppo nel caso del C non c\textquotesingle{}è una libreria che possa essere definita \char`\"{}standard\char`\"{} e in genere usare tali librerie richiede l\textquotesingle{}installazione di software aggiuntivo. Date queste difficoltà è ammesso utilizzare un programma ad-\/hoc per effettuare il test, a patto che si scrivano le funzioni di test prestando attenzione ai punti indicati sopra. Chi volesse utilizzare qualche libreria è libero di farlo, ma sarà sua responsabilità installare e utilizzare correttamente la libreria. Una possibile libreria (che, tuttavia, non rappresenta uno standard) è Unity. L\textquotesingle{}uso di Unity in questo laboratorio è comunque facoltativo.
+
+Esempio di programma di test in C\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include <assert.h>}}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include <stdlib.h>}}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include "{}my\_sorter.h"{}}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{void} test\_sort\_empty\_array() \{}
+\DoxyCodeLine{  \textcolor{keywordtype}{int} a[] = \{\};}
+\DoxyCodeLine{  assert( a == my\_sorter(a, 0) );}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{void} test\_sort\_null\_array() \{}
+\DoxyCodeLine{  \textcolor{keywordtype}{int}* a = NULL;}
+\DoxyCodeLine{  assert( NULL == my\_sorter(a, 0) );}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{...}
+\DoxyCodeLine{}
+\DoxyCodeLine{int main(\textcolor{keywordtype}{int} argc, \textcolor{keywordtype}{char}** argv) \{}
+\DoxyCodeLine{  test\_sort\_empty\_array();}
+\DoxyCodeLine{  test\_sort\_null\_array();}
+\DoxyCodeLine{  ...}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+Si noti che la funzione {\ttfamily assert} usata nell\textquotesingle{}esempio non è stata pensata per fare unit testing in C e fornisce solo funzionalità molto limitate in questo senso. Dati i vincoli e i problemi spiegati sopra, un\textquotesingle{}implementazione lungo la linea mostrata sarà comunque considerata pienamente accettabile. 

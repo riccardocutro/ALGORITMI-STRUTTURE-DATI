@@ -121,7 +121,7 @@ void hash_table_put(HashTable* table, const void* key, const void* value) {
 
     while (current) {
         if (table->compare(current->key, key) == 0) {
-            current->value = (void*)value;
+            current->value = (void *) value;
             return;
         }
         current = current->next;

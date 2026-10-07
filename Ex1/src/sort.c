@@ -80,8 +80,8 @@ static void quick_sort(void *base, size_t nitems, size_t size, size_t k, Compare
 
     random_pivot(base, nitems, size);
     char *base_ptr = (char *)base;
-    char pivot_val[size];
-    memcpy(pivot_val, base_ptr + ((nitems - 1) * size), size);
+    char pivot_val[size];  //temporary buffer
+    memcpy(pivot_val, base_ptr + ((nitems - 1) * size), size); //copy of the bytes
 
     size_t lt = 0;
     size_t unk = 0;

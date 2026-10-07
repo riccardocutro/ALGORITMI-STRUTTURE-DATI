@@ -88,22 +88,22 @@ void** graph_get_nodes(const Graph gr) {
 
 int graph_add_edge(Graph gr, const void* node1, const void* node2, const void* label) {
     if (!gr || !node1 || !node2) return 0;
-    if (gr->labelled && label == NULL) return 0;
+    if (gr->labelled && label == NULL) return 0; //if labelled, you must add the label
 
-    if (!graph_contains_node(gr, node1)) return 0;
-    if (!graph_contains_node(gr, node2)) return 0;
+    if (!graph_contains_node(gr, node1)) return 0; //start node exists?
+    if (!graph_contains_node(gr, node2)) return 0; //end node exists?
 
-    NodeInfo* src_info = (NodeInfo*)hash_table_get(gr->nodes, node1);
+    NodeInfo* src_info = (NodeInfo*)hash_table_get(gr->nodes, node1); // estrae contenitore dal nodo di partenza
 
-    if (hash_table_contains_key(src_info->edges, node2)) return 0;
+    if (hash_table_contains_key(src_info->edges, node2)) return 0; //se l'arco esiste già non fa niente
 
-    void* val_to_store = (label == NULL) ? &EMPTY : (void*)label;
-    hash_table_put(src_info->edges, (void*)node2, val_to_store);
+    void* val_to_store = (label == NULL) ? &EMPTY : (void*)label; //se l'arco non è etichettato usa il segnaposto Empty
+    hash_table_put(src_info->edges, (void*)node2, val_to_store); //inserisce il nodo di partenza [nodoarrivo->peso]
 
     if (!gr->directed) {
         NodeInfo* dest_info = (NodeInfo*)hash_table_get(gr->nodes, node2);
         if (gr->compare(node1, node2) != 0) {
-             hash_table_put(dest_info->edges, (void*)node1, val_to_store);
+             hash_table_put(dest_info->edges, (void*)node1, val_to_store); // nodoPartenza -> Peso
         }
     }
 
